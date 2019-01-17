@@ -3,6 +3,7 @@ package frc.robot.Subsystem.Chassis;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotConstants;
 import frc.robot.RobotMap;
 import static java.lang.System.currentTimeMillis;
 import static frc.robot.Subsystem.Chassis.Transmission.GearState.HIGH;
