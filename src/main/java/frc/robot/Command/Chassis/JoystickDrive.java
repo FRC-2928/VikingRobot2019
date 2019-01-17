@@ -11,7 +11,8 @@ import frc.robot.Robot;
 
 public class JoystickDrive extends Command {
   public JoystickDrive() {
-     //requires(chassis.drivetrain);
+    
+     requires(Robot.chassis.drivetrain);
   
   }
 
@@ -19,29 +20,24 @@ public class JoystickDrive extends Command {
   protected void initialize() {
     
   }
-
-  // Called repeatedly when this Command is scheduled to run
+ 
   @Override
   protected void execute() {
     double driveX = Robot.oi.getDriveX();
     double driveY = Robot.oi.getDriveY();
-
-    //frc.robot.Subsystem.Chassis.Drivetrain.drive(driveY, driveX);
+    Robot.chassis.drivetrain.drive(driveY, driveX);
   }
-
-  // Make this return true when this Command no longer needs to run execute()
+  
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+
   @Override
   protected void interrupted() {
   }

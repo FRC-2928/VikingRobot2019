@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.*;
 import frc.robot.Command.Chassis.*;
+import frc.robot.Subsystem.Chassis.Drivetrain;
+import frc.robot.Subsystem.Chassis.*;
 
 
 /**
@@ -16,18 +18,21 @@ import frc.robot.Command.Chassis.*;
  */
 public class Robot extends IterativeRobot {
     private Compressor compressor;
+    public static Chassis chassis;
     public static OperatorInterface oi;
 
     @Override
     public void robotInit() {
         compressor = new Compressor();
         compressor.start();
+        chassis = new Chassis();
         oi = new OperatorInterface();
     }
 
     @Override
     public void teleopInit() {
         Scheduler.getInstance().removeAll();
+    
     }
 
     @Override
