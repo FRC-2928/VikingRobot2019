@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.Command.Chassis.JoystickDrive;
 
+// This is where we set up the drivetrain
+// We set the motor controllers up, along with the drive functions
 
 public class 
 Drivetrain extends Subsystem {
@@ -33,29 +35,26 @@ public Drivetrain()
 
     left = new WPI_TalonSRX(RobotMap.TALON_BACK_LEFT);
     left_follower_1 = new WPI_VictorSPX(RobotMap.VICTOR_MIDDLE_LEFT);
-    left_follower_1.set(ControlMode.Follower, RobotMap.TALON_BACK_LEFT);
+    left_follower_1.follow(left);
     left_follower_2 = new WPI_VictorSPX(RobotMap.VCTOR_FRONT_LEFT);
-    left_follower_2.set(ControlMode.Follower, RobotMap.TALON_BACK_LEFT);
+    left_follower_2.follow(left);
+    
 
     right= new WPI_TalonSRX(RobotMap.TALON_BACK_RIGHT);
     right_follower_1 = new WPI_VictorSPX(RobotMap.VICTOR_MIDDLE_RIGHT);
-    // right_follower_1.set(ControlMode.Follower, RobotMap.TALON_BACK_RIGHT);
+    right_follower_1.follow(right);
     right_follower_2 = new WPI_VictorSPX(RobotMap.VICTOR_FRONT_RIGHT);
-    right_follower_2.set(ControlMode.Follower, RobotMap.TALON_BACK_RIGHT);
-    System.out.println(right_follower_1);
-    System.out.println("Hi there");
+    right_follower_2.follow(right);
 
     left.setInverted(true);
     left_follower_1.setInverted(true);
     left_follower_2.setInverted(true);
 
     drive = new DifferentialDrive(left, right);
-
     }
 
     public void drive(double move, double rotate) {
       this.drive(move, rotate, true);
-      right_follower_1.set(0.8);
       }
   
     public void drive(double move, double rotate, boolean squaredInputs)

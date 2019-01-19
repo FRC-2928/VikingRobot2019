@@ -7,7 +7,8 @@ import frc.robot.OperatorInterface;
 import frc.robot.Subsystem.Chassis.Drivetrain;
 import frc.robot.Robot;
 
-
+//Here's where we create the command to drive via joystick
+//It's taking the X and Y values from the joystick, which was set up in Operator Interface
 
 public class JoystickDrive extends Command {
   public JoystickDrive() {
