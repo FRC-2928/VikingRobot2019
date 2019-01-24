@@ -11,7 +11,7 @@ public class RobotMap
     public static final int VICTOR_FRONT_RIGHT = 2;
     public static final int VICTOR_MIDDLE_RIGHT = 1;
     public static final int TALON_BACK_RIGHT = 0;
-    //public static final int VICTOR_GROUND_HATCH = x;
+    public static final int VICTOR_GROUND_HATCH = 2928;
 
 
     //Sensors

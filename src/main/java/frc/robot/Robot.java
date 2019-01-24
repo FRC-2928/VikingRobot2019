@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Subsystem.Chassis.*;
+import frc.robot.Subsystem.GroundIntake.*;
 
-/**
- * Robot for 2018.
- */
 public class Robot extends IterativeRobot {
     private Compressor compressor;
     public static Chassis chassis;
+    public static GroundIntake groundintake;
     public static OperatorInterface oi;
 
     @Override
@@ -20,6 +19,7 @@ public class Robot extends IterativeRobot {
         compressor = new Compressor();
         compressor.start();
         chassis = new Chassis();
+        groundintake = new GroundIntake();
         oi = new OperatorInterface();
     }
 
