@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Subsystem.Chassis.*;
 
-
 /**
  * Robot for 2018.
  */

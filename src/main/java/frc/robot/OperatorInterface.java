@@ -5,9 +5,6 @@ import edu.wpi.first.wpilibj.buttons.*;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Subsystem.Chassis.Transmission;
 
-
-
-
 public class OperatorInterface {
 
     private static final Joystick driveStick = new Joystick(0);
