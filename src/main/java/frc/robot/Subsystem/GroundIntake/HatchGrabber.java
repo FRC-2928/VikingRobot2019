@@ -11,7 +11,7 @@ private WPI_VictorSPX groundmotor;
 
   public HatchGrabber(){
     groundmotor = new WPI_VictorSPX(RobotMap.VICTOR_GROUND_HATCH);
-
+    groundmotor.setNeutralMode(com.ctre.WPI_VictorSPx.motorcontrol.NeutralMode.Brake)
   }
 
   public void setpower(double power){
