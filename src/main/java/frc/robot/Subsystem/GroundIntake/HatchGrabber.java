@@ -2,6 +2,8 @@ package frc.robot.Subsystem.GroundIntake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -14,9 +16,33 @@ private WPI_VictorSPX groundmotor;
 
   }
 
+  DigitalInput bottomLimitSwitch; 
+  DigitalInput topLimitSwitch; 
+
+  public void Init(){
+
+    bottomLimitSwitch = new DigitalInput(1);
+    topLimitSwitch = new DigitalInput(2);
+
+  }
+
   public void setpower(double power){
 
     groundmotor.set(ControlMode.PercentOutput, power);
+
+  }
+
+  public void setlimit(boolean limit, boolean upOrDown){
+    
+    if(upOrDown = true){
+
+      limit = topLimitSwitch.get();
+
+    }else{
+
+      limit = bottomLimitSwitch.get();
+
+    }
 
   }
 

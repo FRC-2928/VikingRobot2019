@@ -4,16 +4,23 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RunGroundIntake extends Command {
-  private double power;
 
-  public RunGroundIntake(double power) {
+  private double power;
+  private boolean gLimitSwitch;
+  private boolean upOrDown;
+
+  public RunGroundIntake(double power, boolean gLimitSwitch, boolean upOrDown) {
     requires(Robot.groundintake.hatchGrabber);
     this.power = power;
+    this.gLimitSwitch = gLimitSwitch;
+    this.upOrDown = upOrDown;
+
   }
 
   @Override
   protected void initialize() {
     Robot.groundintake.hatchGrabber.setpower(power);
+    Robot.groundintake.hatchGrabber.setlimit(gLimitSwitch, upOrDown);
   }
 
   @Override
@@ -22,7 +29,7 @@ public class RunGroundIntake extends Command {
   
   @Override
   protected boolean isFinished() {
-    return false;
+    return gLimitSwitch;
   }
 
   @Override
