@@ -2,9 +2,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.*;
-import frc.robot.Command.Arm.RunGroundIntake;
+import frc.robot.Command.GroundIntake.*;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Subsystem.Chassis.Transmission;
+import frc.robot.Subsystem.GroundIntake.Pusher;
 
 public class OperatorInterface {
 
@@ -13,17 +14,19 @@ public class OperatorInterface {
 
     private static final JoystickButton gearButton = new JoystickButton(driveStick, 9);
     //placeholder
-    private static final JoystickButton groundButtonUp = new JoystickButton(driveStick, 1234);
-    private static final JoystickButton groundButtonDown = new JoystickButton(driveStick, 1234);
+    private static final JoystickButton groundButtonUp = new JoystickButton(driveStick, 12348);
+    private static final JoystickButton groundButtonDown = new JoystickButton(driveStick, 12349);
+    private static final JoystickButton pusherButtonOut = new JoystickButton(driveStick, 12345);
+    private static final JoystickButton pusherButtonIn = new JoystickButton(driveStick, 12346);
 
     OperatorInterface() {
-
 
         gearButton.whenPressed(new Shift(Transmission.GearState.LOW));
         gearButton.whenReleased(new Shift(Transmission.GearState.HIGH));
         groundButtonUp.whenPressed(new RunGroundIntake(0.2));
         groundButtonDown.whenPressed(new RunGroundIntake(-0.2));
-
+        pusherButtonIn.whenPressed(new SetPusher(Pusher.PusherState.IN));
+        pusherButtonOut.whenPressed(new SetPusher(Pusher.PusherState.OUT));
     }
 
     

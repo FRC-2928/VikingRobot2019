@@ -11,11 +11,15 @@ public class RobotMap
     public static final int VICTOR_FRONT_RIGHT = 2;
     public static final int VICTOR_MIDDLE_RIGHT = 1;
     public static final int TALON_BACK_RIGHT = 0;
+
     public static final int VICTOR_GROUND_HATCH = 2928;
-    public static final int VICTOR_LEFT_THREADBAR = 254;
-    public static final int VICTOR_RIGHT_THREADBAR = 987;
+
+    public static final int TALON_LEFT_THREADBAR = 16;
+    public static final int TALON_RIGHT_THREADBAR = 987;
     public static final int VICTOR_LEFT_INTAKE = 2910;
     public static final int VICTOR_RIGHT_INTAKE = 2930;
+
+
 
     //Sensors
     public static final int PIGEON = 3;
