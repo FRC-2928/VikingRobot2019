@@ -12,8 +12,7 @@ import frc.robot.Command.Chassis.JoystickDrive;
 // This is where we set up the drivetrain
 // We set the motor controllers up, along with the drive functions
 
-public class 
-Drivetrain extends Subsystem {
+public class Drivetrain extends Subsystem {
  
 public WPI_TalonSRX left;
 public WPI_VictorSPX left_follower_1;

@@ -2,13 +2,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.GroundIntake.*;
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
     private Compressor compressor;
     public static Chassis chassis;
     public static GroundIntake groundintake;

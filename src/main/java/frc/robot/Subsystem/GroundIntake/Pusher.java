@@ -25,7 +25,6 @@ private Solenoid pushermotor;
   }
 
   public void set(PusherState state) {
-    // Setting the solenoid to true brings the pusher in
     pushermotor.set(state.equals(PusherState.IN));
 }
 
