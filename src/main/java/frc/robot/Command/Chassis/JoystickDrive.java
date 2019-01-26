@@ -1,32 +1,45 @@
+
 package frc.robot.Command.Chassis;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.OperatorInterface;
+import frc.robot.Subsystem.Chassis.Drivetrain;
 import frc.robot.Robot;
 
+//Here's where we create the command to drive via joystick
+//It's taking the X and Y values from the joystick, which was set up in Operator Interface
+
 public class JoystickDrive extends Command {
+  public JoystickDrive() {
+    
+     requires(Robot.chassis.drivetrain);
+  
+  }
 
-    @Override
-    protected boolean isFinished() {
-        return !DriverStation.getInstance().isOperatorControl();
-    }
+  @Override
+  protected void initialize() {
+    
+  }
+ 
+  @Override
+  protected void execute() {
+    double driveX = Robot.oi.getDriveX();
+    double driveY = Robot.oi.getDriveY();
+    Robot.chassis.drivetrain.drive(driveY, driveX);
+  }
+  
+  @Override
+  protected boolean isFinished() {
+    return false;
+  }
 
-    public JoystickDrive()
-    {
-        requires(Robot.chassis.drivetrain);
-    }
+  @Override
+  protected void end() {
+  }
 
-    public void initialize()
-    {
-        Robot.chassis.drivetrain.setMotorSafetyEnabled(true);
-    }
 
-    public void execute() {
-        double driveX = Robot.oi.getDriveX();
-        double driveY = Robot.oi.getDriveY();
-
-        System.out.println("driving");
-        Robot.chassis.drivetrain.drive(driveY, driveX);
-    }
+  @Override
+  protected void interrupted() {
+  }
 }
