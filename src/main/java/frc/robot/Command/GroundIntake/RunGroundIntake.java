@@ -1,4 +1,4 @@
-package frc.robot.Command.Arm;
+package frc.robot.Command.GroundIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
