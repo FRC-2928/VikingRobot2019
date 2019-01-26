@@ -12,13 +12,14 @@ public class HatchGrabber extends Subsystem {
 private WPI_VictorSPX groundmotor;
 
   public HatchGrabber(){
+    
     groundmotor = new WPI_VictorSPX(RobotMap.VICTOR_GROUND_HATCH);
 
   }
 
   DigitalInput bottomLimitSwitch; 
   DigitalInput topLimitSwitch; 
-
+  
   public void Init(){
 
     bottomLimitSwitch = new DigitalInput(1);
@@ -36,11 +37,11 @@ private WPI_VictorSPX groundmotor;
     
     if(upOrDown = true){
 
-      limit = topLimitSwitch.get();
+      limit = topLimitSwitch.get(); // *possibly incorrect?
 
     }else{
 
-      limit = bottomLimitSwitch.get();
+      limit = bottomLimitSwitch.get(); // *possibly incorrect?
 
     }
 
