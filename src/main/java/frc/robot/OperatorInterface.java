@@ -28,8 +28,8 @@ public class OperatorInterface {
         gearButton.whenPressed(new Shift(Transmission.GearState.LOW));
         gearButton.whenReleased(new Shift(Transmission.GearState.HIGH));
 
-        groundButtonUp.whenPressed(new RunGroundIntake(-0.6));
-        groundButtonDown.whenPressed(new RunGroundIntake(0.6));
+        groundButtonUp.whileHeld(new RunGroundIntake(-0.6));
+        groundButtonDown.whileHeld(new RunGroundIntake(0.6));
         pusherButtonIn.whenPressed(new SetPusher(PusherState.IN));
         pusherButtonOut.whenPressed(new SetPusher(PusherState.OUT));
 
