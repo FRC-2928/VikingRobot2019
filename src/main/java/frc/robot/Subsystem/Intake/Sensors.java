@@ -1,22 +1,37 @@
-// package frc.robot.Subsystem.Intake;
+package frc.robot.Subsystem.Intake;
 
-// import edu.wpi.first.wpilibj.I2C;
-// import edu.wpi.first.wpilibj.command.Subsystem;
-// includeSensorBar.h
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-// public class Sensors extends Subsystem {
-// public I2C sensor1;
-// public array buff1;
-// public SensorBar MySensorBar(0x3E);
-// public Sensors(){
+public class Sensors extends Subsystem {
 
-//   sensor1.read(0x3E, 6, buff1);
-//   sensor1.read(0x3F, 6, buff1);
-//   sensor1.read(0x70, 6, buff1);
-//   sensor1.read(0x71, 6, buff1);
-// }
+  I2C I2CBus;
 
-//   @Override
-//   public void initDefaultCommand() {
-//   }
-// }
+  // 0x3E;  // SX1509 I2C address (00)
+  // 0x3F;  // SX1509 I2C address (01)
+  // 0x70;  // SX1509 I2C address (10)
+  // 0x71;  // SX1509 I2C address (11)
+
+  I2C sensor;
+
+  byte sensorOutput[];
+
+  public Sensors(){
+
+    I2CBus = new I2C(I2C.Port.kOnboard, 0x1E);
+    I2CBus.write(0x02, 0x00);
+
+    sensor = new I2C(I2C.Port.kOnboard, 0x3E);
+
+    //READS THE I^2C OUTPUT FROM PORT 0x3E WHICH IS 1 BYTE OF INPORTMATION AND THEN STORES IT IN THE ARRAY BUFFER -- sensorOutput
+    sensor.read(0x3E, 1 , sensorOutput);
+
+    //should print out an array of bytes output by sensor
+    System.out.println(sensorOutput);
+
+  }
+
+  @Override
+  public void initDefaultCommand() {
+  }
+}
