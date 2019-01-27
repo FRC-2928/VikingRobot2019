@@ -1,12 +1,6 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.Subsystem.Intake;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,20 +19,26 @@ public class RightThreadbar extends Subsystem {
   public RightThreadbar(){
     
     rightThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_RIGHT_THREADBAR);
-
+    
   }
 
-  Encoder rightEncoder;
-  DigitalInput rightThreadbarInnerLimit; //limitswitch on inside of the right threadbar arm
-  DigitalInput rightThreadbarOuterLimit; //limitswitch on outside of the right threadbar arm
+  // Encoder rightEncoder;
+  // DigitalInput rightThreadbarInnerLimit; //limitswitch on inside of the right threadbar arm
+  // DigitalInput rightThreadbarOuterLimit; //limitswitch on outside of the right threadbar arm
 
   
-  public void Init(){
+  // public void Init(){
 
-    rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+  //   rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 
-    rightThreadbarInnerLimit = new DigitalInput(1);
-    rightThreadbarOuterLimit = new DigitalInput(2);
+  //   rightThreadbarInnerLimit = new DigitalInput(1);
+  //   rightThreadbarOuterLimit = new DigitalInput(2);
+
+  // }
+
+  public void setRightPower(double power){
+
+    rightThreadbarMotor.set(ControlMode.PercentOutput, power);
 
   }
 

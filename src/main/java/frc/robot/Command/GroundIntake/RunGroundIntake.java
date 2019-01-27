@@ -6,21 +6,21 @@ import frc.robot.Robot;
 public class RunGroundIntake extends Command {
 
   private double power;
-  private boolean gLimitSwitch;
-  private boolean upOrDown;
+  // private boolean gLimitSwitch;
+  // private boolean upOrDown;
 
-  public RunGroundIntake(double power, boolean gLimitSwitch, boolean upOrDown) {
+  public RunGroundIntake(double power) {
     requires(Robot.groundintake.hatchGrabber);
     this.power = power;
-    this.gLimitSwitch = gLimitSwitch;
-    this.upOrDown = upOrDown;
+    // this.gLimitSwitch = gLimitSwitch;
+    // this.upOrDown = upOrDown;
 
   }
 
   @Override
   protected void initialize() {
     Robot.groundintake.hatchGrabber.setpower(power);
-    Robot.groundintake.hatchGrabber.setlimit(gLimitSwitch, upOrDown);
+    //Robot.groundintake.hatchGrabber.setlimit(gLimitSwitch, upOrDown);
   }
 
   @Override
@@ -29,7 +29,8 @@ public class RunGroundIntake extends Command {
   
   @Override
   protected boolean isFinished() {
-    return gLimitSwitch;
+    //return gLimitSwitch;
+    return false;
   }
 
   @Override
