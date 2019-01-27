@@ -5,14 +5,14 @@ public class Intake {
 
     public LeftThreadbar leftThreadbar;
     public RightThreadbar rightThreadbar;
-   // public Sensors sensors;
+    public Sensors sensors;
     public Wheels wheels;
 
     public Intake()
     {
         leftThreadbar = new LeftThreadbar();
         rightThreadbar = new RightThreadbar();
-        //sensors = new Sensors();
+        sensors = new Sensors();
         wheels = new Wheels();
     }
 

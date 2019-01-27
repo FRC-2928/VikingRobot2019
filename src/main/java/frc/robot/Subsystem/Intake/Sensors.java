@@ -31,6 +31,12 @@ public class Sensors extends Subsystem {
 
   }
 
+  public void setSensor(I2C newSensor){
+
+    newSensor = sensor;
+
+  }
+
   @Override
   public void initDefaultCommand() {
   }

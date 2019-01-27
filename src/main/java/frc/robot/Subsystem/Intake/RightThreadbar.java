@@ -22,19 +22,19 @@ public class RightThreadbar extends Subsystem {
     
   }
 
-  // Encoder rightEncoder;
-  // DigitalInput rightThreadbarInnerLimit; //limitswitch on inside of the right threadbar arm
-  // DigitalInput rightThreadbarOuterLimit; //limitswitch on outside of the right threadbar arm
+  Encoder rightEncoder;
+  DigitalInput rightThreadbarInnerLimit; //limitswitch on inside of the right threadbar arm
+  DigitalInput rightThreadbarOuterLimit; //limitswitch on outside of the right threadbar arm
 
   
-  // public void Init(){
+  public void Init(){
 
-  //   rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 
-  //   rightThreadbarInnerLimit = new DigitalInput(1);
-  //   rightThreadbarOuterLimit = new DigitalInput(2);
+    rightThreadbarInnerLimit = new DigitalInput(1);
+    rightThreadbarOuterLimit = new DigitalInput(2);
 
-  // }
+  }
 
   public void setRightPower(double power){
 
