@@ -9,20 +9,13 @@ import frc.robot.RobotMap;
 
 public class HatchGrabber extends Subsystem {
   private WPI_TalonSRX groundmotor;
-  //DigitalInput bottomLimitSwitch; 
-  //DigitalInput topLimitSwitch; 
   
     public HatchGrabber(){
       
     groundmotor = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH);
     //groundmotor.setNeutralMode(WPI_TalonSRX.motorcontrol.setNeutralMode.Brake);
     }
-    // public void Init(){
-  
-    //   bottomLimitSwitch = new DigitalInput(1);
-    //   topLimitSwitch = new DigitalInput(2);
-  
-    //}
+   
   
     public void setpower(double power){
   
@@ -30,19 +23,6 @@ public class HatchGrabber extends Subsystem {
   
     }
   
-    // public void setlimit(boolean limit, boolean upOrDown){
-      
-    //   if(upOrDown = true){
-  
-    //     limit = topLimitSwitch.get(); // *possibly incorrect?
-  
-    //   }else{
-  
-    //     limit = bottomLimitSwitch.get(); // *possibly incorrect?
-  
-    //   }
-  
-    // }
   
     @Override
     public void initDefaultCommand() {

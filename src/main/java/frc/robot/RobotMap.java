@@ -1,9 +1,11 @@
  package frc.robot;
 
+ //In here we map all the ports for the robot
+
 public class RobotMap 
 {
 
-    //Talon SRX, needs updating
+    //Drivetrain motors
     //Back Talon on left and right are the leaders, rest are slaves
     public static final int VCTOR_FRONT_LEFT = 13;
     public static final int VICTOR_MIDDLE_LEFT = 14;
@@ -12,8 +14,10 @@ public class RobotMap
     public static final int VICTOR_MIDDLE_RIGHT = 1;
     public static final int TALON_BACK_RIGHT = 0;
 
+    //Ground hatch motors
     public static final int TALON_GROUND_HATCH = 4;
 
+    //Threadbar/intake motors
     public static final int TALON_LEFT_THREADBAR = 11;
     public static final int TALON_RIGHT_THREADBAR = 10;
     public static final int VICTOR_LEFT_INTAKE = 18;

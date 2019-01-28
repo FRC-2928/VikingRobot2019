@@ -13,7 +13,6 @@ private byte output[];
 
   public RunLeftThreadbar(double power) {
     //requires(Robot.intake.leftThreadbar);
-    this.encoderTicks = encoderTicks;
     this.power = power;
   }
 
@@ -21,7 +20,7 @@ private byte output[];
   protected void initialize() {
     
     Robot.intake.leftThreadbar.setLeftPower(power);
-    Robot.intake.leftThreadbar.setLeftEncoderTicks(encoderTicks);
+    // Robot.intake.leftThreadbar.setLeftEncoderTicks(encoderTicks);
     Robot.intake.sensors.setSensor(sensor);
 
   }
@@ -33,6 +32,7 @@ private byte output[];
     sensor.read(0x3E, 1 , output);
 
     System.out.println(output);
+    Robot.intake.leftThreadbar.getLeftEncoder();
 
   }
 
