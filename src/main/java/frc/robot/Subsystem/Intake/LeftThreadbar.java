@@ -26,10 +26,8 @@ public class LeftThreadbar extends Subsystem {
     //Setting up the threadbar motor
     leftThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_LEFT_THREADBAR);
     leftThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
-    System.out.println(leftThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10));
-  
 
-    // leftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
+    //leftThreadbarMotor.config_k
 
   }
 
@@ -39,11 +37,24 @@ public class LeftThreadbar extends Subsystem {
 
   }
 
+  
+
   public void getLeftEncoder(){
 
       leftThreadbarMotor.getSelectedSensorPosition();
       System.out.println(leftThreadbarMotor.getSelectedSensorPosition());
       SmartDashboard.putNumber("Left encoder", leftThreadbarMotor.getSelectedSensorPosition());
+
+  }
+
+  public void setleftPosition(double setpoint){
+
+    double currentPosition = leftThreadbarMotor.getSelectedSensorPosition();
+    double error = setpoint - currentPosition; 
+
+    double kp = 0.5;
+
+
 
   }
 

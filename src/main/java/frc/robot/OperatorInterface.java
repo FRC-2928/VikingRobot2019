@@ -35,10 +35,10 @@ public class OperatorInterface {
         pusherButtonIn.whenPressed(new SetPusher(PusherState.IN));
         pusherButtonOut.whenPressed(new SetPusher(PusherState.OUT));
 
-        threadbarLeft.whileHeld(new RunLeftThreadbar(-0.4));
-        threadbarLeft.whileHeld(new RunRightThreadbar(0.4));
-        threadbarRight.whileHeld(new RunLeftThreadbar(0.4));
-        threadbarRight.whileHeld(new RunRightThreadbar(-0.4));
+        threadbarLeft.whileHeld(new RunLeftThreadbar(-0.8));
+        threadbarLeft.whileHeld(new RunRightThreadbar(0.8));
+        threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
+        threadbarRight.whileHeld(new RunRightThreadbar(-0.8));
 
     }
 
