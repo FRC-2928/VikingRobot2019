@@ -21,7 +21,7 @@ private byte output[];
     
     Robot.intake.leftThreadbar.setLeftPower(power);
     // Robot.intake.leftThreadbar.setLeftEncoderTicks(encoderTicks);
-    Robot.intake.sensors.setSensor(sensor);
+    //Robot.intake.sensors.setSensor(sensor);
 
   }
 
@@ -29,7 +29,7 @@ private byte output[];
   @Override
   protected void execute() {
 
-    sensor.read(0x3E, 1 , output);
+    //sensor.read(0x3E, 1 , output);
 
     System.out.println(output);
     Robot.intake.leftThreadbar.getLeftEncoder();
