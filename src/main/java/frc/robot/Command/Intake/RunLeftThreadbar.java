@@ -6,7 +6,7 @@ import frc.robot.Robot;
 
 public class RunLeftThreadbar extends Command {
 
-private I2C sensor;
+//private I2C sensor;
 private double power;
 private double encoderTicks;
 private byte output[];

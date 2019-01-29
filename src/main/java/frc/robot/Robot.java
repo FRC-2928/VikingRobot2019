@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.GroundIntake.*;
-import frc.robot.Subsystem.Intake.Intake;
+import frc.robot.Subsystem.Intake.*;
 
 public class Robot extends IterativeRobot {
     private Compressor compressor;
@@ -13,15 +13,19 @@ public class Robot extends IterativeRobot {
     public static GroundIntake groundintake;
     public static OperatorInterface oi;
     public static Intake intake;
+    public static Sensors sensors;
 
     @Override
     public void robotInit() {
+
         compressor = new Compressor();
         compressor.start();
         chassis = new Chassis();
         groundintake = new GroundIntake();
         oi = new OperatorInterface();
         intake = new Intake();
+        sensors = new Sensors();
+
     }
 
     @Override
@@ -32,6 +36,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
+
         Scheduler.getInstance().run();
 
     }

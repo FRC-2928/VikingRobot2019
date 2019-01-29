@@ -1,43 +1,53 @@
-// package frc.robot.Subsystem.Intake;
+ package frc.robot.Subsystem.Intake;
 
-// import edu.wpi.first.wpilibj.I2C;
-// import edu.wpi.first.wpilibj.command.Subsystem;
+ import frc.robot.Command.Intake.*;
+ import edu.wpi.first.wpilibj.I2C;
+ import edu.wpi.first.wpilibj.command.Subsystem;
+// import SensorBar.h;
+import frc.robot.Command.Intake.RunSensors;
 
-// public class Sensors extends Subsystem {
+ public class Sensors extends Subsystem {
+ public I2C sensor1;
+//  public Sensorbar MySensorBar1(0x3E)
+//  public I2C MySensorBar2(ox3f)
+//  public I2C MySensorBar3(ox70)
+//  public I2C MySensorBar4(ox71)
 
-//   I2C I2CBus;
 
-//   // 0x3E  // SX1509 I2C address (00)
-//   // 0x3F  // SX1509 I2C address (01)
-//   // 0x70  // SX1509 I2C address (10)
-//   // 0x71  // SX1509 I2C address (11)
 
-//   I2C sensor;
+byte lbuffer[];
+byte mbuffer[];
+byte rbuffer[];
 
-//   byte sensorOutput[];
+ public Sensors(){
 
-//   public Sensors(){
+    lbuffer = new byte[1]; //left, middle, and right sensors
+    mbuffer = new byte[1];
+    rbuffer = new byte[1];
 
-//     // I2CBus = new I2C(I2C.Port.kOnboard, 0x1E);
-//     // I2CBus.write(0x02, 0x00);
+ }
 
-//     sensor = new I2C(I2C.Port.kOnboard, 0x3E);
+ public byte[] readSensors(){
 
-//     //READS THE I^2C OUTPUT FROM PORT 0x3E WHICH IS 1 BYTE OF INPORTMATION AND THEN STORES IT IN THE ARRAY BUFFER -- sensorOutput
-//     sensor.read(0x3E, 1 , sensorOutput);
+    //error with buffer
+    sensor1.read(0x3E, 1, lbuffer);
+    sensor1.read(0x70, 1, mbuffer);
+    sensor1.read(0x3F, 1, rbuffer);
 
-//     //should print out an array of bytes output by sensor
-//     System.out.println(sensorOutput);
+    byte[] readings =  new byte[] {lbuffer[0] , mbuffer[0] , rbuffer[0]}; 
 
-//   }
+    return readings;
 
-//   public void setSensor(I2C newSensor){
+ }
 
-//     newSensor = sensor;
 
-//   }
 
-//   @Override
-//   public void initDefaultCommand() {
-//   }
-// }
+   @Override
+   public void initDefaultCommand() {
+
+    System.out.println(readSensors());
+
+    setDefaultCommand(new RunSensors());
+    
+   }
+ }
