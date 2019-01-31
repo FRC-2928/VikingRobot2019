@@ -23,6 +23,7 @@ public class OperatorInterface {
     private static final JoystickButton pusherButtonIn = new JoystickButton(driveStick, 5);
     private static final JoystickButton pusherButtonOut = new JoystickButton(driveStick, 6);
 
+    private static final JoystickButton PIDButton = new JoystickButton(driveStick, 8);
     private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
@@ -38,15 +39,17 @@ public class OperatorInterface {
         pusherButtonIn.whenPressed(new SetPusher(PusherState.IN));
         pusherButtonOut.whenPressed(new SetPusher(PusherState.OUT));
 
+        //Left: - for moving left, + for moving right
+        //Right: - for moving left, + for moving right
         threadbarLeft.whileHeld(new RunLeftThreadbar(-0.8));
-        threadbarLeft.whileHeld(new RunRightThreadbar(0.8));
+        threadbarLeft.whileHeld(new RunRightThreadbar(-0.8));
         threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
-        threadbarRight.whileHeld(new RunRightThreadbar(-0.8));
+        threadbarRight.whileHeld(new RunRightThreadbar(0.8));
         threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
         threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
 
         //Testing commands
-        SmartDashboard.putData("Run Threadbar PID", new ThreadbarDistancePID(50000, .002, .0002));
+        PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
     }
 
     

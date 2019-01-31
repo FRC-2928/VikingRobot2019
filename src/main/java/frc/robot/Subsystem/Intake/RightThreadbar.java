@@ -23,6 +23,8 @@ public class RightThreadbar extends Subsystem {
     rightThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_RIGHT_THREADBAR);
     //Setting up encoder
     rightThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
+    //Setting it up so + is right and - is left
+    rightThreadbarMotor.setInverted(true);
     rightEncoderPosition = rightThreadbarMotor.getSelectedSensorPosition(); 
     this.error = 0;
     
