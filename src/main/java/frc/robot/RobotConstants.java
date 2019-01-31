@@ -7,6 +7,6 @@ public class RobotConstants {
 
     //placeholder
     public static final long THREAD_ENCODER_TICKS_PER_INCH = 27927;
-    public static final long LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES = 254;
+    public static final long LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES = 1;
 
 }
