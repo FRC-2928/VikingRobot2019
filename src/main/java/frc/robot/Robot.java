@@ -13,7 +13,7 @@ public class Robot extends IterativeRobot {
     public static GroundIntake groundintake;
     public static OperatorInterface oi;
     public static Intake intake;
-    public static Sensors sensors;
+    //public static Sensors sensors;
 
     @Override
     public void robotInit() {
@@ -24,14 +24,18 @@ public class Robot extends IterativeRobot {
         groundintake = new GroundIntake();
         oi = new OperatorInterface();
         intake = new Intake();
-        sensors = new Sensors();
+        //sensors = new Sensors();
+        intake.leftThreadbar.resetLeftEncoder();
+        intake.rightThreadbar.resetRightEncoder();
 
     }
 
     @Override
     public void teleopInit() {
-        Scheduler.getInstance().removeAll();
-    
+        Scheduler.getInstance().removeAll();    
+        intake.leftThreadbar.resetLeftEncoder();
+        intake.rightThreadbar.resetRightEncoder();
+
     }
 
     @Override

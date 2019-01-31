@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.GroundIntake.*;
 // import frc.robot.Command.Intake.RunLeftThreadbar;
 // import frc.robot.Command.Intake.RunRightThreadbar;
@@ -22,6 +23,8 @@ public class OperatorInterface {
     private static final JoystickButton pusherButtonIn = new JoystickButton(driveStick, 5);
     private static final JoystickButton pusherButtonOut = new JoystickButton(driveStick, 6);
 
+    private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
+    private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
 
@@ -39,7 +42,11 @@ public class OperatorInterface {
         threadbarLeft.whileHeld(new RunRightThreadbar(0.8));
         threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
         threadbarRight.whileHeld(new RunRightThreadbar(-0.8));
+        threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
+        threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
 
+        //Testing commands
+        SmartDashboard.putData("Run Threadbar PID", new ThreadbarDistancePID(50000, .002, .0002));
     }
 
     

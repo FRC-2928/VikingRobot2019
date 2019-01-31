@@ -17,17 +17,21 @@ public class LeftThreadbar extends Subsystem {
   
   //motor setup
   public WPI_TalonSRX leftThreadbarMotor;
-  
-  //encoder setup
-  // public Encoder leftEncoder;
+  //Setting up distance PID
+  private double errorSum;
+  public double leftEncoderPosition;
+  public boolean leftInPosition;
+  private double error;
+
 
   public LeftThreadbar(){
     
     //Setting up the threadbar motor
     leftThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_LEFT_THREADBAR);
+    //Setting up threadbar encoder
     leftThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
-
-    //leftThreadbarMotor.config_k
+    leftEncoderPosition = leftThreadbarMotor.getSelectedSensorPosition(); 
+    this.error = 0;
 
   }
 
@@ -37,6 +41,13 @@ public class LeftThreadbar extends Subsystem {
 
   }
 
+  public void setLeftPID(double kP, double kI, double kD){
+
+    leftThreadbarMotor.config_kP(0, kP);
+    leftThreadbarMotor.config_kI(0, kI);
+    leftThreadbarMotor.config_kD(0, kD);
+
+  }
   
 
   public void getLeftEncoder(){
@@ -47,33 +58,32 @@ public class LeftThreadbar extends Subsystem {
 
   }
 
-  public void setleftPosition(double setpoint){
-
-    double currentPosition = leftThreadbarMotor.getSelectedSensorPosition();
-    double error = setpoint - currentPosition; 
-
-    double kp = 0.5;
-
-
-
+  public void resetLeftEncoder(){
+    leftThreadbarMotor.setSelectedSensorPosition(0);
   }
 
-  // public void setLeftEncoderTicks(double intake){
-  //   intake = leftEncoder.get();
-  //   System.out.println(leftEncoder.get());
-  // }
+  public void setLeftPosition(double leftSetpoint, double Kp, double Ki){
 
-  // public void getLeftEncoder(){
+    getLeftEncoder();
+    leftInPosition = false;
+    error = leftSetpoint - leftEncoderPosition; 
+    this.errorSum += error;
+    double output = (Kp * error) + (Ki * errorSum);
+    leftThreadbarMotor.set(ControlMode.PercentOutput, output);
 
-  //   leftEncoder.get();
+    SmartDashboard.putNumber("Left error", error);
+    SmartDashboard.putNumber("Left output", output);
+    SmartDashboard.putNumber("Left P", Kp * error);
+    SmartDashboard.putNumber("Left I", Ki * error);
 
-  // }
+    if (Math.abs(error) <=10000){
 
-  // public void resetLeftEncoder(){
+      leftInPosition = true;
+      SmartDashboard.putBoolean("leftInPosition", leftInPosition);
 
-  //   leftEncoder.reset();
+    }
 
-  // }
+  }
 
   @Override
   public void initDefaultCommand() {
