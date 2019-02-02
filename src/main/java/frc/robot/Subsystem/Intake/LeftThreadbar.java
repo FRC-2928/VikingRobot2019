@@ -43,6 +43,7 @@ public class LeftThreadbar extends Subsystem {
   }
 
   public void setLeftPID(double kP, double kI, double kD){
+    //Not yet set up, using Talon SRX PID
 
     leftThreadbarMotor.config_kP(0, kP);
     leftThreadbarMotor.config_kI(0, kI);
@@ -57,7 +58,6 @@ public class LeftThreadbar extends Subsystem {
       System.out.println(leftThreadbarMotor.getSelectedSensorPosition());
       SmartDashboard.putNumber("Left encoder", leftThreadbarMotor.getSelectedSensorPosition());
       return leftPosition;
-
   }
 
   public void resetLeftEncoder(){

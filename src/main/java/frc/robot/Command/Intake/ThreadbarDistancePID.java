@@ -41,7 +41,6 @@ public class ThreadbarDistancePID extends Command {
     SmartDashboard.putNumber("Left output", output);
     System.out.println("Left output");
     System.out.println(output);
-
   }
 
   @Override

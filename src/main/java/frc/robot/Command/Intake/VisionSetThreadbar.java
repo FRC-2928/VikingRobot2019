@@ -30,7 +30,6 @@ public class VisionSetThreadbar extends Command {
   
 
   public double getVisionError(){
-
     
     double setpointInches = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
     double positionInches = Robot.intake.leftThreadbar.leftEncoderPosition / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
@@ -51,7 +50,7 @@ public class VisionSetThreadbar extends Command {
 
   @Override
   protected void initialize() {
-    SmartDashboard.putNumber("X, Limelight", x);
+    // SmartDashboard.putNumber("X, Limelight", x);
     SmartDashboard.putNumber("Y, Limelight", y);
     SmartDashboard.putNumber("Area, Limelight", area);
 
@@ -91,6 +90,7 @@ public class VisionSetThreadbar extends Command {
     
     Robot.intake.leftThreadbar.setLeftPower(threadbar_Movement);
     //Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
+    SmartDashboard.putNumber("X, Limelight", x);
     SmartDashboard.putNumber("Left Threadbar current position inches", currentPositionInches);
     SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
     SmartDashboard.putNumber("Limelight error", errorInches);
