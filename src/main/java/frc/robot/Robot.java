@@ -3,9 +3,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.Autonomous.*;
+import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
+
+//The main robot class, during a match the robot goes through everything in this class
 
 public class Robot extends IterativeRobot {
     private Compressor compressor;
@@ -32,7 +36,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
-        Scheduler.getInstance().removeAll();    
+        Scheduler.getInstance().removeAll();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
 
@@ -40,14 +44,13 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
-
         Scheduler.getInstance().run();
-
     }
 
     @Override
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
+
     }
 
     @Override

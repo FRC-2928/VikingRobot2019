@@ -33,6 +33,7 @@ public class RightThreadbar extends Subsystem {
   public void setRightPower(double power){
 
     rightThreadbarMotor.set(ControlMode.PercentOutput, power);
+    SmartDashboard.putNumber("Right Threadbar power", power);
 
   }
 

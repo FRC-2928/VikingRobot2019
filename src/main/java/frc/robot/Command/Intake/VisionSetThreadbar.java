@@ -31,6 +31,7 @@ public class VisionSetThreadbar extends Command {
 
   public double getVisionError(){
 
+    
     double setpointInches = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
     double positionInches = Robot.intake.leftThreadbar.leftEncoderPosition / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     double errorInches = setpointInches - positionInches;
@@ -38,17 +39,25 @@ public class VisionSetThreadbar extends Command {
   }
   
   public VisionSetThreadbar() {
+
+    // SmartDashboard.putNumber("X, Limelight", x);
+    // SmartDashboard.putNumber("Y, Limelight", y);
+    // SmartDashboard.putNumber("Area, Limelight", area);
+
+    // //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
+    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    // NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+  }
+
+  @Override
+  protected void initialize() {
     SmartDashboard.putNumber("X, Limelight", x);
     SmartDashboard.putNumber("Y, Limelight", y);
     SmartDashboard.putNumber("Area, Limelight", area);
 
     //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
-  }
-
-  @Override
-  protected void initialize() {
   }
 
   @Override
@@ -62,7 +71,7 @@ public class VisionSetThreadbar extends Command {
     
     //kP is multiplied by error to get the power
     //min_Command helps give a little extra power when the threadbar is close
-    double kP = 0.3;
+    double kP = 0.5;
     double min_Command = 0.05;
 
     //Setting up how much power we're giving the threadbars
@@ -81,7 +90,10 @@ public class VisionSetThreadbar extends Command {
     double threadbar_Movement = threadbarInches * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     
     Robot.intake.leftThreadbar.setLeftPower(threadbar_Movement);
-    Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
+    //Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
+    SmartDashboard.putNumber("Left Threadbar current position inches", currentPositionInches);
+    SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
+    SmartDashboard.putNumber("Limelight error", errorInches);
   }
 
   @Override
@@ -96,7 +108,7 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected void end() {
     Robot.intake.leftThreadbar.setLeftPower(0);
-    Robot.intake.rightThreadbar.setRightPower(0);
+    Robot.intake.rightThreadbar.setRightPower(0); 
   }
 
   @Override
@@ -104,3 +116,4 @@ public class VisionSetThreadbar extends Command {
     end();
   }
 }
+

@@ -23,7 +23,9 @@ public class OperatorInterface {
     private static final JoystickButton pusherButtonIn = new JoystickButton(driveStick, 5);
     private static final JoystickButton pusherButtonOut = new JoystickButton(driveStick, 6);
 
+    private static final JoystickButton VisionButton = new JoystickButton(driveStick, 7);
     private static final JoystickButton PIDButton = new JoystickButton(driveStick, 8);
+
     private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
@@ -49,6 +51,7 @@ public class OperatorInterface {
         threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
 
         //Testing commands
+        VisionButton.whileHeld(new VisionSetThreadbar());
         PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
     }
 

@@ -38,6 +38,7 @@ public class LeftThreadbar extends Subsystem {
   public void setLeftPower(double power){
 
     leftThreadbarMotor.set(ControlMode.PercentOutput, power);
+    SmartDashboard.putNumber("Left Threadbar Power", power);
 
   }
 

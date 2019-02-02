@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Subsystem.Chassis.Transmission.GearState;
 import frc.robot.Robot;
 
+//Creates the command to shift gears
+//Calls transmission from subsystem
+
 public class Shift extends Command {
 
   private GearState target;

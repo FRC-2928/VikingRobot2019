@@ -3,6 +3,7 @@ package frc.robot.Command.Intake;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotConstants;
 
 public class ThreadbarDistancePID extends Command {
   private double setpoint;
@@ -11,8 +12,8 @@ public class ThreadbarDistancePID extends Command {
   private double errorSum;
 
   
-  public ThreadbarDistancePID(double allSetpoint, double kP, double kI) {
-    this.setpoint = allSetpoint;
+  public ThreadbarDistancePID(double inchesSetpoint, double kP, double kI) {
+    this.setpoint = inchesSetpoint;
     this.P = kP;
     this.I = kI;
     this.errorSum = 0;
@@ -29,8 +30,9 @@ public class ThreadbarDistancePID extends Command {
     //Todo, unify the two PIDS
 
     //Setting up the error
+    double encoderSetpoint = setpoint * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     double leftPosition = Robot.intake.leftThreadbar.leftEncoderPosition;
-    double leftError = setpoint - leftPosition;
+    double leftError = encoderSetpoint - leftPosition;
     this.errorSum += leftError;
     double output = (P * leftError) + (I * errorSum);
     Robot.intake.leftThreadbar.setLeftPower(output);
