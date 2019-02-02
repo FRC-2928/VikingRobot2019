@@ -9,6 +9,12 @@ public class RunGroundIntake extends Command {
   // private boolean gLimitSwitch;
   // private boolean upOrDown;
 
+  /**
+   * rotates the hatchgrabber motor at a certain powerpower
+   * need to add limit switch stuff ------ boii
+   * @param power
+   */
+
   public RunGroundIntake(double power) {
     requires(Robot.groundintake.hatchGrabber);
     this.power = power;
