@@ -12,6 +12,12 @@ public class ThreadbarDistancePID extends Command {
   private double errorSum;
 
   
+  /**
+   * moves the arms together based on pid seperate from eachother
+   * @param inchesSetpoint the amount of inches you want to move
+   * @param kP [-1,1]
+   * @param kI [-1,1]
+   */
   public ThreadbarDistancePID(double inchesSetpoint, double kP, double kI) {
     this.setpoint = inchesSetpoint;
     this.P = kP;
@@ -41,6 +47,7 @@ public class ThreadbarDistancePID extends Command {
     SmartDashboard.putNumber("Left output", output);
     System.out.println("Left output");
     System.out.println(output);
+
   }
 
   @Override

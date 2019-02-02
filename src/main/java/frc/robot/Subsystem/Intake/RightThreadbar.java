@@ -66,10 +66,7 @@ public class RightThreadbar extends Subsystem {
       SmartDashboard.putBoolean("Right In Position", rightInPosition);
 
     }
-
-
   }
-
 
   @Override
   public void initDefaultCommand() {
