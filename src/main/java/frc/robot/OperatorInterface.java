@@ -14,7 +14,7 @@ import frc.robot.Subsystem.GroundIntake.Pusher.PusherState;
 public class OperatorInterface {
 
     private static final Joystick driveStick = new Joystick(0);
-    // private static final double Joy_Deadzone = 0.05;
+    private static final Joystick operatorConsole = new Joystick(1);
 
     private static final JoystickButton gearButton = new JoystickButton(driveStick, 9);
     //placeholder1
@@ -30,7 +30,8 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
-    private static final JoystickButton wheels = new JoystickButton(driveStick, 13);
+    private static final JoystickButton intake = new JoystickButton(operatorConsole, 1);
+    private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
 
     OperatorInterface() {
 
@@ -50,7 +51,9 @@ public class OperatorInterface {
         threadbarRight.whileHeld(new RunRightThreadbar(0.8));
         threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
         threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
-        wheels.whileHeld(new RunWheels(0.5));
+
+        intake.whileHeld(new RunWheels(0.8));
+        outtake.whileHeld(new RunWheels(-0.9));
 
         //Testing commands
         VisionButton.whileHeld(new VisionSetThreadbar());

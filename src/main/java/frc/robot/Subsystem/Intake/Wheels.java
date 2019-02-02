@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * Runs wheels at a certain power
  */
 public class Wheels extends Subsystem {
   // Put methods for controlling this subsystem
