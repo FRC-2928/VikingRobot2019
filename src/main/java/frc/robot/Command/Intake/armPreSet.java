@@ -1,14 +1,26 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.Command.Intake;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
- * Add your docs here.
+ * By Erika, this is bad, but the arms mirror a set midPoint in theory
  */
-public class armPreSet {
+public class armPreSet extends Command{
+    int midpoint= 0; //set
+    public void hatchSet(int setMidPoint){/*
+        i = (hatchDistance in ticks)/2
+        
+        RunLeftThreadbar(midPoint-i)
+        RunRightThreadbar(midPoint+i)
+        */
+    }
+    public void ballSet(int setMidPoint){/*
+        o = (ballDistance in ticks)/2
+        RunLeftThreadbar(midPoint-o)
+        RunRightThreadbar(midPoint+o)
+        */
+    }
+    protected boolean isFinished() {
+        return false;
+      }
 }
