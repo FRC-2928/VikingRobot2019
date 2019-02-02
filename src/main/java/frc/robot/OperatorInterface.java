@@ -30,6 +30,7 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
+    private static final JoystickButton wheels = new JoystickButton(driveStick, 13);
 
     OperatorInterface() {
 
@@ -49,6 +50,7 @@ public class OperatorInterface {
         threadbarRight.whileHeld(new RunRightThreadbar(0.8));
         threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
         threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
+        wheels.whileHeld(new RunWheels(0.5));
 
         //Testing commands
         VisionButton.whileHeld(new VisionSetThreadbar());
