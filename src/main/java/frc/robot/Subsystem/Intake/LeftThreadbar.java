@@ -23,9 +23,12 @@ public class LeftThreadbar extends Subsystem {
   public boolean leftInPosition;
   private double error;
 
-
+  /**
+   * Constructs threadbar
+   */
+  
   public LeftThreadbar(){
-    
+
     //Setting up the threadbar motor
     leftThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_LEFT_THREADBAR);
     //Setting up threadbar encoder
@@ -35,12 +38,25 @@ public class LeftThreadbar extends Subsystem {
 
   }
 
+  /**
+   *Sets the power of the left threadbar motor to a power parameter
+   * @param power
+   */
+
   public void setLeftPower(double power){
+    
 
     leftThreadbarMotor.set(ControlMode.PercentOutput, power);
     SmartDashboard.putNumber("Left Threadbar Power", power);
 
   }
+  
+  /**
+   * PID setup
+   * @param kP
+   * @param kI
+   * @param kD
+   */
 
   public void setLeftPID(double kP, double kI, double kD){
     //Not yet set up, using Talon SRX PID
@@ -51,6 +67,9 @@ public class LeftThreadbar extends Subsystem {
 
   }
   
+  /** 
+   * gets data from the left motors encoder
+  */
 
   public double getLeftEncoder(){
 
@@ -60,30 +79,44 @@ public class LeftThreadbar extends Subsystem {
       return leftPosition;
   }
 
+  /**
+   * resets the value of the left encoder
+   */
+
   public void resetLeftEncoder(){
+
     leftThreadbarMotor.setSelectedSensorPosition(0);
+
   }
+
+  /**
+   * PID MATH
+   * @param leftSetpoint
+   * @param Kp
+   * @param Ki
+   */
 
   public void setLeftPosition(double leftSetpoint, double Kp, double Ki){
 
-    // getLeftEncoder();
-    // leftInPosition = false;
-    // error = leftSetpoint - leftEncoderPosition; 
-    // this.errorSum += error;
-    // double output = (Kp * error) + (Ki * errorSum);
-    // leftThreadbarMotor.set(ControlMode.PercentOutput, output);
+//pid math
+    /* getLeftEncoder();
+    leftInPosition = false;
+    error = leftSetpoint - leftEncoderPosition; 
+    this.errorSum += error;
+    double output = (Kp * error) + (Ki * errorSum);
+    leftThreadbarMotor.set(ControlMode.PercentOutput, output);
 
-    // SmartDashboard.putNumber("Left error", error);
-    // SmartDashboard.putNumber("Left output", output);
-    // SmartDashboard.putNumber("Left P", Kp * error);
-    // SmartDashboard.putNumber("Left I", Ki * error);
+    SmartDashboard.putNumber("Left error", error);
+    SmartDashboard.putNumber("Left output", output);
+    SmartDashboard.putNumber("Left P", Kp * error);
+    SmartDashboard.putNumber("Left I", Ki * error);
 
-    // if (Math.abs(error) <=10000){
+    if (Math.abs(error) <=10000){
 
-    //   leftInPosition = true;
-    //   SmartDashboard.putBoolean("leftInPosition", leftInPosition);
+      leftInPosition = true;
+      SmartDashboard.putBoolean("leftInPosition", leftInPosition);
 
-    // }
+    }*/
 
   }
 
