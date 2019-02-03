@@ -7,6 +7,7 @@ public class Intake {
     public RightThreadbar rightThreadbar;
     //public Sensors sensors;
     public Wheels wheels;
+    public ThreadbarLimelight threadbarLimelight;
 
     public Intake()
     {
@@ -14,6 +15,7 @@ public class Intake {
         rightThreadbar = new RightThreadbar();
         //sensors = new Sensors();
         wheels = new Wheels();
+        threadbarLimelight = new ThreadbarLimelight();
     }
 
 }

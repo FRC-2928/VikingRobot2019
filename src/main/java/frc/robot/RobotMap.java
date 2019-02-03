@@ -15,13 +15,13 @@ public class RobotMap
     public static final int TALON_BACK_RIGHT = 0;
 
     //Ground hatch motors
-    public static final int TALON_GROUND_HATCH = 4;
+    public static final int TALON_GROUND_HATCH = 27; //This shit be gone
 
     //Threadbar/intake motors
     public static final int TALON_LEFT_THREADBAR = 11;
     public static final int TALON_RIGHT_THREADBAR = 10;
-    public static final int VICTOR_LEFT_INTAKE = 18;
-    public static final int VICTOR_RIGHT_INTAKE = 19;
+    public static final int TALON_LEFT_INTAKE = 4;
+    public static final int TALON_RIGHT_INTAKE = 5;
 
 
 

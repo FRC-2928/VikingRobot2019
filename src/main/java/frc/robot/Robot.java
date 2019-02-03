@@ -3,11 +3,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.*;
 import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 //The main robot class, during a match the robot goes through everything in this class
 
@@ -39,12 +43,23 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().removeAll();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
+        chassis.drivetrain.setMotorSafetyEnabled(true);
 
     }
 
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTableEntry tx = table.getEntry("tx");
+        NetworkTableEntry ty = table.getEntry("ty");
+        NetworkTableEntry ta = table.getEntry("ta");
+        double x = tx.getDouble(0.0);
+        double y = ty.getDouble(0.0);
+        double area = ta.getDouble(0.0);
+
+        SmartDashboard.putNumber("Actual Limelight X",x);
+
     }
 
     @Override

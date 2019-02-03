@@ -16,7 +16,8 @@ public class OperatorInterface {
     private static final Joystick driveStick = new Joystick(0);
     private static final Joystick operatorConsole = new Joystick(1);
 
-    private static final JoystickButton gearButton = new JoystickButton(driveStick, 9);
+    private static final JoystickButton gearButtonHigh = new JoystickButton(operatorConsole , 2);
+    private static final JoystickButton gearButtonLow = new JoystickButton(operatorConsole, 3);
     //placeholder1
     private static final JoystickButton groundButtonUp = new JoystickButton(driveStick, 3);
     private static final JoystickButton groundButtonDown = new JoystickButton(driveStick, 4);
@@ -35,8 +36,8 @@ public class OperatorInterface {
 
     OperatorInterface() {
 
-        gearButton.whenPressed(new Shift(Transmission.GearState.LOW));
-        gearButton.whenReleased(new Shift(Transmission.GearState.HIGH));
+        gearButtonHigh.whenPressed(new Shift(Transmission.GearState.HIGH));
+        gearButtonLow.whenPressed(new Shift(Transmission.GearState.LOW));
 
         groundButtonUp.whileHeld(new RunGroundIntake(-0.6));
         groundButtonDown.whileHeld(new RunGroundIntake(0.6));
@@ -52,8 +53,8 @@ public class OperatorInterface {
         threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
         threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
 
-        intake.whileHeld(new RunWheels(0.8));
-        outtake.whileHeld(new RunWheels(-0.9));
+        intake.whileHeld(new RunWheels(0.95));
+        outtake.whileHeld(new RunWheels(-0.95));
 
         //Testing commands
         VisionButton.whileHeld(new VisionSetThreadbar());

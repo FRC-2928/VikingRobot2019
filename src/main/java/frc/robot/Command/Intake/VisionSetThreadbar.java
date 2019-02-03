@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
+import frc.robot.Subsystem.Intake.ThreadbarLimelight;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,19 +20,10 @@ Tune the various constants
 
 public class VisionSetThreadbar extends Command {
       //Setting up Limelight variables
-      NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-      NetworkTableEntry tx = table.getEntry("tx");
-      NetworkTableEntry ty = table.getEntry("ty");
-      NetworkTableEntry ta = table.getEntry("ta");
-  
-      double x = tx.getDouble(0.0);
-      double y = ty.getDouble(0.0);
-      double area = ta.getDouble(0.0);
-  
+    double LimelightErrorX;
 
   public double getVisionError(){
-    
-    double setpointInches = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
+    double setpointInches = LimelightErrorX * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
     double positionInches = Robot.intake.leftThreadbar.leftEncoderPosition / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     double errorInches = setpointInches - positionInches;
     return errorInches;
@@ -51,8 +43,8 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected void initialize() {
     // SmartDashboard.putNumber("X, Limelight", x);
-    SmartDashboard.putNumber("Y, Limelight", y);
-    SmartDashboard.putNumber("Area, Limelight", area);
+    //SmartDashboard.putNumber("Y, Limelight", y);
+    // SmartDashboard.putNumber("Area, Limelight", area);
 
     //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
@@ -65,7 +57,7 @@ public class VisionSetThreadbar extends Command {
     // Based on the assumption that we're looking at both vision tapes, and finding an average in between
     // Convert everything to inches, then to encoder ticks
     double currentPositionInches = Robot.intake.leftThreadbar.leftEncoderPosition / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    double desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
+    double desiredSetpoint = LimelightErrorX * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
     double errorInches = desiredSetpoint - currentPositionInches;
     
     //kP is multiplied by error to get the power
@@ -90,7 +82,7 @@ public class VisionSetThreadbar extends Command {
     
     Robot.intake.leftThreadbar.setLeftPower(threadbar_Movement);
     //Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
-    SmartDashboard.putNumber("X, Limelight", x);
+    SmartDashboard.putNumber("X, Limelight", LimelightErrorX);
     SmartDashboard.putNumber("Left Threadbar current position inches", currentPositionInches);
     SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
     SmartDashboard.putNumber("Limelight error", errorInches);

@@ -8,7 +8,7 @@ public class RunWheels extends Command {
 
   public RunWheels(double power) {
 
-    requires(Robot.intake.wheels);
+    //requires(Robot.intake.wheels);
     this.power = power;
 
   }

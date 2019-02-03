@@ -61,5 +61,9 @@ public Drivetrain()
       drive.arcadeDrive(rotate, move, squaredInputs); // WPILIB is still backwards
     }
 
+    public void setMotorSafetyEnabled(boolean safety)
+    {
+        drive.setSafetyEnabled(safety);
+    }
 
 }
