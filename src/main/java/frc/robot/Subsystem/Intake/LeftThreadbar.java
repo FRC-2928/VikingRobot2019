@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.Command.Intake.VisionSetThreadbar;
 
 
 public class LeftThreadbar extends Subsystem {
@@ -26,7 +27,10 @@ public class LeftThreadbar extends Subsystem {
   /**
    * Constructs threadbar
    */
-  
+  @Override
+  public void initDefaultCommand() {
+    //setDefaultCommand(new VisionSetThreadbar());
+  }
   public LeftThreadbar(){
 
     //Setting up the threadbar motor
@@ -120,7 +124,5 @@ public class LeftThreadbar extends Subsystem {
 
   }
 
-  @Override
-  public void initDefaultCommand() {
-  }
+
 }

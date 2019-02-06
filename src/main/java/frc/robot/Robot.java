@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.*;
@@ -9,13 +10,14 @@ import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 //The main robot class, during a match the robot goes through everything in this class
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
     private Compressor compressor;
     public static Chassis chassis;
     public static GroundIntake groundintake;
@@ -43,7 +45,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().removeAll();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
-        chassis.drivetrain.setMotorSafetyEnabled(true);
+        //chassis.drivetrain.setMotorSafetyEnabled(true);
 
     }
 

@@ -18,7 +18,7 @@ public class OperatorInterface {
 
     private static final JoystickButton gearButtonHigh = new JoystickButton(operatorConsole , 2);
     private static final JoystickButton gearButtonLow = new JoystickButton(operatorConsole, 3);
-    //placeholder1
+    
     private static final JoystickButton groundButtonUp = new JoystickButton(driveStick, 3);
     private static final JoystickButton groundButtonDown = new JoystickButton(driveStick, 4);
     private static final JoystickButton pusherButtonIn = new JoystickButton(driveStick, 5);

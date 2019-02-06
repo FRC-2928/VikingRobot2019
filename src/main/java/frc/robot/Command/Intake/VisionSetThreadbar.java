@@ -25,7 +25,15 @@ public class VisionSetThreadbar extends Command {
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
  
+  public VisionSetThreadbar() {
 
+    //requires(Robot.intake.leftThreadbar);
+    //requires(Robot.intake.rightThreadbar);
+
+    //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
+    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+  }
 
   public double getVisionError(){
     double x = tx.getDouble(0.0);
@@ -34,15 +42,6 @@ public class VisionSetThreadbar extends Command {
     double errorInches = setpointInches - positionInches;
     SmartDashboard.putNumber("Stop error",errorInches);
     return errorInches;
-  }
-  
-  public VisionSetThreadbar() {
-
-   
-
-    //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
-    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
   }
 
   @Override
@@ -70,8 +69,8 @@ public class VisionSetThreadbar extends Command {
     
     //kP is multiplied by error to get the power
     //min_Command helps give a little extra power when the threadbar is close
-    double kP = 0.1;
-    double min_Command = 0.05;
+    double kP = 0.4;
+    double min_Command = 0.1;
 
     //Setting up how much power we're giving the threadbars
     if(errorInches > 1){
@@ -89,7 +88,7 @@ public class VisionSetThreadbar extends Command {
     double threadbar_Movement = threadbarInches * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     
     Robot.intake.leftThreadbar.setLeftPower(threadbar_Movement);
-    //Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
+    Robot.intake.rightThreadbar.setRightPower(threadbar_Movement);
     SmartDashboard.putNumber("X, Limelight", x);
     SmartDashboard.putNumber("Left Threadbar current position inches", currentPositionInches);
     SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
@@ -100,6 +99,7 @@ public class VisionSetThreadbar extends Command {
   protected boolean isFinished() {
     //Stops if within 0.5 inches
     if ( Math.abs(getVisionError()) < 1){
+      SmartDashboard.putBoolean("Threadbar is Finished", isFinished());
       return true;
     }
     return false;

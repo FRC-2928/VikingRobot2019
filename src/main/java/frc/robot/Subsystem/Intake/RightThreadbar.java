@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.Command.Intake.VisionSetThreadbar;
 
 public class RightThreadbar extends Subsystem {
   //Setting up right motor
@@ -28,6 +29,11 @@ public class RightThreadbar extends Subsystem {
     rightEncoderPosition = rightThreadbarMotor.getSelectedSensorPosition(); 
     this.error = 0;
     
+  }
+
+  @Override
+  public void initDefaultCommand() {
+    //setDefaultCommand(new VisionSetThreadbar());
   }
 
   public void setRightPower(double power){
@@ -68,7 +74,5 @@ public class RightThreadbar extends Subsystem {
     }
   }
 
-  @Override
-  public void initDefaultCommand() {
-  }
+ 
 }
