@@ -43,10 +43,10 @@ public class RightThreadbar extends Subsystem {
 
   }
 
-  public void getRightEncoder(){
+  public double getRightEncoder(){
 
-    rightThreadbarMotor.getSelectedSensorPosition();
     SmartDashboard.putNumber("Right Encoder", rightThreadbarMotor.getSelectedSensorPosition());
+    return rightThreadbarMotor.getSelectedSensorPosition();
 
   }
   
