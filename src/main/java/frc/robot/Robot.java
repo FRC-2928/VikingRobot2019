@@ -2,12 +2,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Autonomous.*;
 import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
+import frc.robot.Subsystem.Elevator.Elevator;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
 
@@ -23,6 +26,9 @@ public class Robot extends TimedRobot {
     public static GroundIntake groundintake;
     public static OperatorInterface oi;
     public static Intake intake;
+    public static SerialPort rangefinder;
+    public static Elevator elevator;
+    
     //public static Sensors sensors;
 
     @Override
@@ -34,10 +40,11 @@ public class Robot extends TimedRobot {
         groundintake = new GroundIntake();
         oi = new OperatorInterface();
         intake = new Intake();
+        rangefinder = new SerialPort(115200, Port.kMXP);
+        elevator = new Elevator();
         //sensors = new Sensors();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
-
     }
 
     @Override
@@ -45,6 +52,7 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().removeAll();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
         //chassis.drivetrain.setMotorSafetyEnabled(true);
 
     }
@@ -52,11 +60,13 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry tx = table.getEntry("tx");
-        double x = tx.getDouble(0.0);
-        SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
-
+        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        // NetworkTableEntry tx = table.getEntry("tx");
+        // double x = tx.getDouble(0.0);
+        // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
+        // rangefinder.readString(1);
+        // SmartDashboard.putString("Wowza this is the rangefinder", rangefinder.readString(1));   
+        
     }
 
     @Override

@@ -23,7 +23,9 @@ public class RobotMap
     public static final int TALON_LEFT_INTAKE = 4;
     public static final int TALON_RIGHT_INTAKE = 5;
 
-
+    //Elevator motors (placeholder)
+    public static final int TALON_LEFT_ELEVATOR = 55;
+    public static final int TALON_RIGHT_ELEVATOR = 54;
 
     //Sensors
     public static final int PIGEON = 3;

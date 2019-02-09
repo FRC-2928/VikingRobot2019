@@ -23,14 +23,15 @@ public class VisionSetThreadbar extends Command {
     
     // Based on the assumption that we're looking at both vision tapes, and finding an average in between
     // Convert everything to inches, then to encoder ticks
-    private double currentPositionInchesLeft; //= -Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    private double currentPositionInchesRight;// = Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    private double desiredSetpoint;// = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
-    private double errorInchesLeft;// = desiredSetpoint - currentPositionInchesLeft;
-    private double errorInchesRight;// = desiredSetpoint - currentPositionInchesRight;
+    // Initiates variables
+    private double currentPositionInchesLeft; 
+    private double currentPositionInchesRight;
+    private double desiredSetpoint;
+    private double errorInchesLeft;
+    private double errorInchesRight;
  
-    private double threadbarInchesLeft;// = 0;
-    private double threadbarInchesRight;// = 0;
+    private double threadbarInchesLeft;
+    private double threadbarInchesRight;
 
   public VisionSetThreadbar() {
 
@@ -76,8 +77,8 @@ public class VisionSetThreadbar extends Command {
     
     //kP is multiplied by error to get the power
     //min_Command helps give a little extra power when the threadbar is close
-    double kP = 0.4;
-    double min_Command = 0.1;
+    double kP = 0.5;
+    double min_Command = 0.3;
 
     //Setting up how much power we're giving the threadbars
     if(Math.abs(errorInchesLeft) > 2){
