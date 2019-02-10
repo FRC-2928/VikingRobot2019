@@ -4,21 +4,37 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
-import frc.robot.Command.Elevator.RunElevator;
+import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 
 public class SetElevator extends Command {
   private double setpointInches;
   private double currentPosition;
   private double error;
   
+  public enum LiftState{ //TODO: Add in enum stuff
+
+    BALL_LEVEL_1,
+    BALL_LEVEL_2,
+    BALL_LEVEL_3,
+    HATCH_LEVEL_1,
+    HATCH_LEVEL_2,
+    HATCH_LEVEL_3,
+    CARGO_SHIP_BALL,
+    GROUND_LEVEL;
+
+  }
 
   //Inches
   public SetElevator(double setpointInches) {
+
     this.setpointInches = setpointInches; 
+    
   }
 
   @Override
   protected void initialize() {
+
+    Robot.elevator.lift.shiftBrake(BrakeState.OFF);
     
   }
 
@@ -58,17 +74,20 @@ public class SetElevator extends Command {
     if(Math.abs(error) < 0.5){
       return true;
     }
+
     if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches + currentPosition)){
       System.out.println("Elevator setpoint is too high dude, aborting");
       return true;
     }
    
     return false;
+
   }
 
   @Override
   protected void end() {
     Robot.elevator.lift.setLiftPower(0);
+    Robot.elevator.lift.shiftBrake(BrakeState.ON);
   }
 
   @Override
