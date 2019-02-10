@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Subsystem.Chassis.Transmission;
+import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 
 
 public class OperatorInterface {
@@ -38,6 +39,11 @@ public class OperatorInterface {
     //Elevator
     private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 11);
     private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 12);
+    private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 254);//placeholder
+    private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 118);//placeholder
+    private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 148);//placeholder
+    private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 973);
+    private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 971);
 
     OperatorInterface() {
 
@@ -63,6 +69,18 @@ public class OperatorInterface {
 
         elevatorUp.whileHeld(new RunElevator(0.2));
         elevatorDown.whileHeld(new RunElevator(-0.2));
+        // elevatorLvlGround.whenPressed(new SetElevator(Idfk));
+        // elevatorLvlCargoBall.whenPressed(command);
+        // if(ArmState = BALL){
+        //     elevatorLvl1.whenPressed(new SetElevator(Idfk));
+        //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
+        //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
+        // }
+        // if(ArmState = HATCH){
+        //     elevatorLvl1.whenPressed(new SetElevator(Idfk));
+        //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
+        //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
+        // }
 
         //Testing commands
         VisionButton.whileHeld(new VisionSetThreadbar());

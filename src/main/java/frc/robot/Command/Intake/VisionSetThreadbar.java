@@ -125,11 +125,11 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected boolean isFinished() {
     //Stops if within 1 inches
-    if (Math.abs(getVisionErrorLeft()) < 1){
+    if (Math.abs(getVisionErrorLeft()) < 0.5){
       SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
-    else if (Math.abs(getVisionErrorRight()) < 1){
+    else if (Math.abs(getVisionErrorRight()) < 0.5){
       SmartDashboard.putString("Threadbar is Finished", "Right side is done");
       return true;
     }

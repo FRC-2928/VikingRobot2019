@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Autonomous.*;
 import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.Elevator.Elevator;

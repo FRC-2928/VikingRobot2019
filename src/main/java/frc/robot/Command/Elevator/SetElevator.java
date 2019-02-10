@@ -1,13 +1,16 @@
 package frc.robot.Command.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
+import frc.robot.Command.Elevator.RunElevator;
 
 public class SetElevator extends Command {
   private double setpointInches;
   private double currentPosition;
   private double error;
+  
 
   //Inches
   public SetElevator(double setpointInches) {
@@ -22,35 +25,40 @@ public class SetElevator extends Command {
 
   @Override
   protected void execute() {
+    double kP = 0.2;
+    double min_Command = 0.05;
+    double elevatorMovement = 0;
     currentPosition = Robot.elevator.lift.getLiftPositionInches();
     error = setpointInches - currentPosition;
+    
+    if(setpointInches + currentPosition > RobotConstants.ELEVATOR_MAX_ENCODER_TICKS){
 
-    if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches * RobotConstants.ELEVATOR_ENCODER_TICKS_PER_INCH)){
+      if(Math.abs(error) > 1){
+
+        elevatorMovement = kP * error;
+
+      }
+
+      if(Math.abs(error) < 1){
+
+        elevatorMovement = (kP * error) + (min_Command * error);
+
+      }
+
+      Robot.elevator.lift.setLiftPower(elevatorMovement);
+      SmartDashboard.putNumber("Elevator position", currentPosition);
+      SmartDashboard.putNumber("Elevator PID movement", elevatorMovement);
       
-      if(error > 0){
-
-      Robot.elevator.lift.setLiftPower(0.2);
-
-      }
-
-      if(error < 0){
-
-      Robot.elevator.lift.setLiftPower(-0.2);
-
-      }
-    }
-    else{
-      System.out.println("Elevator setpoint is too high dude, aborting");
     }
   }
 
   @Override
   protected boolean isFinished() {
 
-    if(Math.abs(error) < 1){
+    if(Math.abs(error) < 0.5){
       return true;
     }
-    if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches * RobotConstants.ELEVATOR_ENCODER_TICKS_PER_INCH)){
+    if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches + currentPosition)){
       System.out.println("Elevator setpoint is too high dude, aborting");
       return true;
     }

@@ -1,11 +1,13 @@
 package frc.robot.Subsystem.Chassis;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.Command.Chassis.JoystickDrive;
 
@@ -49,6 +51,9 @@ public Drivetrain()
     left_follower_1.setInverted(true);
     left_follower_2.setInverted(true);
 
+    left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+
     drive = new DifferentialDrive(left, right);
     }
 
@@ -63,7 +68,23 @@ public Drivetrain()
 
     public void setMotorSafetyEnabled(boolean safety)
     {
-        drive.setSafetyEnabled(safety);
+      drive.setSafetyEnabled(safety);
+    }
+
+    public double getYaw() {
+      double[] angles = {0, 0, 0};
+      pigeon.getYawPitchRoll(angles);
+      return angles[0];
+  }
+
+    public double getEncoderPositionLeft(){
+      SmartDashboard.putNumber("Left Drivetrain Encoder Position", left.getSelectedSensorPosition());
+      return left.getSelectedSensorPosition();
+    }
+
+    public double getEncoderPositionRight(){
+      SmartDashboard.putNumber("Right Drivetrain Encoder Position", right.getSelectedSensorPosition());
+      return right.getSelectedSensorPosition();
     }
 
 }
