@@ -35,6 +35,8 @@ public class OperatorInterface {
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
     private static final JoystickButton intake = new JoystickButton(operatorConsole, 1);
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
+    // private static final JoystickButton drawbridgeUp
+    // private static final JoystickButton drawbridgeDown
 
     //Elevator
     private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 11);

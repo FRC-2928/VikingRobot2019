@@ -103,24 +103,23 @@ public class LeftThreadbar extends Subsystem {
   public void setLeftPosition(double leftSetpoint, double Kp, double Ki){
 
 //pid math
-    /* getLeftEncoder();
-    leftInPosition = false;
-    error = leftSetpoint - leftEncoderPosition; 
-    this.errorSum += error;
-    double output = (Kp * error) + (Ki * errorSum);
-    leftThreadbarMotor.set(ControlMode.PercentOutput, output);
+    // getLeftEncoder();
+    // leftInPosition = false;
+    // error = leftSetpoint - leftEncoderPosition; 
+    // this.errorSum += error;
+    // double output = (Kp * error) + (Ki * errorSum);
+    // leftThreadbarMotor.set(ControlMode.PercentOutput, output);
 
-    SmartDashboard.putNumber("Left error", error);
-    SmartDashboard.putNumber("Left output", output);
-    SmartDashboard.putNumber("Left P", Kp * error);
-    SmartDashboard.putNumber("Left I", Ki * error);
+    // SmartDashboard.putNumber("Left error", error);
+    // SmartDashboard.putNumber("Left output", output);
+    // SmartDashboard.putNumber("Left P", Kp * error);
+    // SmartDashboard.putNumber("Left I", Ki * error);
 
-    if (Math.abs(error) <=10000){
+    // if (Math.abs(error) <=10000){
 
-      leftInPosition = true;
-      SmartDashboard.putBoolean("leftInPosition", leftInPosition);
-
-    }*/
+    //   leftInPosition = true;
+    //   SmartDashboard.putBoolean("leftInPosition", leftInPosition);
+    // }
 
   }
 

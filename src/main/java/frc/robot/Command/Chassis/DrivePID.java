@@ -1,40 +1,40 @@
 package frc.robot.Command.Chassis;
 
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.Subsystem.Chassis.Drivetrain;
 
-/**
- * Add your docs here.
- */
-public class DrivePID extends PIDSubsystem {
-  /**
-   * Add your docs here.
-   */
-  public DrivePID() {
-    // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 2, 3);
-    // Use these to get going:
-    // setSetpoint() - Sets where the PID controller should move the system
-    // to
-    // enable() - Enables the PID controller.
+public class DrivePID extends Command {
+  double error;
+  double setpoint;
+  double currentPositionLeft;
+  double currentPositionRight;
+  public DrivePID(double setpointInches) {
+    requires(Robot.chassis.drivetrain);
+    this.setpoint = setpointInches;
   }
 
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  protected void initialize() {
+    Robot.chassis.drivetrain.resetEncoderPosition();
   }
 
   @Override
-  protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
+  protected void execute() {
+    currentPositionLeft = Robot.chassis.drivetrain.getEncoderPositionLeft();
+    currentPositionRight = Robot.chassis.drivetrain.getEncoderPositionRight();
   }
 
   @Override
-  protected void usePIDOutput(double output) {
-    // Use output to drive your system, like a motor
-    // e.g. yourMotor.set(output);
+  protected boolean isFinished() {
+    return false;
+  }
+
+  @Override
+  protected void end() {
+  }
+
+  @Override
+  protected void interrupted() {
   }
 }

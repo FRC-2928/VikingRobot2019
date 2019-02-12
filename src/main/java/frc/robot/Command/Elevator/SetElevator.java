@@ -27,6 +27,7 @@ public class SetElevator extends Command {
   //Inches
   public SetElevator(double setpointInches) {
 
+    requires(Robot.elevator.lift);
     this.setpointInches = setpointInches; 
     
   }

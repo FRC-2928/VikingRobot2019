@@ -1,6 +1,8 @@
 package frc.robot.Subsystem.Chassis;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -31,8 +33,7 @@ public DifferentialDrive drive;
 public void initDefaultCommand() {
   setDefaultCommand(new JoystickDrive());
 }
-public Drivetrain()
-  {
+public Drivetrain(){
 
     left = new WPI_TalonSRX(RobotMap.TALON_BACK_LEFT);
     left_follower_1 = new WPI_VictorSPX(RobotMap.VICTOR_MIDDLE_LEFT);
@@ -51,23 +52,21 @@ public Drivetrain()
     left_follower_1.setInverted(true);
     left_follower_2.setInverted(true);
 
-    left.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    right.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
     drive = new DifferentialDrive(left, right);
     }
 
-    public void drive(double move, double rotate) {
+    public void drive(double move, double rotate){
       this.drive(move, rotate, true);
-      }
+    }
   
-    public void drive(double move, double rotate, boolean squaredInputs)
-    {
+    public void drive(double move, double rotate, boolean squaredInputs){
       drive.arcadeDrive(rotate, move, squaredInputs); // WPILIB is still backwards
     }
 
-    public void setMotorSafetyEnabled(boolean safety)
-    {
+    public void setMotorSafetyEnabled(boolean safety){
       drive.setSafetyEnabled(safety);
     }
 
@@ -75,7 +74,7 @@ public Drivetrain()
       double[] angles = {0, 0, 0};
       pigeon.getYawPitchRoll(angles);
       return angles[0];
-  }
+    }
 
     public double getEncoderPositionLeft(){
       SmartDashboard.putNumber("Left Drivetrain Encoder Position", left.getSelectedSensorPosition());
@@ -87,4 +86,8 @@ public Drivetrain()
       return right.getSelectedSensorPosition();
     }
 
+    public void resetEncoderPosition(){
+      left.setSelectedSensorPosition(0);
+      right.setSelectedSensorPosition(0);
+    }
 }

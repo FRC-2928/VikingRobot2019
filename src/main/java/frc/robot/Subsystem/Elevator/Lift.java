@@ -33,14 +33,13 @@ public class Lift extends Subsystem {
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     
     liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
-    // currentstate = something; 
-    
+    // currentstate = something;   
   }
 
   public void shiftBrake(BrakeState state){
 
     switch(state){
-
+      
       case OFF: 
       brake.set(false);
       break;

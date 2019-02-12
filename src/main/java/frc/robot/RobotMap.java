@@ -36,6 +36,6 @@ public class RobotMap
     public static final int SOLENOID_TRANSMISSION_LOW = 0;
     public static final int SOLENOID_TRANSMISSION_HIGH = 1;
     public static final int SOLENOID_GROUND_HATCH = 2;
-    public static final int SOLENOID_INTAKE_DRAWBRIDGE = 971;
-    public static final int SOLENOID_ELEVATOR_BRAKE = 254;
+    public static final int SOLENOID_INTAKE_DRAWBRIDGE = 5;
+    public static final int SOLENOID_ELEVATOR_BRAKE = 4;
 }

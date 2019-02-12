@@ -34,6 +34,7 @@ public class SetFourBar extends Command {
     }
 
     while(inPosition = true){
+      
       if(setpointDirection = true){
       //Starts driving the four bar up until it hits max
         while (error < 100){
@@ -41,14 +42,6 @@ public class SetFourBar extends Command {
         Robot.chassis.fourbar.setFourBarPower(0.2); //Placeholder, low for testing
 
         }
-
-      //Once we're up, starts driving forward
-        if (error > 1000){ //Placeholder, low for testing
-
-        Robot.chassis.drivetrain.drive(0.4,0);
-    
-        } 
-
       //TODO: Connect to infrared sensor, stop driving once it reads something
       }
 

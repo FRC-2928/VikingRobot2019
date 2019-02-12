@@ -12,7 +12,6 @@ import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.Elevator.Elevator;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -27,6 +26,8 @@ public class Robot extends TimedRobot {
     public static Intake intake;
     public static SerialPort rangefinder;
     public static Elevator elevator;
+    private double testCounter;
+
     
     //public static Sensors sensors;
 
@@ -39,7 +40,7 @@ public class Robot extends TimedRobot {
         groundintake = new GroundIntake();
         oi = new OperatorInterface();
         intake = new Intake();
-        rangefinder = new SerialPort(115200, Port.kMXP);
+        // rangefinder = new SerialPort(115200, Port.kMXP);
         elevator = new Elevator();
         //sensors = new Sensors();
         intake.leftThreadbar.resetLeftEncoder();
@@ -52,6 +53,7 @@ public class Robot extends TimedRobot {
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+        
         //chassis.drivetrain.setMotorSafetyEnabled(true);
 
     }
@@ -63,8 +65,14 @@ public class Robot extends TimedRobot {
         // NetworkTableEntry tx = table.getEntry("tx");
         // double x = tx.getDouble(0.0);
         // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
-        // rangefinder.readString(1);
-        // SmartDashboard.putString("Wowza this is the rangefinder", rangefinder.readString(1));   
+
+        //rangefinder.setReadBufferSize(8);
+        // rangefinder.setWriteBufferMode();
+        
+        SmartDashboard.putNumber("Oh god please work",rangefinder.getBytesReceived());
+        SmartDashboard.putRaw("Byte rangefinder", rangefinder.read(8));
+        SmartDashboard.putString("Wowza this is the rangefinder", rangefinder.readString(8));
+        SmartDashboard.putString("Rangefinder string", rangefinder.readString());
         
     }
 
