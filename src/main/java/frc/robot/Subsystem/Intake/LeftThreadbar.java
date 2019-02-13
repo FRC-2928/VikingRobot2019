@@ -4,9 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-//import edu.wpi.first.wpilibj.DigitalInput;
-//import edu.wpi.first.wpilibj.Encoder;
-//import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -76,11 +73,8 @@ public class LeftThreadbar extends Subsystem {
   */
 
   public double getLeftEncoder(){
-
-      double leftPosition = leftThreadbarMotor.getSelectedSensorPosition();
-      System.out.println(leftThreadbarMotor.getSelectedSensorPosition());
       SmartDashboard.putNumber("Left encoder", leftThreadbarMotor.getSelectedSensorPosition());
-      return leftPosition;
+      return leftThreadbarMotor.getSelectedSensorPosition();
   }
 
   /**

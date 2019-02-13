@@ -25,8 +25,8 @@ public class OperatorInterface {
 
     //Testing autos
     private static final JoystickButton VisionButton = new JoystickButton(driveStick, 7);
-    private static final JoystickButton PIDButton = new JoystickButton(driveStick, 8);
-    private static final JoystickButton LifterTest = new JoystickButton(driveStick, 9);
+    // private static final JoystickButton PIDButton = new JoystickButton(driveStick, 8);
+    private static final JoystickButton LifterTest = new JoystickButton(driveStick, 8);
 
     //Intake
     private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
@@ -86,10 +86,10 @@ public class OperatorInterface {
 
         //Testing commands
         VisionButton.whileHeld(new VisionSetThreadbar());
-        PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
-        // LifterTest.whileHeld(new SetElevator(5));
+        // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
+        // PIDButton.whileHeld(new SetArm(ArmState.HATCH));
+        LifterTest.whileHeld(new SetArm(ArmState.BALL));
     }
-
     
     public double getDriveY() {
         return driveStick.getY(); 

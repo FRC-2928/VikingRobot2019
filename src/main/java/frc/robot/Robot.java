@@ -69,10 +69,10 @@ public class Robot extends TimedRobot {
         //rangefinder.setReadBufferSize(8);
         // rangefinder.setWriteBufferMode();
         
-        SmartDashboard.putNumber("Oh god please work",rangefinder.getBytesReceived());
-        SmartDashboard.putRaw("Byte rangefinder", rangefinder.read(8));
-        SmartDashboard.putString("Wowza this is the rangefinder", rangefinder.readString(8));
-        SmartDashboard.putString("Rangefinder string", rangefinder.readString());
+        // SmartDashboard.putNumber("Oh god please work",rangefinder.getBytesReceived());
+        // SmartDashboard.putRaw("Byte rangefinder", rangefinder.read(8));
+        // SmartDashboard.putString("Wowza this is the rangefinder", rangefinder.readString(8));
+        // SmartDashboard.putString("Rangefinder string", rangefinder.readString());
         
     }
 

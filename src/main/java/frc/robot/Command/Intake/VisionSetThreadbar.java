@@ -115,9 +115,9 @@ public class VisionSetThreadbar extends Command {
     Robot.intake.leftThreadbar.setLeftPower(threadbarMovementLeft);
     Robot.intake.rightThreadbar.setRightPower(threadbarMovementRight);
     SmartDashboard.putNumber("X, Limelight", x);
-    SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
-    SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
-    SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
+    // SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
+    // SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
+    // SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
     SmartDashboard.putNumber("Limelight error left", errorInchesLeft);
     SmartDashboard.putNumber("Limelight error right", errorInchesRight);
   }
@@ -126,11 +126,11 @@ public class VisionSetThreadbar extends Command {
   protected boolean isFinished() {
     //Stops if within 1 inches
     if (Math.abs(getVisionErrorLeft()) < 0.5){
-      SmartDashboard.putString("Threadbar is Finished", "Left side is done");
+      // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
     else if (Math.abs(getVisionErrorRight()) < 0.5){
-      SmartDashboard.putString("Threadbar is Finished", "Right side is done");
+      // SmartDashboard.putString("Threadbar is Finished", "Right side is done");
       return true;
     }
     else{
