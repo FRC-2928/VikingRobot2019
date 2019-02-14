@@ -85,10 +85,10 @@ public class OperatorInterface {
         // }
 
         //Testing commands
-        VisionButton.whileHeld(new VisionSetThreadbar());
+        // VisionButton.whileHeld(new VisionSetThreadbar());
         // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
-        // PIDButton.whileHeld(new SetArm(ArmState.HATCH));
-        LifterTest.whileHeld(new SetArm(ArmState.BALL));
+        VisionButton.whenPressed(new SetArm(ArmState.HATCH));
+        LifterTest.whenPressed(new SetArm(ArmState.BALL));
     }
     
     public double getDriveY() {

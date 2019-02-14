@@ -74,7 +74,7 @@ public class LeftThreadbar extends Subsystem {
 
   public double getLeftEncoder(){
       SmartDashboard.putNumber("Left encoder", leftThreadbarMotor.getSelectedSensorPosition());
-      return leftThreadbarMotor.getSelectedSensorPosition();
+      return leftEncoderPosition;
   }
 
   /**

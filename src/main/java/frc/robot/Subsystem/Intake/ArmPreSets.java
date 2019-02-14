@@ -39,6 +39,10 @@ public class ArmPreSets extends Subsystem {
     return currentState;
   }
 
+  public void toggle(){
+    getArmState().switchPosition();
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
