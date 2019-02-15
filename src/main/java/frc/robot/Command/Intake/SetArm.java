@@ -4,19 +4,23 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
+import frc.robot.Subsystem.Intake.ArmPreSets;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 import static java.lang.Math.abs;
 
 public class SetArm extends Command {
-  private ArmState target;
-  private double leftCurrentPosition;
-  private double rightCurrentPosition;
   private double leftPreviousPosition;
   private double rightPreviousPosition;
-  private double leftSetpoint;
-  private double rightSetpoint; 
-  private double leftError;
-  private double rightError;
+  private double midpoint;
+  private double setpointLeft;
+  private double setpointRight;
+  private double currentPositionLeft;
+  private double currentPositionRight;
+  private double errorLeft;
+  private double errorRight;
+  private double outputLeft;
+  private double outputRight;
+  private ArmState target;
   public ArmState currentState;
 
   public SetArm(ArmState state) {
@@ -27,90 +31,75 @@ public class SetArm extends Command {
 
   @Override
   protected void initialize() {
-    leftPreviousPosition = Math.abs( Robot.intake.leftThreadbar.leftThreadbarMotor.getSelectedSensorPosition() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH);
-    rightPreviousPosition = Math.abs( Robot.intake.rightThreadbar.rightThreadbarMotor.getSelectedSensorPosition() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH);
-    
+    midpoint = Robot.intake.armPresets.getMidpoint() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    leftPreviousPosition = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    rightPreviousPosition = Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+
     switch(target){
+      case HATCH:
+      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
+      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
+      break;
 
       case BALL:
-      leftSetpoint = RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH + leftPreviousPosition;
-      rightSetpoint = RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH - rightPreviousPosition;
+      setpointLeft = midpoint - RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
+      setpointRight = midpoint + RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
       break;
 
-      case HATCH:
-      leftSetpoint = RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH - leftPreviousPosition;
-      rightSetpoint = RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH + rightPreviousPosition;
-      break;
     }
-    SmartDashboard.putNumber("Left Arm Previous Position", leftPreviousPosition);
-    SmartDashboard.putNumber("Right Arm Previous Position", rightPreviousPosition);
-    SmartDashboard.putNumber("Right Arm Preset setpoint", rightSetpoint);
-    SmartDashboard.putNumber("Left Arm Preset setpoint", leftSetpoint);
+    SmartDashboard.putNumber("Arm State Midpoint", midpoint);
+    SmartDashboard.putNumber("Arm State Left Previous Position", leftPreviousPosition);
+    SmartDashboard.putNumber("Arm State Right Previous Position", rightPreviousPosition);
+    SmartDashboard.putNumber("Arm State Left Setpoint", setpointLeft);
+    SmartDashboard.putNumber("Arm State Right Setpoint", setpointRight);
   }
 
   @Override
-  protected void execute() {
-    leftCurrentPosition = Robot.intake.leftThreadbar.leftThreadbarMotor.getSelectedSensorPosition() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    rightCurrentPosition = Robot.intake.rightThreadbar.rightThreadbarMotor.getSelectedSensorPosition() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    leftError = (leftSetpoint + leftCurrentPosition);
-    rightError = (rightSetpoint - rightCurrentPosition);
-    double kP = 0.4;
-    double min_Command =0.1;
-    double leftOutput;
-    double rightOutput;
-
-    if (Math.abs(leftError) > 1){
-     leftOutput = kP * leftError;
+  protected void execute(){
+    currentPositionLeft = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
+    currentPositionRight = Robot.intake.rightThreadbar.getRightEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    errorLeft = setpointLeft + currentPositionLeft;
+    errorRight = setpointRight + currentPositionRight;
+    double kP = 0.3;
+    double min_Command = 0.1;
+    // Very basic P, will expand later but need to test it first
+    if (Math.abs(errorLeft) > 1){
+      outputLeft = errorLeft * kP;
+    }
+    
+    if (Math.abs(errorLeft) < 1){
+      outputLeft = (errorLeft * kP) + min_Command;
+    }
+    
+    if(Math.abs(errorRight) > 1){
+      outputRight = errorRight * kP;
     }
 
-    else {
-     leftOutput = kP * leftError + min_Command;
+    if(Math.abs(errorRight) < 1){
+      outputRight = (errorRight * kP) + min_Command;
     }
+    Robot.intake.leftThreadbar.setLeftPower(outputLeft);
+    Robot.intake.rightThreadbar.setRightPower(outputRight);
 
-    if (Math.abs(rightError) > 1){
-     rightOutput = kP * rightError;
-    }
-
-    else {
-     rightOutput = kP * rightError + min_Command;
-    }
-
-    switch(target){
-      
-      case BALL:
-      Robot.intake.leftThreadbar.setLeftPower(leftOutput);
-      Robot.intake.rightThreadbar.setRightPower(-rightOutput);
-      break;
-
-      case HATCH:
-      Robot.intake.leftThreadbar.setLeftPower(-leftOutput);
-      Robot.intake.rightThreadbar.setRightPower(rightOutput);
-      break;
-    }
-    currentState = target;
-    SmartDashboard.putNumber("Arm switch left current position",leftCurrentPosition);
-    SmartDashboard.putNumber("Arm switch right current position", rightCurrentPosition);
-    SmartDashboard.putNumber("Arm switch left error", leftError);
-    SmartDashboard.putNumber("Arm switch right error", rightError);
-    SmartDashboard.putNumber("Arm switch left output", leftOutput);
-    SmartDashboard.putNumber("Arm switch right output", rightOutput);
-
+    SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);
+    SmartDashboard.putNumber("Arm State current position right", currentPositionRight);
+    SmartDashboard.putNumber("Arm State Error Left", errorLeft);
+    SmartDashboard.putNumber("Arm State Error Right", errorRight);
+    SmartDashboard.putNumber("Arm State Output Left", outputLeft);
+    SmartDashboard.putNumber("Arm State Output Right", outputRight);
   }
 
   @Override
   protected boolean isFinished() {
-    double stopError = 0.5;
-    leftCurrentPosition = Robot.intake.leftThreadbar.leftThreadbarMotor.getSelectedSensorPosition();
-    rightCurrentPosition = Robot.intake.rightThreadbar.rightThreadbarMotor.getSelectedSensorPosition();
-    leftError = (leftSetpoint + leftCurrentPosition) / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    rightError = (rightSetpoint - rightCurrentPosition) / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    
-    if(Math.abs(leftError) > stopError && Math.abs(rightError) > stopError){
-      leftError = 0;
-      rightError = 0;
+    SmartDashboard.putNumber("Is Finished error left", errorLeft);
+    SmartDashboard.putNumber("Is Finished error right", errorRight);
+    if(Math.abs(errorLeft) < 0.5 && Math.abs(errorRight) < 0.5){
       return true;
     }
+    else{
     return false;
+    }
+    
   }
 
   @Override

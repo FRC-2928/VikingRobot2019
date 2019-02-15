@@ -85,9 +85,9 @@ public class OperatorInterface {
         // }
 
         //Testing commands
-        // VisionButton.whileHeld(new VisionSetThreadbar());
+        VisionButton.whileHeld(new VisionSetThreadbar());
         // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
-        VisionButton.whenPressed(new SetArm(ArmState.HATCH));
+        // VisionButton.whenPressed(new SetArm(ArmState.HATCH));
         LifterTest.whenPressed(new SetArm(ArmState.BALL));
     }
     
