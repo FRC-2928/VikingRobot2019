@@ -2,6 +2,7 @@ package frc.robot.Subsystem.Elevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,6 +15,7 @@ public class Lift extends Subsystem {
   private WPI_TalonSRX liftMotor;
   private Solenoid brake;
   private BrakeState currentState;
+  
 
   //Enum for the Elevator brake, set off before moving, set on to stay in place
   public enum BrakeState{
@@ -33,6 +35,7 @@ public class Lift extends Subsystem {
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     
     liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
+    liftMotor.setNeutralMode(NeutralMode.Brake);
     // currentstate = something;   
   }
 

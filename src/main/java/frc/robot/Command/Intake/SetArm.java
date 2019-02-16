@@ -6,6 +6,7 @@ import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.Subsystem.Intake.ArmPreSets;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+import frc.robot.Subsystem.Intake.Threadbar;
 import static java.lang.Math.abs;
 
 public class SetArm extends Command {
@@ -26,14 +27,15 @@ public class SetArm extends Command {
   public SetArm(ArmState state) {
     
     this.target = state;
+    // requires(Robot.intake.threadbar);
   
   }
 
   @Override
   protected void initialize() {
-    leftPreviousPosition = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    rightPreviousPosition = Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    midpoint = (leftPreviousPosition + rightPreviousPosition) /2;
+    leftPreviousPosition = Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    rightPreviousPosition = Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    midpoint = (leftPreviousPosition + rightPreviousPosition) / 2;
     
     // Left positive, right negative
     switch(target){
@@ -61,12 +63,12 @@ public class SetArm extends Command {
 
   @Override
   protected void execute(){
-    currentPositionLeft = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
-    currentPositionRight = Robot.intake.rightThreadbar.getRightEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionLeft = Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
+    currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     errorLeft = -setpointLeft + currentPositionLeft;
     errorRight = -setpointRight + currentPositionRight;
-    double kP = 0.4;
-    double min_Command = 0.3;
+    double kP = 0.5;
+    double min_Command = 0.15;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) > 1){
       outputLeft = errorLeft * kP;
@@ -83,8 +85,9 @@ public class SetArm extends Command {
     if(Math.abs(errorRight) < 1){
       outputRight = (errorRight * kP) + (min_Command * errorRight);
     }
-    Robot.intake.leftThreadbar.setLeftPower(outputLeft);
-    Robot.intake.rightThreadbar.setRightPower(outputRight);
+
+    Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
+    Robot.intake.threadbar.setRightThreadbarPower(outputRight);
 
     SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);
     SmartDashboard.putNumber("Arm State current position right", currentPositionRight);
@@ -114,8 +117,8 @@ public class SetArm extends Command {
 
   @Override
   protected void end() {
-    Robot.intake.leftThreadbar.setLeftPower(0);
-    Robot.intake.rightThreadbar.setRightPower(0);
+    Robot.intake.threadbar.setLeftThreadbarPower(0);
+    Robot.intake.threadbar.setRightThreadbarPower(0);
   }
 
   @Override

@@ -89,7 +89,9 @@ public class OperatorInterface {
         // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
         VisionButton.whenPressed(new SetArm(ArmState.HATCH));
         LifterTest.whenPressed(new SetArm(ArmState.BALL));
-        pusherButtonIn.whileHeld( new VisionSetThreadbar());
+        pusherButtonIn.whenPressed
+        
+        ( new VisionSetThreadbar());
     }
     
     public double getDriveY() {

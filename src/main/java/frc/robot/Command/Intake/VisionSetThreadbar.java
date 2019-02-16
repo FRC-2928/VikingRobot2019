@@ -21,7 +21,6 @@ Tune the various constants
 public class VisionSetThreadbar extends Command {
     //Reading values from the limelight
 
-    
     // Based on the assumption that we're looking at both vision tapes, and finding an average in between
     // Convert everything to inches, then to encoder ticks
     // Initiates variables
@@ -41,8 +40,6 @@ public class VisionSetThreadbar extends Command {
     //requires(Robot.intake.leftThreadbar);
     //requires(Robot.intake.rightThreadbar);
 
-    //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
-    //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
   }
 
@@ -82,14 +79,14 @@ public class VisionSetThreadbar extends Command {
     }
 
     if(Robot.intake.armPresets.currentState == ArmState.BALL){
-    errorInchesLeft = (desiredSetpoint - 2) - currentPositionInchesLeft;
-    errorInchesRight = (desiredSetpoint + 2) - currentPositionInchesRight;
+    errorInchesLeft = (desiredSetpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesLeft;
+    errorInchesRight = (desiredSetpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesRight;
 
     }
     
     //kP is multiplied by error to get the power
     //min_Command helps give a little extra power when the threadbar is close
-    double kP = 0.5;
+    double kP = 0.4;
     double min_Command = 0.3;
 
     //Setting up how much power we're giving the threadbars
@@ -138,17 +135,11 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected boolean isFinished() {
     //Stops if within 1 inches
-    if (Math.abs(getVisionErrorLeft()) < 0.8){
+    if (Math.abs(errorInchesLeft) < 0.5 && Math.abs(errorInchesRight) < 0.5){
       // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
-    else if (Math.abs(getVisionErrorRight()) < 0.8){
-      // SmartDashboard.putString("Threadbar is Finished", "Right side is done");
-      return true;
-    }
-    else{
       return false;
-    }
   }
 
   @Override

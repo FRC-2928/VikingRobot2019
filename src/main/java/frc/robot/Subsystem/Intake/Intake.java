@@ -2,8 +2,11 @@ package frc.robot.Subsystem.Intake;
 
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 
+//Where we initialize stuff for Robot.java, allows us to call subsystems from other places
+
 public class Intake {
 
+    public Threadbar threadbar;
     public LeftThreadbar leftThreadbar;
     public RightThreadbar rightThreadbar;
     //public Sensors sensors;
@@ -13,6 +16,7 @@ public class Intake {
 
     public Intake()
     {
+        threadbar = new Threadbar();
         leftThreadbar = new LeftThreadbar();
         rightThreadbar = new RightThreadbar();
         //sensors = new Sensors();
