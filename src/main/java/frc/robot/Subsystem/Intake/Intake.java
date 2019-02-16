@@ -1,5 +1,6 @@
 package frc.robot.Subsystem.Intake;
 
+import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 
 public class Intake {
 

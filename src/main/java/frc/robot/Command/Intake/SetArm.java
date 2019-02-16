@@ -31,44 +31,49 @@ public class SetArm extends Command {
 
   @Override
   protected void initialize() {
-    midpoint = Robot.intake.armPresets.getMidpoint() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     leftPreviousPosition = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     rightPreviousPosition = Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-
+    midpoint = (leftPreviousPosition + rightPreviousPosition) /2;
+    
+    // Left positive, right negative
     switch(target){
       case HATCH:
-      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
-      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
+      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
       break;
 
-      case BALL:
-      setpointLeft = midpoint - RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
-      setpointRight = midpoint + RobotConstants.THREAD_ENCODER_TICKS_PER_SWITCH;
+      case BALL :
+      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
       break;
 
     }
+    Robot.intake.armPresets.toggle();
+
+    // SmartDashboard.putString("Current State", Robot.intake.armPresets.currentState.toString());
     SmartDashboard.putNumber("Arm State Midpoint", midpoint);
     SmartDashboard.putNumber("Arm State Left Previous Position", leftPreviousPosition);
     SmartDashboard.putNumber("Arm State Right Previous Position", rightPreviousPosition);
     SmartDashboard.putNumber("Arm State Left Setpoint", setpointLeft);
     SmartDashboard.putNumber("Arm State Right Setpoint", setpointRight);
+  
   }
 
   @Override
   protected void execute(){
     currentPositionLeft = Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
     currentPositionRight = Robot.intake.rightThreadbar.getRightEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    errorLeft = setpointLeft + currentPositionLeft;
-    errorRight = setpointRight + currentPositionRight;
-    double kP = 0.3;
-    double min_Command = 0.1;
+    errorLeft = -setpointLeft + currentPositionLeft;
+    errorRight = -setpointRight + currentPositionRight;
+    double kP = 0.4;
+    double min_Command = 0.3;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) > 1){
       outputLeft = errorLeft * kP;
-    }
+    } 
     
     if (Math.abs(errorLeft) < 1){
-      outputLeft = (errorLeft * kP) + min_Command;
+      outputLeft = (errorLeft * kP) + (min_Command * errorLeft);
     }
     
     if(Math.abs(errorRight) > 1){
@@ -76,7 +81,7 @@ public class SetArm extends Command {
     }
 
     if(Math.abs(errorRight) < 1){
-      outputRight = (errorRight * kP) + min_Command;
+      outputRight = (errorRight * kP) + (min_Command * errorRight);
     }
     Robot.intake.leftThreadbar.setLeftPower(outputLeft);
     Robot.intake.rightThreadbar.setRightPower(outputRight);
@@ -87,19 +92,24 @@ public class SetArm extends Command {
     SmartDashboard.putNumber("Arm State Error Right", errorRight);
     SmartDashboard.putNumber("Arm State Output Left", outputLeft);
     SmartDashboard.putNumber("Arm State Output Right", outputRight);
+    Robot.intake.armPresets.getArmState();
   }
 
   @Override
   protected boolean isFinished() {
+    double counter;
     SmartDashboard.putNumber("Is Finished error left", errorLeft);
     SmartDashboard.putNumber("Is Finished error right", errorRight);
-    if(Math.abs(errorLeft) < 0.5 && Math.abs(errorRight) < 0.5){
+    if(Math.abs(errorLeft) < 0.3 && Math.abs(errorRight) < 0.3){
+      counter = 2;
+      SmartDashboard.putNumber("Threadbar Arm State is finished", counter);
       return true;
     }
     else{
+      counter = 1;
+      SmartDashboard.putNumber("Threadbar Arm State is finished", counter);
     return false;
     }
-    
   }
 
   @Override

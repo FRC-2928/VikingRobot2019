@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
+import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -32,6 +33,8 @@ public class VisionSetThreadbar extends Command {
  
     private double threadbarInchesLeft;
     private double threadbarInchesRight;
+    private double threadbarMovementLeft;
+    private double threadbarMovementRight;
 
   public VisionSetThreadbar() {
 
@@ -70,10 +73,19 @@ public class VisionSetThreadbar extends Command {
 
     currentPositionInchesLeft = -Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     currentPositionInchesRight = -Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+
     desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
+
+    if(Robot.intake.armPresets.currentState == ArmState.HATCH){
     errorInchesLeft = desiredSetpoint - currentPositionInchesLeft;
     errorInchesRight = desiredSetpoint - currentPositionInchesRight;
+    }
 
+    if(Robot.intake.armPresets.currentState == ArmState.BALL){
+    errorInchesLeft = (desiredSetpoint - 2) - currentPositionInchesLeft;
+    errorInchesRight = (desiredSetpoint + 2) - currentPositionInchesRight;
+
+    }
     
     //kP is multiplied by error to get the power
     //min_Command helps give a little extra power when the threadbar is close
@@ -106,18 +118,19 @@ public class VisionSetThreadbar extends Command {
       threadbarInchesRight = kP * errorInchesRight + min_Command * errorInchesRight;
 
     }
+
+    // if(Math.abs(desiredSetpoint) > 1){
     
-  
-    
-    double threadbarMovementLeft = threadbarInchesLeft * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    double threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    threadbarMovementLeft = threadbarInchesLeft * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    // }
 
     Robot.intake.leftThreadbar.setLeftPower(threadbarMovementLeft);
     Robot.intake.rightThreadbar.setRightPower(threadbarMovementRight);
     SmartDashboard.putNumber("X, Limelight", x);
-    // SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
-    // SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
-    // SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
+    SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
+    SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
+    SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
     SmartDashboard.putNumber("Limelight error left", errorInchesLeft);
     SmartDashboard.putNumber("Limelight error right", errorInchesRight);
   }
@@ -125,11 +138,11 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected boolean isFinished() {
     //Stops if within 1 inches
-    if (Math.abs(getVisionErrorLeft()) < 0.5){
+    if (Math.abs(getVisionErrorLeft()) < 0.8){
       // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
-    else if (Math.abs(getVisionErrorRight()) < 0.5){
+    else if (Math.abs(getVisionErrorRight()) < 0.8){
       // SmartDashboard.putString("Threadbar is Finished", "Right side is done");
       return true;
     }
@@ -142,6 +155,7 @@ public class VisionSetThreadbar extends Command {
   protected void end() {
     Robot.intake.leftThreadbar.setLeftPower(0);
     Robot.intake.rightThreadbar.setRightPower(0); 
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
   }
 
   @Override

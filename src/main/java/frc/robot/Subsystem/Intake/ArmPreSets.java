@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
-import frc.robot.Command.Intake.ThreadbarDistancePID;
-
 import static frc.robot.Subsystem.Intake.ArmPreSets.ArmState.HATCH;
 import static frc.robot.Subsystem.Intake.ArmPreSets.ArmState.BALL;
 
@@ -19,7 +17,6 @@ public class ArmPreSets extends Subsystem {
     BALL;
   
       public ArmState switchPosition(){
-        
           return this.equals(HATCH)? HATCH:BALL;
         }
     }
@@ -35,11 +32,12 @@ public class ArmPreSets extends Subsystem {
   }
 
   public ArmState getArmState(){
+    SmartDashboard.putString("Arm State", currentState == ArmState.BALL ? "BALL" : "HATCH");
     return currentState;
   }
 
   public void toggle(){
-    getArmState().switchPosition();
+    currentState = currentState == ArmState.HATCH ? ArmState.BALL : ArmState.HATCH;
   }
 
   @Override
