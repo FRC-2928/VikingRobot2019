@@ -67,6 +67,7 @@ public class VisionSetThreadbar extends Command {
     //Creates a setpoint that's in the middle of the two arms
     desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
 
+    //Creates setpoints for each arm, differs based on Hatch or Ball state
     if(Robot.intake.armPresets.currentState == ArmState.HATCH){
     errorInchesLeft = desiredSetpoint - currentPositionInchesLeft;
     errorInchesRight = desiredSetpoint - currentPositionInchesRight;

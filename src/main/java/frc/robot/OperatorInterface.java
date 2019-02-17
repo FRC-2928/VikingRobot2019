@@ -8,6 +8,7 @@ import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Subsystem.Chassis.Transmission;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+import frc.robot.Autonomous.Endgame;
 
 
 public class OperatorInterface {
@@ -47,6 +48,10 @@ public class OperatorInterface {
     private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 973);
     private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 971);
 
+    //Endgame
+    private static final JoystickButton endgame = new JoystickButton(operatorConsole, 2928);
+    private static final JoystickButton endgameStop = new JoystickButton(operatorConsole, 987);
+
     OperatorInterface() {
 
         gearButtonHigh.whenPressed(new Shift(Transmission.GearState.HIGH));
@@ -83,6 +88,9 @@ public class OperatorInterface {
         //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
         // }
+
+        endgame.whenPressed(new Endgame());
+            
 
         //Testing commands
         //VisionButton.whileHeld(new VisionSetThreadbar());

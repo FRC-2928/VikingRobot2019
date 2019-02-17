@@ -29,7 +29,6 @@ public class Robot extends TimedRobot {
     public static GroundIntake groundintake;
     public static OperatorInterface oi;
     public static Intake intake;
-    public static AnalogInput rangefinder;
     public static Elevator elevator;
 
     
@@ -44,15 +43,12 @@ public class Robot extends TimedRobot {
         groundintake = new GroundIntake();
         elevator = new Elevator();
         intake = new Intake();
-        rangefinder = new AnalogInput(3);
         //sensors = new Sensors();
         armPresetSelector = new SendableChooser<>();
         armPresetSelector.setDefaultOption("Hatch State", ArmState.HATCH);
         armPresetSelector.addOption("Ball State", ArmState.BALL);
         SmartDashboard.putData("Threadbar State", armPresetSelector);
-        rangefinder.setOversampleBits(8);
-        rangefinder.setAverageBits(4);
-        AnalogInput.setGlobalSampleRate(62500);
+        
 
         // This has to be at the bottom or things crash
         // OI requires everything to be initialized
@@ -88,15 +84,6 @@ public class Robot extends TimedRobot {
         // NetworkTableEntry tx = table.getEntry("tx");
         // double x = tx.getDouble(0.0);
         // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
-
-        // System.out.println("Value AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-        // System.out.println(rangefinder.getValue());
-        // System.out.println("Average Value WEEEEEEEEEEEEEEEEEEE");
-        SmartDashboard.putNumber("Rangefinder value",rangefinder.getAverageValue());
-        // System.out.println("AVerage Voltage OHHHHHHHHHHHHHHHHH GODDDDDDDDDDDDDD");
-        SmartDashboard.putNumber("Rangefinder",rangefinder.getAverageVoltage() / 100);
-        // System.out.println("Voltage ------------------------------");
-        // System.out.println(rangefinder.getVoltage());
     }
 
    
