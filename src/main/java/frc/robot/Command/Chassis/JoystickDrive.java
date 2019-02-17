@@ -14,6 +14,8 @@ public class JoystickDrive extends Command {
   public JoystickDrive() {
     
      requires(Robot.chassis.drivetrain);
+     System.out.println("THis is the drivetrain hi there");
+     System.out.println(Robot.chassis.drivetrain);
   
   }
 

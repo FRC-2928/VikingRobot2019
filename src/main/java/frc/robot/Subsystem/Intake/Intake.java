@@ -17,6 +17,7 @@ public class Intake {
     public Intake()
     {
         threadbar = new Threadbar();
+        System.out.println(threadbar);
         leftThreadbar = new LeftThreadbar();
         rightThreadbar = new RightThreadbar();
         //sensors = new Sensors();

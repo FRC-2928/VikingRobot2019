@@ -40,10 +40,11 @@ public class Robot extends TimedRobot {
         compressor.start();
         chassis = new Chassis();
         groundintake = new GroundIntake();
-        oi = new OperatorInterface();
-        intake = new Intake();
-        // rangefinder = new SerialPort(115200, Port.kMXP);
         elevator = new Elevator();
+        intake = new Intake();
+        System.out.println("This is the Robot wooo");
+        System.out.println(intake);
+        // rangefinder = new SerialPort(115200, Port.kMXP);
         //sensors = new Sensors();
         intake.leftThreadbar.resetLeftEncoder();
         intake.rightThreadbar.resetRightEncoder();
@@ -51,6 +52,10 @@ public class Robot extends TimedRobot {
         armPresetSelector.setDefaultOption("Hatch State", ArmState.HATCH);
         armPresetSelector.addOption("Ball State", ArmState.BALL);
         SmartDashboard.putData("Threadbar State", armPresetSelector);
+        
+        // This has to be at the bottom or things crash
+        // OI requires everything to be initialized
+        oi = new OperatorInterface(); 
     }
 
     @Override

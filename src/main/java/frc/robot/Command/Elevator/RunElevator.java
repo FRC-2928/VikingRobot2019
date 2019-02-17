@@ -6,7 +6,7 @@ import frc.robot.Robot;
 public class RunElevator extends Command {
   private double power;
   public RunElevator(double power) {
-    // requires(Robot.elevator.lift);
+    requires(Robot.elevator.lift);
     this.power = power;
   }
 

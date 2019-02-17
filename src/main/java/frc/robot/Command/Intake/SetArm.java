@@ -27,7 +27,9 @@ public class SetArm extends Command {
   public SetArm(ArmState state) {
     
     this.target = state;
-    // requires(Robot.intake.threadbar);
+    System.out.println("------------------------- Yeet");
+    System.out.println(Robot.intake);
+    requires(Robot.intake.threadbar);
   
   }
 
