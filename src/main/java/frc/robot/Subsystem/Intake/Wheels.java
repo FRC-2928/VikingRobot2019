@@ -21,9 +21,7 @@ import frc.robot.RobotMap;
  * Runs wheels at a certain power
  */
 public class Wheels extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
+ 
   public TalonSRX leftWheel;
   public TalonSRX rightWheel;
 

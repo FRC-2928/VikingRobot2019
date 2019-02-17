@@ -12,12 +12,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 //Using the limelight to see vision tape on rocket
 //We're then bring the threadbar over
 
-/*TO DO:
-Read both left and right encoders, and cross reference (currently reading only left side)
-Tune the various constants
-
-*/
-
 public class VisionSetThreadbar extends Command {
     //Reading values from the limelight
 
@@ -70,6 +64,7 @@ public class VisionSetThreadbar extends Command {
     currentPositionInchesLeft = -Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     currentPositionInchesRight = -Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
 
+    //Creates a setpoint that's in the middle of the two arms
     desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
 
     if(Robot.intake.armPresets.currentState == ArmState.HATCH){
