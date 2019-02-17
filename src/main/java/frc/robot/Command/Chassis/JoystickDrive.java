@@ -14,8 +14,6 @@ public class JoystickDrive extends Command {
   public JoystickDrive() {
     
      requires(Robot.chassis.drivetrain);
-     System.out.println("THis is the drivetrain hi there");
-     System.out.println(Robot.chassis.drivetrain);
   
   }
 
@@ -26,16 +24,16 @@ public class JoystickDrive extends Command {
  
   @Override
   protected void execute() {
-    double driveX = Robot.oi.getDriveX();
-    if (Math.abs(Robot.oi.getDriveX()) < 0.10){
-      driveX = 0;
-    }
+    // double driveX = Robot.oi.getDriveX();
+    // if (Math.abs(Robot.oi.getDriveX()) < 0.10){
+    //   driveX = 0;
+    // }
 
-    double driveY = Robot.oi.getDriveY();
-    if(Math.abs(Robot.oi.getDriveY()) < 0.10){
-      driveY = 0;
-    }
-    Robot.chassis.drivetrain.drive(driveY, driveX);
+    // double driveY = Robot.oi.getDriveY();
+    // if(Math.abs(Robot.oi.getDriveY()) < 0.10){
+    //   driveY = 0;
+    // }
+    // Robot.chassis.drivetrain.drive(driveY, driveX);
   }
   
   @Override

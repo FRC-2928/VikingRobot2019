@@ -26,7 +26,7 @@ public class ArmPreSets extends Subsystem {
   }
 
   public double getMidpoint(){
-    midpoint = (Robot.intake.leftThreadbar.getLeftEncoder() - Robot.intake.rightThreadbar.getRightEncoder()) / 2;
+    midpoint = (Robot.intake.threadbar.getLeftThreadbarEncoder() - Robot.intake.threadbar.getRightThreadbarEncoder()) / 2;
     SmartDashboard.putNumber("Threadbar midpoint", midpoint);
     return midpoint;
   }

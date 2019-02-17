@@ -1,7 +1,5 @@
 package frc.robot.Command.Intake;
 
-import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -9,18 +7,18 @@ public class RunRightThreadbar extends Command {
   private double power;
 
   public RunRightThreadbar(double power) {
-    //requires(Robot.intake.rightThreadbar);
+    requires(Robot.intake.threadbar);
     this.power = power;
   }
 
   @Override
   protected void initialize() {
-    Robot.intake.rightThreadbar.setRightPower(power);
+    Robot.intake.threadbar.setRightThreadbarPower(power);
   }
 
   @Override
   protected void execute() {
-    Robot.intake.rightThreadbar.getRightEncoder();
+    Robot.intake.threadbar.getRightThreadbarEncoder();
     
   }
 
@@ -31,7 +29,7 @@ public class RunRightThreadbar extends Command {
 
   @Override
   protected void end() {
-    Robot.intake.rightThreadbar.setRightPower(0);
+    Robot.intake.threadbar.setRightThreadbarPower(0);
   }
 
   @Override
@@ -43,7 +41,7 @@ public class RunRightThreadbar extends Command {
 
     while(!false){
 
-      Robot.intake.rightThreadbar.setRightPower(power);
+      Robot.intake.threadbar.setRightThreadbarPower(power);
 
     }
 

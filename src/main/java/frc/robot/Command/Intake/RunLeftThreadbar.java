@@ -1,25 +1,21 @@
 package frc.robot.Command.Intake;
 
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RunLeftThreadbar extends Command {
 
-//private I2C sensor;
 private double power;
-private double encoderTicks;
-private byte output[];
 
   public RunLeftThreadbar(double power) {
-    //requires(Robot.intake.leftThreadbar);
+    requires(Robot.intake.threadbar);
     this.power = power;
   }
 
   @Override
   protected void initialize() {
     
-    Robot.intake.leftThreadbar.setLeftPower(power);
+    Robot.intake.threadbar.setLeftThreadbarPower(power);
     // Robot.intake.sensors.setSensor(sensor);
 
   }
@@ -28,10 +24,7 @@ private byte output[];
   @Override
   protected void execute() {
 
-    // sensor.read(0x3E, 1 , output);
-
-    System.out.println(output);
-    Robot.intake.leftThreadbar.getLeftEncoder();
+    Robot.intake.threadbar.getLeftThreadbarEncoder();
 
   }
 
@@ -43,7 +36,7 @@ private byte output[];
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intake.leftThreadbar.setLeftPower(0);
+    Robot.intake.threadbar.setLeftThreadbarPower(0);
   }
 
   @Override

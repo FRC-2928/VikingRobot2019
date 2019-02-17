@@ -37,8 +37,7 @@ public class VisionSetThreadbar extends Command {
 
   public VisionSetThreadbar() {
 
-    //requires(Robot.intake.leftThreadbar);
-    //requires(Robot.intake.rightThreadbar);
+    requires(Robot.intake.threadbar);
 
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
   }
@@ -68,8 +67,8 @@ public class VisionSetThreadbar extends Command {
     NetworkTableEntry tx = table.getEntry("tx");
     double x = tx.getDouble(0.0);
 
-    currentPositionInchesLeft = -Robot.intake.leftThreadbar.getLeftEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    currentPositionInchesRight = -Robot.intake.rightThreadbar.getRightEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionInchesLeft = -Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionInchesRight = -Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
 
     desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
 
@@ -122,8 +121,8 @@ public class VisionSetThreadbar extends Command {
     threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     // }
 
-    Robot.intake.leftThreadbar.setLeftPower(threadbarMovementLeft);
-    Robot.intake.rightThreadbar.setRightPower(threadbarMovementRight);
+    Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
+    Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
     SmartDashboard.putNumber("X, Limelight", x);
     SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
     SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
@@ -144,8 +143,8 @@ public class VisionSetThreadbar extends Command {
 
   @Override
   protected void end() {
-    Robot.intake.leftThreadbar.setLeftPower(0);
-    Robot.intake.rightThreadbar.setRightPower(0); 
+    Robot.intake.threadbar.setLeftThreadbarPower(0);
+    Robot.intake.threadbar.setRightThreadbarPower(0); 
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
   }
 

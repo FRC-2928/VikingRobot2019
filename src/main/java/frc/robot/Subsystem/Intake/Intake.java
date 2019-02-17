@@ -7,8 +7,6 @@ import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 public class Intake {
 
     public Threadbar threadbar;
-    public LeftThreadbar leftThreadbar;
-    public RightThreadbar rightThreadbar;
     //public Sensors sensors;
     public Wheels wheels;
     public ArmPreSets armPresets;
@@ -17,9 +15,6 @@ public class Intake {
     public Intake()
     {
         threadbar = new Threadbar();
-        System.out.println(threadbar);
-        leftThreadbar = new LeftThreadbar();
-        rightThreadbar = new RightThreadbar();
         //sensors = new Sensors();
         wheels = new Wheels();
         armPresets = new ArmPreSets();
