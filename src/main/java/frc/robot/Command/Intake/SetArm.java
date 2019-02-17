@@ -36,7 +36,8 @@ public class SetArm extends Command {
     leftPreviousPosition = Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     rightPreviousPosition = Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     midpoint = (leftPreviousPosition + rightPreviousPosition) / 2;
-    
+    currentState = Robot.intake.armPresets.currentState;
+
     // Left positive, right negative
     switch(target){
       case HATCH:
@@ -50,7 +51,9 @@ public class SetArm extends Command {
       break;
 
     }
+    if (target != currentState){
     Robot.intake.armPresets.toggle();
+    }
 
     // SmartDashboard.putString("Current State", Robot.intake.armPresets.currentState.toString());
     SmartDashboard.putNumber("Arm State Midpoint", midpoint);

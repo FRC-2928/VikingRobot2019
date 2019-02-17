@@ -2,9 +2,6 @@
 package frc.robot.Command.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.OperatorInterface;
-import frc.robot.Subsystem.Chassis.Drivetrain;
 import frc.robot.Robot;
 
 //Here's where we create the command to drive via joystick
@@ -24,16 +21,16 @@ public class JoystickDrive extends Command {
  
   @Override
   protected void execute() {
-    // double driveX = Robot.oi.getDriveX();
-    // if (Math.abs(Robot.oi.getDriveX()) < 0.10){
-    //   driveX = 0;
-    // }
+    double driveX = Robot.oi.getDriveX();
+    if (Math.abs(Robot.oi.getDriveX()) < 0.10){
+      driveX = 0;
+    }
 
-    // double driveY = Robot.oi.getDriveY();
-    // if(Math.abs(Robot.oi.getDriveY()) < 0.10){
-    //   driveY = 0;
-    // }
-    // Robot.chassis.drivetrain.drive(driveY, driveX);
+    double driveY = Robot.oi.getDriveY();
+    if(Math.abs(Robot.oi.getDriveY()) < 0.10){
+      driveY = 0;
+    }
+    Robot.chassis.drivetrain.drive(driveY, driveX);
   }
   
   @Override
