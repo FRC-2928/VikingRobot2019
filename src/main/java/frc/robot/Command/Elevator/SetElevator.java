@@ -80,6 +80,14 @@ public class SetElevator extends Command {
       System.out.println("Elevator setpoint is too high dude, aborting");
       return true;
     }
+
+    if(currentPosition < RobotConstants.ELEVATOR_MAX_ENCODER_TICKS - RobotConstants.ELEVATOR_STOP_THRESHOLD){
+      return true;
+    }
+
+    if (currentPosition > RobotConstants.ELEVATOR_MIN_ENCODER_TICKS + RobotConstants.ELEVATOR_STOP_THRESHOLD){
+      return true;
+    }
    
     return false;
 

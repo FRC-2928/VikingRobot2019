@@ -9,7 +9,6 @@ import frc.robot.RobotMap;
 public class Drawbridge extends Subsystem {
   private Solenoid drawbridge;
   public DrawbridgeState bridgeState;
-
   private double lastChange = 0;
 
   public enum DrawbridgeState{
@@ -31,6 +30,7 @@ public class Drawbridge extends Subsystem {
 
   public Drawbridge(){
     drawbridge = new Solenoid(RobotMap.SOLENOID_INTAKE_DRAWBRIDGE);
+    bridgeState = DrawbridgeState.UP;
   }
 
   public void switchBridge(DrawbridgeState state){

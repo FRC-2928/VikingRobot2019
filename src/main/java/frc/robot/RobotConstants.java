@@ -18,6 +18,8 @@ public class RobotConstants {
 
     public static final long ELEVATOR_ENCODER_TICKS_PER_INCH = 254; //placeholder
     public static final long ELEVATOR_MAX_ENCODER_TICKS = 973; //placeholder
+    public static final long ELEVATOR_MIN_ENCODER_TICKS = 842; //placeholder
+    public static final long ELEVATOR_STOP_THRESHOLD = 2000; //placeholder
 
     public static final long FOUR_BAR_ENCODER_TICKS_PER_INCH = 1011; //placeholder
     public static final long FOUR_BAR_MAX_ENCODER_TICKS = 5499; //placeholder

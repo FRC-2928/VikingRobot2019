@@ -9,6 +9,7 @@ import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Chassis.SetFourBar;
 import frc.robot.Subsystem.Chassis.Transmission;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
 import frc.robot.Autonomous.Endgame;
 
 
@@ -35,10 +36,13 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
+    private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7589213); //placeholder
+    private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 52804123); //placeholder
     private static final JoystickButton intake = new JoystickButton(operatorConsole, 1);
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
-    // private static final JoystickButton drawbridgeUp
-    // private static final JoystickButton drawbridgeDown
+    private DrawbridgeState drawbridgeCurrentState = Robot.intake.drawbridge.getDrawbridgeState();
+    private static final JoystickButton drawbridgeUp = new JoystickButton(driveStick, 420); //placeholder
+    private static final JoystickButton drawbridgeDown = new JoystickButton(driveStick, 6969); //placeholder
 
     //Elevator
     private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 11);
@@ -65,15 +69,28 @@ public class OperatorInterface {
 
         //Left: - for moving left, + for moving right
         //Right: - for moving left, + for moving right
-        threadbarLeft.whileHeld(new RunLeftThreadbar(-0.8));
-        threadbarLeft.whileHeld(new RunRightThreadbar(-0.8));
-        threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
-        threadbarRight.whileHeld(new RunRightThreadbar(0.8));
-        threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
-        threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
+        if(drawbridgeCurrentState == DrawbridgeState.DOWN){ 
+            threadbarLeft.whileHeld(new RunLeftThreadbar(-0.8));
+            threadbarLeft.whileHeld(new RunRightThreadbar(-0.8));
+            threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
+            threadbarRight.whileHeld(new RunRightThreadbar(0.8));
+            threadbarLeftLeft.whileHeld(new RunLeftThreadbar(-0.8));
+            threadbarLeftRight.whileHeld(new RunLeftThreadbar(0.8));
+    
+            threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
+            threadbarBall.whenPressed(new SetArm(ArmState.BALL));
 
-        intake.whileHeld(new RunWheels(0.95));
-        outtake.whileHeld(new RunWheels(-0.95));
+            VisionButton.whenPressed(new VisionSetThreadbar());
+
+            intake.whileHeld(new RunWheels(0.95));
+            outtake.whileHeld(new RunWheels(-0.95));
+            }
+
+        drawbridgeDown.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
+        drawbridgeUp.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
+
+
+        
 
         elevatorUp.whileHeld(new RunElevator(0.2));
         elevatorDown.whileHeld(new RunElevator(-0.2));
@@ -97,9 +114,8 @@ public class OperatorInterface {
         //Testing commands
         //VisionButton.whileHeld(new VisionSetThreadbar());
         // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
-        VisionButton.whenPressed(new SetArm(ArmState.HATCH));
         LifterTest.whenPressed(new SetArm(ArmState.BALL));
-        pusherButtonIn.whenPressed(new VisionSetThreadbar());
+        VisionButton.whenPressed(new VisionSetThreadbar());
     }
     
     public double getDriveY() {
