@@ -29,6 +29,9 @@ public class VisionSetThreadbar extends Command {
     private double threadbarMovementLeft;
     private double threadbarMovementRight;
 
+    private boolean leftLimitSwitch;
+    private boolean rightLimitSwitch;
+
   public VisionSetThreadbar() {
 
     requires(Robot.intake.threadbar);
@@ -60,6 +63,9 @@ public class VisionSetThreadbar extends Command {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     double x = tx.getDouble(0.0);
+
+    leftLimitSwitch = Robot.intake.threadbar.getLeftThreadbarLimitSwitch();
+    rightLimitSwitch = Robot.intake.threadbar.getRightThreadbarLimitSwitch();
 
     currentPositionInchesLeft = -Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     currentPositionInchesRight = -Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
@@ -110,12 +116,13 @@ public class VisionSetThreadbar extends Command {
       threadbarInchesRight = kP * errorInchesRight + min_Command * errorInchesRight;
 
     }
-
-    // if(Math.abs(desiredSetpoint) > 1){
     
+    
+
     threadbarMovementLeft = threadbarInchesLeft * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    // }
+    
+    // if(leftLimitSwitch = true && )
 
     Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
     Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
@@ -134,13 +141,13 @@ public class VisionSetThreadbar extends Command {
       // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
+    // if (){}
       return false;
   }
 
   @Override
   protected void end() {
-    Robot.intake.threadbar.setLeftThreadbarPower(0);
-    Robot.intake.threadbar.setRightThreadbarPower(0); 
+    Robot.intake.threadbar.setThreadbarPower(0, 0);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
   }
 

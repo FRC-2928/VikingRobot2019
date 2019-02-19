@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Chassis.SetFourBar;
@@ -45,6 +44,7 @@ public class OperatorInterface {
     private static final JoystickButton drawbridgeDown = new JoystickButton(driveStick, 6969); //placeholder
 
     //Elevator
+    private ArmState armCurrentState = Robot.intake.armPresets.getArmState();
     private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 11);
     private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 12);
     private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 254);//placeholder
@@ -89,33 +89,23 @@ public class OperatorInterface {
         drawbridgeDown.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         drawbridgeUp.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
 
-
-        
-
         elevatorUp.whileHeld(new RunElevator(0.2));
         elevatorDown.whileHeld(new RunElevator(-0.2));
         // elevatorLvlGround.whenPressed(new SetElevator(Idfk));
         // elevatorLvlCargoBall.whenPressed(command);
-        // if(ArmState = BALL){
+        if(armCurrentState == ArmState.BALL){
         //     elevatorLvl1.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
-        // }
-        // if(ArmState = HATCH){
+        }
+        if(armCurrentState == ArmState.HATCH){
         //     elevatorLvl1.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
-        // }
+        }
 
         endgame.whenPressed(new Endgame());
         endgameStop.whenPressed(new SetFourBar(false));
-            
-
-        //Testing commands
-        //VisionButton.whileHeld(new VisionSetThreadbar());
-        // PIDButton.whileHeld(new ThreadbarDistancePID(50000, .2, .002));
-        LifterTest.whenPressed(new SetArm(ArmState.BALL));
-        VisionButton.whenPressed(new VisionSetThreadbar());
     }
     
     public double getDriveY() {

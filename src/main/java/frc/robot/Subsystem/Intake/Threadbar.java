@@ -23,13 +23,25 @@ public class Threadbar extends Subsystem {
     rightThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_RIGHT_THREADBAR);
     leftThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     rightThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    // leftThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-    // rightThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+    leftThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+    leftThreadbarMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+    rightThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+    rightThreadbarMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     }
 
   public void setThreadbarPower(double powerLeft, double powerRight){
     leftThreadbarMotor.set(ControlMode.PercentOutput, powerLeft);
     rightThreadbarMotor.set(ControlMode.PercentOutput, powerRight);
+  }
+
+  public boolean getLeftThreadbarLimitSwitch(){
+    boolean leftLimit = leftThreadbarMotor.getSensorCollection().isFwdLimitSwitchClosed();
+    return leftLimit;
+  }
+
+  public boolean getRightThreadbarLimitSwitch(){
+    boolean rightLimit = rightThreadbarMotor.getSensorCollection().isFwdLimitSwitchClosed();
+    return rightLimit;
   }
 
   public void setLeftThreadbarPower(double power){

@@ -77,7 +77,7 @@ public class Lift extends Subsystem {
     double liftPosition = liftEncoder.getPosition();
     SmartDashboard.putNumber("Lift position inches", liftPosition);
     return liftPosition;
-
+    
   }
 
   public void resetLiftEncoders(){

@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 public class HatchGrabber extends Subsystem {
-  private WPI_TalonSRX groundmotor;
+  private WPI_TalonSRX groundMotorLeft;
+  private WPI_TalonSRX groundMotorRight;
   
     public HatchGrabber(){
       
-    groundmotor = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH);
+    groundMotorLeft = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH_LEFT);
+    groundMotorRight = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH_RIGHT);
     //groundmotor.setNeutralMode(WPI_TalonSRX.motorcontrol.setNeutralMode.Brake);
     }
    
   
     public void setpower(double power){
   
-      groundmotor.set(ControlMode.PercentOutput, power);
+      groundMotorLeft.set(ControlMode.PercentOutput, power);
+      groundMotorRight.set(ControlMode.PercentOutput, power);
   
     }
   
