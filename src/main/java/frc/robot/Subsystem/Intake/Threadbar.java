@@ -25,7 +25,7 @@ public class Threadbar extends Subsystem {
     rightThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     // leftThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     // rightThreadbarMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-  }
+    }
 
   public void setThreadbarPower(double powerLeft, double powerRight){
     leftThreadbarMotor.set(ControlMode.PercentOutput, powerLeft);
