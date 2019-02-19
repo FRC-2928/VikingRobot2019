@@ -8,12 +8,7 @@ import frc.robot.Command.Chassis.DriveToWall;
 
 public class Endgame extends CommandGroup {
 
-  /*TODO: 
-  1.Drive backwards however many inches are needed
-  2.Start four bar movement
-  3.After a few seconds, start driving forward
-  4.Check for distance to driver station, and stop once you're close enough  
-  */
+
   public Endgame() {
 
     CommandGroup driveCommandGroup = new CommandGroup();  
@@ -28,7 +23,6 @@ public class Endgame extends CommandGroup {
    
     endCommandGroup
       .addSequential(new DriveToWall());
-
 
     addSequential(driveCommandGroup);
     addSequential(climbCommandGroup);

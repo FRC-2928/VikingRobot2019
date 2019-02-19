@@ -9,13 +9,13 @@ public class SetFourBar extends Command {
   private double setpoint;
   private double error;
   private boolean setpointDirection; 
-  private boolean stop;
+  public boolean stopFourBar;
 
   //True = forward, false = backwards
   public SetFourBar(Boolean direction) {
 
     this.setpointDirection = direction;
-    stop = false;
+    stopFourBar = false;
 
   }
   
@@ -43,7 +43,7 @@ public class SetFourBar extends Command {
         Robot.chassis.fourbar.setFourBarPower(-0.2);
       }
       else{
-        stop = true;
+        stopFourBar = true;
       }
   }
 }
@@ -53,7 +53,10 @@ public class SetFourBar extends Command {
     if(error > 100000){//placeholder
       return true;
     }
-    if(stop == true){
+    if(stopFourBar == true){
+      return true;
+    }
+    if(setpointDirection == false && error < 1000){
       return true;
     }
     return false;

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
+import frc.robot.Command.Chassis.SetFourBar;
 import frc.robot.Subsystem.Chassis.Transmission;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
 import frc.robot.Autonomous.Endgame;
@@ -90,6 +91,7 @@ public class OperatorInterface {
         // }
 
         endgame.whenPressed(new Endgame());
+        endgameStop.whenPressed(new SetFourBar(false));
             
 
         //Testing commands

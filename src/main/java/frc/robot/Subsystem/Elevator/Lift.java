@@ -36,7 +36,7 @@ public class Lift extends Subsystem {
     
     liftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0, 10);
     liftMotor.setNeutralMode(NeutralMode.Brake);
-    // currentstate = something;   
+    // currentstate = something;, idk if we start with brakes on or off  
   }
 
   public void shiftBrake(BrakeState state){
