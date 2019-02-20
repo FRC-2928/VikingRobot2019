@@ -25,7 +25,7 @@ public class RobotMap
     public static final int TALON_RIGHT_INTAKE = 9;
 
     //Elevator motors
-    public static final int TALON_ELEVATOR = 7;
+    public static final int SPARK_ELEVATOR = 7;
 
     //Four-Bar motors
     public static final int TALON_FOUR_BAR = 6;
@@ -38,5 +38,5 @@ public class RobotMap
     public static final int SOLENOID_TRANSMISSION_HIGH = 1;
     public static final int SOLENOID_GROUND_HATCH = 2;
     public static final int SOLENOID_INTAKE_DRAWBRIDGE = 3;
-    public static final int SOLENOID_ELEVATOR_BRAKE = 0;
+    public static final int SOLENOID_ELEVATOR_BRAKE = 4; //placeholder, actually 0
 }

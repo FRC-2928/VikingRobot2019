@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Scheduler.getInstance().removeAll();
         intake.threadbar.resetThreadbarEncoders();
+        elevator.lift.resetLiftEncoders();
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
         //chassis.drivetrain.setMotorSafetyEnabled(true);
         

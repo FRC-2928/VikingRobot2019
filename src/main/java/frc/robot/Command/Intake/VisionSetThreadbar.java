@@ -31,6 +31,7 @@ public class VisionSetThreadbar extends Command {
 
     private boolean leftLimitSwitch;
     private boolean rightLimitSwitch;
+    private boolean finished;
 
   public VisionSetThreadbar() {
 
@@ -52,7 +53,7 @@ public class VisionSetThreadbar extends Command {
   @Override
   protected void initialize() {
     
-
+    finished = false;
     //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
@@ -103,8 +104,6 @@ public class VisionSetThreadbar extends Command {
 
     }
 
-
-
     if(Math.abs(errorInchesRight) > 2){
 
       threadbarInchesRight = kP * errorInchesRight;
@@ -122,7 +121,17 @@ public class VisionSetThreadbar extends Command {
     threadbarMovementLeft = threadbarInchesLeft * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     
-    // if(leftLimitSwitch = true && )
+    // if(leftLimitSwitch == true && (threadbarMovementLeft < 0 || threadbarMovementRight < 0)){
+    //   threadbarMovementLeft = 0;
+    //   threadbarMovementRight = 0;
+    //   finished = true;
+    // } //Not finished, need to  confirm the limit switch
+
+    // if(rightLimitSwitch == true && (threadbarMovementLeft > 0 || threadbarMovementRight > 0)){
+    //   threadbarMovementLeft = 0;
+    //   threadbarMovementRight = 0;
+    //   finished = true;
+    // }
 
     Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
     Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
@@ -141,7 +150,9 @@ public class VisionSetThreadbar extends Command {
       // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
-    // if (){}
+    if (finished = true){
+      return true;
+    }
       return false;
   }
 

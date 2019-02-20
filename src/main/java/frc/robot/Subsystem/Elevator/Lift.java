@@ -36,7 +36,7 @@ public class Lift extends Subsystem {
 
   public Lift(){
 
-    liftMotor = new CANSparkMax(RobotMap.TALON_ELEVATOR,MotorType.kBrushless);
+    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR,MotorType.kBrushless);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     
     liftEncoder = liftMotor.getEncoder();

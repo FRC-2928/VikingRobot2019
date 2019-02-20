@@ -33,8 +33,8 @@ public class OperatorInterface {
     //Intake
     private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
-    private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
-    private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
+    private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 987);
+    private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 642);
     private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7589213); //placeholder
     private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 52804123); //placeholder
     private static final JoystickButton intake = new JoystickButton(operatorConsole, 1);
@@ -89,8 +89,8 @@ public class OperatorInterface {
         drawbridgeDown.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         drawbridgeUp.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
 
-        elevatorUp.whileHeld(new RunElevator(0.2));
-        elevatorDown.whileHeld(new RunElevator(-0.2));
+        elevatorUp.whileHeld(new RunElevator(0.25));
+        elevatorDown.whileHeld(new RunElevator(-0.25));
         // elevatorLvlGround.whenPressed(new SetElevator(Idfk));
         // elevatorLvlCargoBall.whenPressed(command);
         if(armCurrentState == ArmState.BALL){
