@@ -10,6 +10,7 @@ public class SetElevator extends Command {
   private double setpointInches;
   private double currentPosition;
   private double error;
+  private double elevatorMovement;
   
   public enum LiftState{ //TODO: Add in enum stuff
 
@@ -42,10 +43,10 @@ public class SetElevator extends Command {
 
   @Override
   protected void execute() {
-    double kP = 0.2;
-    double min_Command = 0.05;
-    double elevatorMovement = 0;
-    currentPosition = Robot.elevator.lift.getLiftPositionInches();
+    double kP = 0.0002;
+    double min_Command = 0.0005;
+    
+    currentPosition = Robot.elevator.lift.getLiftPosition();
     error = setpointInches - currentPosition;
     
     if(setpointInches + currentPosition > RobotConstants.ELEVATOR_MAX_ENCODER_TICKS){

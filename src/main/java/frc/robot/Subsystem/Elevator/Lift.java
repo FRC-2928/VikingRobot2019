@@ -71,9 +71,8 @@ public class Lift extends Subsystem {
     liftMotor.set(power);
   }
 
-  public double getLiftPositionInches(){
+  public double getLiftPosition(){
 
-    liftEncoder.setPositionConversionFactor(RobotConstants.ELEVATOR_ENCODER_TICKS_PER_INCH);
     double liftPosition = liftEncoder.getPosition();
     SmartDashboard.putNumber("Lift position inches", liftPosition);
     return liftPosition;
