@@ -1,7 +1,5 @@
 package frc.robot.Subsystem.Intake;
 
-import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
-
 //Where we initialize stuff for Robot.java, allows us to call subsystems from other places
 
 public class Intake {

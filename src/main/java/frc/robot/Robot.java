@@ -1,23 +1,15 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PWM;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Command.Intake.VisionSetThreadbar;
 import frc.robot.Subsystem.Chassis.*;
-import frc.robot.Subsystem.Chassis.Drivetrain;
 import frc.robot.Subsystem.Elevator.Elevator;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 //The main robot class, during a match the robot goes through everything in this class

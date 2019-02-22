@@ -3,9 +3,6 @@ package frc.robot.Subsystem.Intake;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotConstants;
-import static frc.robot.Subsystem.Intake.ArmPreSets.ArmState.HATCH;
-import static frc.robot.Subsystem.Intake.ArmPreSets.ArmState.BALL;
 
 public class ArmPreSets extends Subsystem {
   public double midpoint;

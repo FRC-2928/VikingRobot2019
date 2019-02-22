@@ -2,7 +2,6 @@ package frc.robot.Command.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotConstants;
 
 public class RunElevator extends Command {
   private double power;

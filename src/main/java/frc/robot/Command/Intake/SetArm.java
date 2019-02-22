@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
-import frc.robot.Subsystem.Intake.ArmPreSets;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
-import frc.robot.Subsystem.Intake.Threadbar;
-import static java.lang.Math.abs;
 
 public class SetArm extends Command {
   private double leftPreviousPosition;

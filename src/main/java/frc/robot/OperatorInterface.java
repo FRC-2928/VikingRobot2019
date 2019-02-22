@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Chassis.RunFourBar;

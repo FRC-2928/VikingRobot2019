@@ -9,6 +9,7 @@ public class SetDrawbridge extends Command {
 
   public SetDrawbridge(DrawbridgeState target) {
     requires(Robot.intake.drawbridge);
+    requires(Robot.intake.threadbar);
     this.target = target;
   }
 
