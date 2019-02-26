@@ -15,6 +15,7 @@ public class HatchGrabber extends Subsystem {
       
     groundMotorLeft = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH_LEFT);
     groundMotorRight = new WPI_TalonSRX(RobotMap.TALON_GROUND_HATCH_RIGHT);
+    groundMotorLeft.setInverted(true);
     //groundmotor.setNeutralMode(WPI_TalonSRX.motorcontrol.setNeutralMode.Brake);
     }
    

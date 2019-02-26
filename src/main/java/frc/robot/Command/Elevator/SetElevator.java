@@ -6,24 +6,28 @@ import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 
+
+//Moves the elevator to whatever setpoint you give it via PID
 public class SetElevator extends Command {
   private double setpointInches;
   private double currentPosition;
   private double error;
   private double elevatorMovement;
+  private double kP;
+  private double min_Command;
   
-  public enum LiftState{ //TODO: Add in enum stuff
+  // public enum LiftState{ //TODO: Add in enum stuff, currently not in use
 
-    BALL_LEVEL_1,
-    BALL_LEVEL_2,
-    BALL_LEVEL_3,
-    HATCH_LEVEL_1,
-    HATCH_LEVEL_2,
-    HATCH_LEVEL_3,
-    CARGO_SHIP_BALL,
-    GROUND_LEVEL;
+  //   BALL_LEVEL_1,
+  //   BALL_LEVEL_2,
+  //   BALL_LEVEL_3,
+  //   HATCH_LEVEL_1,
+  //   HATCH_LEVEL_2,
+  //   HATCH_LEVEL_3,
+  //   CARGO_SHIP_BALL,
+  //   GROUND_LEVEL;
 
-  }
+  // }
 
   //Inches
   public SetElevator(double setpointInches) {
@@ -40,55 +44,72 @@ public class SetElevator extends Command {
     
   }
 
-
   @Override
   protected void execute() {
-    double kP = 0.0002;
-    double min_Command = 0.0005;
-    
     currentPosition = Robot.elevator.lift.getLiftPosition();
+    SmartDashboard.putNumber("Elevator position", currentPosition);
     error = setpointInches - currentPosition;
-    
-    if(setpointInches + currentPosition > RobotConstants.ELEVATOR_MAX_ENCODER_TICKS){
 
-      if(Math.abs(error) > 1){
+    if(error > 0){
+      kP = 0.07;
+      min_Command = 0.05;
+    }
+
+    if(error < 0){
+      kP = 0.007;
+      min_Command = 0.002;
+    }
+    
+
+    // if(setpointInches + currentPosition < RobotConstants.ELEVATOR_MAX_ENCODER_TICKS){
+
+      if(Math.abs(error) > 2){
 
         elevatorMovement = kP * error;
 
       }
 
-      if(Math.abs(error) < 1){
+      if(Math.abs(error) < 2){
 
         elevatorMovement = (kP * error) + (min_Command * error);
-
       }
 
-      Robot.elevator.lift.setLiftPower(elevatorMovement);
-      SmartDashboard.putNumber("Elevator position", currentPosition);
+      Robot.elevator.lift.setLiftPower(elevatorMovement); 
       SmartDashboard.putNumber("Elevator PID movement", elevatorMovement);
-      
+      SmartDashboard.putNumber("Elevator PID Error", error);
+      SmartDashboard.putNumber("Elevator PID Setpoint", setpointInches);
+
     }
-  }
+  // }
 
   @Override
   protected boolean isFinished() {
 
-    if(Math.abs(error) < 0.5){
-      return true;
-    }
+    if(error > 0){
+      if(Math.abs(error) < 0.1){
+        SmartDashboard.putNumber("Stopping error", error);
+        return true;
+      }
+  }
 
-    if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches + currentPosition)){
-      System.out.println("Elevator setpoint is too high dude, aborting");
-      return true;
+    if(error < 0){
+      if(Math.abs(error) < 0.5){
+        return true;
+      }
     }
+  
+    // if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches + currentPosition)){
+    //   System.out.println("Elevator setpoint is too high dude, aborting");
+    //   return true;
+    // }
 
     if(currentPosition < RobotConstants.ELEVATOR_MAX_ENCODER_TICKS - RobotConstants.ELEVATOR_STOP_THRESHOLD){
       return true;
     }
 
-    if (currentPosition > RobotConstants.ELEVATOR_MIN_ENCODER_TICKS + RobotConstants.ELEVATOR_STOP_THRESHOLD){
-      return true;
-    }
+    // if (currentPosition > RobotConstants.ELEVATOR_MIN_ENCODER_TICKS + RobotConstants.ELEVATOR_STOP_THRESHOLD){
+    //   return true;
+    // }
    
     return false;
 

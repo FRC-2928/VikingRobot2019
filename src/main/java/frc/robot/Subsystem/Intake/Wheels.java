@@ -9,6 +9,7 @@ package frc.robot.Subsystem.Intake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,13 +21,14 @@ import frc.robot.RobotMap;
  */
 public class Wheels extends Subsystem {
  
-  public TalonSRX leftWheel;
-  public TalonSRX rightWheel;
+  public VictorSPX leftWheel;
+  public VictorSPX rightWheel;
 
   public Wheels(){
         
-    leftWheel = new WPI_TalonSRX(RobotMap.TALON_LEFT_INTAKE);
-    rightWheel = new WPI_TalonSRX(RobotMap.TALON_RIGHT_INTAKE);
+    leftWheel = new VictorSPX(RobotMap.TALON_LEFT_INTAKE);
+    rightWheel = new VictorSPX(RobotMap.TALON_RIGHT_INTAKE);
+    leftWheel.setInverted(true);
 
   }
 

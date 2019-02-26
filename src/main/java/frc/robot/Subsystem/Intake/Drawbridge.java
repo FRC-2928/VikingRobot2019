@@ -42,9 +42,11 @@ public class Drawbridge extends Subsystem {
 
         case UP:  
         drawbridge.set(true);
+        break;
 
         case DOWN:
         drawbridge.set(false);
+        break;
 
       }
       lastChange = time;

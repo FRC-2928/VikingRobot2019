@@ -16,7 +16,7 @@ public class RobotMap
 
     //Ground hatch motors
     public static final int TALON_GROUND_HATCH_LEFT = 4;
-    public static final int TALON_GROUND_HATCH_RIGHT= 5; //This shit be gone
+    public static final int TALON_GROUND_HATCH_RIGHT= 5;
 
     //Threadbar/intake motors
     public static final int TALON_LEFT_THREADBAR = 10;
@@ -28,14 +28,14 @@ public class RobotMap
     public static final int SPARK_ELEVATOR = 7;
 
     //Four-Bar motors
-    public static final int TALON_FOUR_BAR = 6;
+    public static final int TALON_FOUR_BAR = 7;
 
     //Sensors
     public static final int PIGEON = 3;
 
     //Solenoids
-    public static final int SOLENOID_TRANSMISSION = 1;
-    public static final int SOLENOID_GROUND_HATCH = 2;
+    public static final int SOLENOID_TRANSMISSION = 0;
+    public static final int SOLENOID_GROUND_HATCH = 1;
     public static final int SOLENOID_INTAKE_DRAWBRIDGE = 3;
-    public static final int SOLENOID_ELEVATOR_BRAKE = 0; 
+    public static final int SOLENOID_ELEVATOR_BRAKE = 6; 
 }

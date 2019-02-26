@@ -14,7 +14,7 @@ private double power;
 
   @Override
   protected void initialize() {
-    
+    //- for left, + for right
     Robot.intake.threadbar.setLeftThreadbarPower(power);
     // Robot.intake.sensors.setSensor(sensor);
 
