@@ -25,6 +25,7 @@ private double power;
   protected void execute() {
 
     Robot.intake.threadbar.getLeftThreadbarEncoder();
+    System.out.println("The left threadbar is moving bois");
 
   }
 
