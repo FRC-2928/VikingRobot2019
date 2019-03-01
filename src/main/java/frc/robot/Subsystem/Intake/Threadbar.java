@@ -24,8 +24,7 @@ public class Threadbar extends Subsystem {
     rightThreadbarMotor = new WPI_TalonSRX(RobotMap.TALON_RIGHT_THREADBAR);
     leftThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     rightThreadbarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    rightThreadbarMotor.setInverted(InvertType.InvertMotorOutput);
-    
+
     }
 
   public void setThreadbarPower(double powerLeft, double powerRight){

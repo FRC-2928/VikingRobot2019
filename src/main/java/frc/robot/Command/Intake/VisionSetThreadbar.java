@@ -133,13 +133,13 @@ public class VisionSetThreadbar extends Command {
     // }
 
     Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
-    Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
-    SmartDashboard.putNumber("X, Limelight", x);
-    SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
-    SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
-    SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
-    SmartDashboard.putNumber("Limelight error left", errorInchesLeft);
-    SmartDashboard.putNumber("Limelight error right", errorInchesRight);
+    // Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
+    // SmartDashboard.putNumber("X, Limelight", x);
+    // SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
+    // SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
+    // SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
+    // SmartDashboard.putNumber("Limelight error left", errorInchesLeft);
+    // SmartDashboard.putNumber("Limelight error right", errorInchesRight);
   }
 
   @Override

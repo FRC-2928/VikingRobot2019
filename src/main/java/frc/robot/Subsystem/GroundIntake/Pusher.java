@@ -21,7 +21,7 @@ private Solenoid pushermotor;
 
   public Pusher(){
     pushermotor = new Solenoid(RobotMap.SOLENOID_GROUND_HATCH);
-    set(PusherState.IN);
+    set(PusherState.OUT);
   }
 
   public void set(PusherState state) {

@@ -104,14 +104,14 @@ public class OperatorInterface {
 
         elevatorUp.whileHeld(new RunElevator(0.45));
         elevatorDown.whileHeld(new RunElevator(-0.1));
-        // elevatorLvlGround.whenPressed(new SetElevator(0));
-        // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
-        // elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
+        elevatorLvlGround.whenPressed(new SetElevator(0));
+        elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
+        elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
         // elevatorLvlCargoBall.whenPressed(command);
         // if(armCurrentState == ArmState.BALL){
-            // elevatorLvl1.whenPressed(new SetElevator(7.5));
-            // elevatorLvl2.whenPressed(new SetElevator(15));
-            // elevatorLvl3.whenPressed(new SetElevator(0));
+            elevatorLvl1.whenPressed(new SetElevator(7.5));
+            elevatorLvl2.whenPressed(new SetElevator(15));
+            elevatorLvl3.whenPressed(new SetElevator(30));
             // elevatorLvl2.whileHeld(new RunLeftThreadbar(0.8));
             // elevatorLvl3.whileHeld(new RunLeftThreadbar(-0.8));
             // elevatorLvl2.whileHeld(new SetElevator(30));

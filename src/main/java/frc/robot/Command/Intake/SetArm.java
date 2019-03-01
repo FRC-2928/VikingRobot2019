@@ -38,13 +38,13 @@ public class SetArm extends Command {
     // Left positive, right negative
     switch(target){
       case HATCH:
-      setpointLeft = midpoint;// + RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
-      setpointRight = midpoint;//- RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointLeft = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH; //midpoint;// + RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointRight = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;//midpoint;//- RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
       break;
 
       case BALL :
-      setpointLeft = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
-      setpointRight = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointLeft = -RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointRight = -RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
       break;
 
     }
@@ -65,12 +65,12 @@ public class SetArm extends Command {
   protected void execute(){
     currentPositionLeft = Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
     currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    errorLeft = setpointLeft + currentPositionLeft;
-    errorRight = setpointRight + currentPositionRight;
-    double kP = 0.2; //Normally 0.5, testing rn
+    errorLeft = setpointLeft - currentPositionLeft;
+    errorRight = setpointRight - currentPositionRight;
+    double kP = 0.5; //Normally 0.5, testing rn
     double min_Command = 0.15;
     // Very basic P, will expand later but need to test it first
-    if (Math.abs(errorLeft) > 1){
+    if (Math.abs(errorLeft) >= 1){
       outputLeft = errorLeft * kP;
     } 
     
@@ -78,7 +78,7 @@ public class SetArm extends Command {
       outputLeft = (errorLeft * kP) + (min_Command * errorLeft);
     }
     
-    if(Math.abs(errorRight) > 1){
+    if(Math.abs(errorRight) >= 1){
       outputRight = errorRight * kP;
     }
 

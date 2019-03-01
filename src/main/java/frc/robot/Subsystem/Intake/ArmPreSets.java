@@ -19,7 +19,7 @@ public class ArmPreSets extends Subsystem {
     }
 
   public ArmPreSets(){
-
+    currentState = ArmState.HATCH;
   }
 
   public double getMidpoint(){
