@@ -67,13 +67,13 @@ public class OperatorInterface {
     // private static final JoystickButton fourBarDown = new JoystickButton(driveStick, 3);
 
     OperatorInterface() {
-        // gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
-        // gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
+        gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
+        gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
 
-        // groundButtonUp.whileHeld(new RunGroundIntake(-0.8));
-        // groundButtonDown.whileHeld(new RunGroundIntake(0.8));
-        // pusherButton.whenPressed(new SetPusher(PusherState.IN));
-        // pusherButton.whenReleased(new SetPusher(PusherState.OUT));
+        groundButtonUp.whileHeld(new RunGroundIntake(0.8));
+        groundButtonDown.whileHeld(new RunGroundIntake(-0.8));
+        pusherButton.whenPressed(new SetPusher(PusherState.IN));
+        pusherButton.whenReleased(new SetPusher(PusherState.OUT));
 
         //Left: - for moving left, + for moving right
         //Right: - for moving left, + for moving right
@@ -85,25 +85,25 @@ public class OperatorInterface {
             threadbarLeftLeft.whileHeld(new RunRightThreadbar(-0.8));
             threadbarLeftRight.whileHeld(new RunRightThreadbar(0.8));
     
-            // threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
-            // threadbarBall.whenPressed(new SetArm(ArmState.BALL));
+            threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
+            threadbarBall.whenPressed(new SetArm(ArmState.BALL));
 
             // VisionButton.whenPressed(new VisionSetThreadbar());
 
-            // intake.whileHeld(new RunWheels(0.9));
-            // outtake.whileHeld(new RunWheels(-0.6));
+            intake.whileHeld(new RunWheels(0.9));
+            outtake.whileHeld(new RunWheels(-0.6));
             // }
 
         // drawbridgeDown.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         // drawbridgeUp.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
         
         // drawbridgeDown.whenPressed(new SetElevatorBrake(BrakeState.OFF));
-        // // drawbridgeUp.whenPressed(new SetElevatorBrake(BrakeState.ON));
+        // drawbridgeUp.whenPressed(new SetElevatorBrake(BrakeState.ON));
         // drawbridgeDown.whileHeld(new SetElevator(25));
         // drawbridgeUp.whileHeld(new SetElevator(0));
 
-        // elevatorUp.whileHeld(new RunElevator(0.6));
-        // elevatorDown.whileHeld(new RunElevator(-0.2));
+        elevatorUp.whileHeld(new RunElevator(0.45));
+        elevatorDown.whileHeld(new RunElevator(-0.1));
         // elevatorLvlGround.whenPressed(new SetElevator(0));
         // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
         // elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));

@@ -38,13 +38,13 @@ public class SetArm extends Command {
     // Left positive, right negative
     switch(target){
       case HATCH:
-      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
-      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointLeft = midpoint;// + RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointRight = midpoint;//- RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
       break;
 
       case BALL :
-      setpointLeft = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
-      setpointRight = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointLeft = midpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointRight = midpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
       break;
 
     }
@@ -65,9 +65,9 @@ public class SetArm extends Command {
   protected void execute(){
     currentPositionLeft = Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;  
     currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    errorLeft = -setpointLeft + currentPositionLeft;
-    errorRight = -setpointRight + currentPositionRight;
-    double kP = 0.5;
+    errorLeft = setpointLeft + currentPositionLeft;
+    errorRight = setpointRight + currentPositionRight;
+    double kP = 0.2; //Normally 0.5, testing rn
     double min_Command = 0.15;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) > 1){
@@ -104,13 +104,9 @@ public class SetArm extends Command {
     SmartDashboard.putNumber("Is Finished error left", errorLeft);
     SmartDashboard.putNumber("Is Finished error right", errorRight);
     if(Math.abs(errorLeft) < 0.3 && Math.abs(errorRight) < 0.3){
-      counter = 2;
-      SmartDashboard.putNumber("Threadbar Arm State is finished", counter);
       return true;
     }
     else{
-      counter = 1;
-      SmartDashboard.putNumber("Threadbar Arm State is finished", counter);
     return false;
     }
   }

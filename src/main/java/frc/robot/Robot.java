@@ -40,8 +40,7 @@ public class Robot extends TimedRobot {
         armPresetSelector.setDefaultOption("Hatch State", ArmState.HATCH);
         armPresetSelector.addOption("Ball State", ArmState.BALL);
         SmartDashboard.putData("Threadbar State", armPresetSelector);
-
-        
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
 
         // This has to be at the bottom or things crash
         // OI requires everything to be initialized
@@ -66,7 +65,6 @@ public class Robot extends TimedRobot {
         Scheduler.getInstance().removeAll();
         intake.threadbar.resetThreadbarEncoders();
         elevator.lift.resetLiftEncoders();
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
         //chassis.drivetrain.setMotorSafetyEnabled(true);
         
     }

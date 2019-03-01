@@ -30,7 +30,7 @@ public class JoystickDrive extends Command {
     if(Math.abs(Robot.oi.getDriveY()) < 0.075){
       driveY = 0;
     }
-    Robot.chassis.drivetrain.drive(driveY, driveX);
+    Robot.chassis.drivetrain.drive(driveY, -driveX);
   }
   
   @Override

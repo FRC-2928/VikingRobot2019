@@ -45,9 +45,9 @@ public Drivetrain(){
     right_follower_2 = new WPI_VictorSPX(RobotMap.VICTOR_FRONT_RIGHT);
     right_follower_2.follow(right);
 
-    // left.setInverted(true);
-    // left_follower_1.setInverted(true);
-    // left_follower_2.setInverted(true);
+    left.setInverted(true);
+    left_follower_1.setInverted(true);
+    left_follower_2.setInverted(true);
 
     left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);

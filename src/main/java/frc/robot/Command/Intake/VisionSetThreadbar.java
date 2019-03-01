@@ -54,9 +54,8 @@ public class VisionSetThreadbar extends Command {
   protected void initialize() {
     
     finished = false;
-    //Set up LEDs, 0 = current pipeline, 1 = off, 2 = blink, 3 = on
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
   }
 
   @Override
@@ -160,6 +159,7 @@ public class VisionSetThreadbar extends Command {
   protected void end() {
     Robot.intake.threadbar.setThreadbarPower(0, 0);
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
   }
 
   @Override
