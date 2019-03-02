@@ -30,7 +30,12 @@ public class ArmPreSets extends Subsystem {
 
   public ArmState getArmState(){
     SmartDashboard.putString("Arm State", currentState == ArmState.BALL ? "BALL" : "HATCH");
-    return currentState;
+    if (currentState == ArmState.HATCH){
+      return ArmState.HATCH;
+    }
+    else{
+      return ArmState.BALL;
+    }
   }
 
   public void toggle(){

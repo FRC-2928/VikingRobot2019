@@ -41,11 +41,11 @@ public class Transmission extends Subsystem {
       {
           if (state == HIGH)
           {
-              shiftSolenoid.set(true);
+              shiftSolenoid.set(false);
           }
           if (state == LOW)
           {
-              shiftSolenoid.set(false);
+              shiftSolenoid.set(true);
           }
           currentState = state;
           lastShift = time;

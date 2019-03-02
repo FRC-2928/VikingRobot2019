@@ -51,6 +51,8 @@ public Drivetrain(){
 
     left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    left.configNeutralDeadband(0.01);
+    right.configNeutralDeadband(0.01);
 
     drive = new DifferentialDrive(left, right);
     }

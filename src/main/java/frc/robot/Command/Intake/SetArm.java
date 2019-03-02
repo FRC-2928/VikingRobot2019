@@ -19,7 +19,7 @@ public class SetArm extends Command {
   private double outputLeft;
   private double outputRight;
   private ArmState target;
-  public ArmState currentState;
+  public ArmState currentState; 
 
   public SetArm(ArmState state) {
     
@@ -67,15 +67,18 @@ public class SetArm extends Command {
     currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()  / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     errorLeft = setpointLeft - currentPositionLeft;
     errorRight = setpointRight - currentPositionRight;
-    double kP = 0.5; //Normally 0.5, testing rn
-    double min_Command = 0.15;
+    double kP = 0.6; //Normally 0.5, testing rn
+    double min_Command = 0.25;
+    double kI = 0.01;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) >= 1){
       outputLeft = errorLeft * kP;
     } 
     
     if (Math.abs(errorLeft) < 1){
-      outputLeft = (errorLeft * kP) + (min_Command * errorLeft);
+      
+    double errorSumLeft =+ errorLeft*0.2;
+      outputLeft = (errorLeft * kP) + (min_Command * errorLeft) + (kI * errorSumLeft);
     }
     
     if(Math.abs(errorRight) >= 1){
@@ -83,7 +86,9 @@ public class SetArm extends Command {
     }
 
     if(Math.abs(errorRight) < 1){
-      outputRight = (errorRight * kP) + (min_Command * errorRight);
+      
+    double errorSumRight =+ errorRight*0.2;
+      outputRight = (errorRight * kP) + (min_Command * errorRight) + (kI * errorSumRight);
     }
 
     Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
@@ -103,7 +108,7 @@ public class SetArm extends Command {
     double counter;
     SmartDashboard.putNumber("Is Finished error left", errorLeft);
     SmartDashboard.putNumber("Is Finished error right", errorRight);
-    if(Math.abs(errorLeft) < 0.3 && Math.abs(errorRight) < 0.3){
+    if(Math.abs(errorLeft) < 0.1 && Math.abs(errorRight) < 0.1){
       return true;
     }
     else{

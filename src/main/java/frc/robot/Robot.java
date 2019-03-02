@@ -10,6 +10,7 @@ import frc.robot.Subsystem.Elevator.Elevator;
 import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
 import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 //The main robot class, during a match the robot goes through everything in this class
@@ -40,7 +41,10 @@ public class Robot extends TimedRobot {
         armPresetSelector.setDefaultOption("Hatch State", ArmState.HATCH);
         armPresetSelector.addOption("Ball State", ArmState.BALL);
         SmartDashboard.putData("Threadbar State", armPresetSelector);
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+        NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("camMode").setNumber(0);
+        NetworkTableInstance.getDefault().getTable("limelight-back").getEntry("camMode").setNumber(0);
+
+        // CameraServer.getInstance().startAutomaticCapture(camera )
 
         // This has to be at the bottom or things crash
         // OI requires everything to be initialized
@@ -51,7 +55,6 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         Robot.chassis.drivetrain.resetEncoderPosition();
-        Robot.chassis.transmission.shift(Transmission.GearState.LOW);
 
     }
 

@@ -5,10 +5,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
+import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+
 import static java.lang.System.currentTimeMillis;
 
 //Moves the elevator to whatever setpoint you give it via PID
 public class SetElevator extends Command {
+  private LiftState setpoint;
   private double setpointInches;
   private double currentPosition;
   private double error;
@@ -21,47 +24,90 @@ public class SetElevator extends Command {
   private double errorSum;
   private double previousError;
   private boolean isFinished;
+  private ArmState armState;
   private long stopTime;
   private long currentTime;
+  private int counter;
   
-  // public enum LiftState{ //TODO: Add in enum stuff, currently not in use
+  public enum LiftState{ //TODO: Add in enum stuff, currently not in use
 
-  //   BALL_LEVEL_1,
-  //   BALL_LEVEL_2,
-  //   BALL_LEVEL_3,
-  //   HATCH_LEVEL_1,
-  //   HATCH_LEVEL_2,
-  //   HATCH_LEVEL_3,
-  //   CARGO_SHIP_BALL,
-  //   GROUND_LEVEL;
+    LEVEL_1,
+    LEVEL_2,
+    LEVEL_3,
+    CARGO_SHIP_BALL,
+    CARGO_LOADER_BALL,
+    GROUND_LEVEL;
 
-  // }
+  }
 
   //Inches
-  public SetElevator(double setpointInches) {
-
+  public SetElevator(LiftState setpoint) {
     requires(Robot.elevator.lift);
-    this.setpointInches = setpointInches; 
+    this.setpoint = setpoint; 
     
   }
 
   @Override
   protected void initialize() {
-
     Robot.elevator.lift.shiftBrake(BrakeState.OFF);
+    armState = Robot.intake.armPresets.getArmState();
+
+    switch(setpoint){
+      case LEVEL_1:
+        if(armState == ArmState.HATCH){  
+          setpointInches = 7.5;
+        }
+        else{
+          setpointInches = 13;
+        }
+      break;
+
+      case LEVEL_2:
+        if(armState == ArmState.HATCH){  
+          setpointInches = 24.5;
+      }
+        else{
+          setpointInches = 32.5;
+      }
+      break;
+
+      case LEVEL_3:
+        if(armState == ArmState.HATCH){  
+          setpointInches = 47;
+      }
+        else{
+          setpointInches = 47;
+      }
+      break;
+
+      case GROUND_LEVEL:
+      setpointInches = 0;
+      break;
+
+      case CARGO_SHIP_BALL:
+      setpointInches = 23.75;
+      break;
+
+      case CARGO_LOADER_BALL:
+      setpointInches = 19.5;
+      break;
+    }
+
     errorSum = 0;
     derivative = 0;
     isFinished = false;
+    counter = 0;
 
   }
 
   @Override
   protected void execute() {
 
+
     currentPosition = Robot.elevator.lift.getLiftPosition();
     SmartDashboard.putNumber("Elevator position", currentPosition);
     error = setpointInches - currentPosition;
-    if(Math.abs(error) < 3){
+    if(Math.abs(error) < 4.5){
       errorSum += (error * 0.2);
     }
     else{
@@ -71,14 +117,14 @@ public class SetElevator extends Command {
 
     if(error > 0){
       kP = 0.055; //0.07
-      kI = 0.005;
-      kD = 0.15;
-      min_Command = 0.005; //0.05
+      kI = 0.009;
+      kD = 0.175;
+      min_Command = 0.006; //0.05
     }
     
 
     if(error < 0){
-      kP = 0.01;
+      kP = 0.015;
       kI = 0.001;
       kD = 0;
     }
@@ -101,19 +147,18 @@ public class SetElevator extends Command {
     // else{
     //   Robot.elevator.lift.shiftBrake(BrakeState.OFF);
     // }
-
+     
     Robot.elevator.lift.setLiftPower(elevatorMovement); 
     previousError = error;
     SmartDashboard.putNumber("Elevator PID movement", elevatorMovement);
     SmartDashboard.putNumber("Elevator PID Error", error);
     SmartDashboard.putNumber("Elevator Integral", errorSum * kI);
     SmartDashboard.putNumber("Elevator PID Setpoint", setpointInches);
-    System.out.println(derivative * kD);
 
   }
 
   private boolean inZone(){
-    if(Math.abs(error) < 0.5){
+    if(Math.abs(error) < 0.4){
       return true;
     }
     else{
@@ -174,9 +219,8 @@ public class SetElevator extends Command {
 
   @Override
   protected void end() {
-    System.out.println("Elevator PID is stopping YAAAAAA");
-    Robot.elevator.lift.setLiftPower(0);
     Robot.elevator.lift.shiftBrake(BrakeState.ON);
+    Robot.elevator.lift.setLiftPower(0);
   }
 
   @Override
