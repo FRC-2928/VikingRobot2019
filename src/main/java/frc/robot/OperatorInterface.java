@@ -56,9 +56,9 @@ public class OperatorInterface {
     private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 2);//placeholder
     private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 1);//placeholder
     private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 6);
+    // private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 971);
     private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
-    // private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 971);
 
     //Endgame
     private static final JoystickButton endgame = new JoystickButton(operatorConsole, 2928);
@@ -97,11 +97,6 @@ public class OperatorInterface {
         // drawbridgeDown.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         // drawbridgeUp.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
         
-        // drawbridgeDown.whenPressed(new SetElevatorBrake(BrakeState.OFF));
-        // drawbridgeUp.whenPressed(new SetElevatorBrake(BrakeState.ON));
-        // drawbridgeDown.whileHeld(new SetElevator(25));
-        // drawbridgeUp.whileHeld(new SetElevator(0));
-
         elevatorUp.whileHeld(new RunElevator(0.45));
         elevatorDown.whileHeld(new RunElevator(-0.1));
         elevatorLvlGround.whenPressed(new SetElevator(0));
@@ -115,12 +110,12 @@ public class OperatorInterface {
             // elevatorLvl2.whileHeld(new RunLeftThreadbar(0.8));
             // elevatorLvl3.whileHeld(new RunLeftThreadbar(-0.8));
             // elevatorLvl2.whileHeld(new SetElevator(30));
-            // elevatorLvl3.whileHeld(new SetElevator(45));
+            // elevatorLvl3.whileHeld(new SetElevator(46));
         // }
         // if(armCurrentState == ArmState.HATCH){
         //     elevatorLvl1.whenPressed(new SetElevator(Idfk));
         //     elevatorLvl2.whenPressed(new SetElevator(Idfk));
-        //     elevatorLvl3.whenPressed(new SetElevator(Idfk));
+        //     elevatorLvl3.whenPressed(new SetElevator(46));
         // }
 
         // endgame.whenPressed(new Endgame());

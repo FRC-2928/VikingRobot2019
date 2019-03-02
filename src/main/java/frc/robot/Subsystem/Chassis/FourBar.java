@@ -16,6 +16,7 @@ public class FourBar extends Subsystem {
 
     fourBarMotor = new WPI_TalonSRX(RobotMap.TALON_FOUR_BAR);
     fourBarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,10);
+    fourBarMotor.configClosedloopRamp(1);
 
   }
 
