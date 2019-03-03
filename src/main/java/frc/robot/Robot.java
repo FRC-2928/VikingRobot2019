@@ -37,12 +37,6 @@ public class Robot extends TimedRobot {
         elevator = new Elevator();
         intake = new Intake();
         //sensors = new Sensors();
-        armPresetSelector = new SendableChooser<>();
-        armPresetSelector.setDefaultOption("Hatch State", ArmState.HATCH);
-        armPresetSelector.addOption("Ball State", ArmState.BALL);
-        SmartDashboard.putData("Threadbar State", armPresetSelector);
-        NetworkTableInstance.getDefault().getTable("limelight-front").getEntry("camMode").setNumber(0);
-        NetworkTableInstance.getDefault().getTable("limelight-back").getEntry("camMode").setNumber(0);
 
         // CameraServer.getInstance().startAutomaticCapture(camera )
 
@@ -67,7 +61,6 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Scheduler.getInstance().removeAll();
         intake.threadbar.resetThreadbarEncoders();
-        elevator.lift.resetLiftEncoders();
         //chassis.drivetrain.setMotorSafetyEnabled(true);
         
     }

@@ -55,7 +55,7 @@ public class SetElevator extends Command {
     switch(setpoint){
       case LEVEL_1:
         if(armState == ArmState.HATCH){  
-          setpointInches = 7.5;
+          setpointInches = 8.3;
         }
         else{
           setpointInches = 13;
@@ -64,7 +64,7 @@ public class SetElevator extends Command {
 
       case LEVEL_2:
         if(armState == ArmState.HATCH){  
-          setpointInches = 24.5;
+          setpointInches = 27.5;
       }
         else{
           setpointInches = 32.5;
@@ -107,7 +107,7 @@ public class SetElevator extends Command {
     currentPosition = Robot.elevator.lift.getLiftPosition();
     SmartDashboard.putNumber("Elevator position", currentPosition);
     error = setpointInches - currentPosition;
-    if(Math.abs(error) < 4.5){
+    if(Math.abs(error) < 5){
       errorSum += (error * 0.2);
     }
     else{
@@ -117,7 +117,7 @@ public class SetElevator extends Command {
 
     if(error > 0){
       kP = 0.055; //0.07
-      kI = 0.009;
+      kI = 0.01;
       kD = 0.175;
       min_Command = 0.006; //0.05
     }
@@ -158,7 +158,7 @@ public class SetElevator extends Command {
   }
 
   private boolean inZone(){
-    if(Math.abs(error) < 0.4){
+    if(Math.abs(error) < 0.3){
       return true;
     }
     else{

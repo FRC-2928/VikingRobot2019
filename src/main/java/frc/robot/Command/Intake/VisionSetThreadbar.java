@@ -37,7 +37,6 @@ public class VisionSetThreadbar extends Command {
 
     requires(Robot.intake.threadbar);
 
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
   }
 
   public double getVisionErrorLeft(){
@@ -54,8 +53,8 @@ public class VisionSetThreadbar extends Command {
   protected void initialize() {
     
     finished = false;
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(0);
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+
   }
 
   @Override
@@ -134,7 +133,7 @@ public class VisionSetThreadbar extends Command {
 
     Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
     // Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
-    // SmartDashboard.putNumber("X, Limelight", x);
+    SmartDashboard.putNumber("X, Limelight", x);
     // SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
     // SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
     // SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
@@ -149,17 +148,17 @@ public class VisionSetThreadbar extends Command {
       // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
       return true;
     }
-    if (finished = true){
-      return true;
-    }
+    // if (finished = true){
+    //   return true;
+    // }
       return false;
   }
 
   @Override
   protected void end() {
     Robot.intake.threadbar.setThreadbarPower(0, 0);
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight-back").getEntry("camMode").setNumber(1);
   }
 
   @Override

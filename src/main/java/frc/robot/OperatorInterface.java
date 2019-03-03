@@ -32,7 +32,7 @@ public class OperatorInterface {
     private static final JoystickButton pusherButton = new JoystickButton(operatorConsole, 10);
 
     //Testing autos
-    // private static final JoystickButton VisionButton = new JoystickButton(driveStick, 7);
+    private static final JoystickButton VisionButton = new JoystickButton(driveStick, 5);
     // private static final JoystickButton LifterTest = new JoystickButton(driveStick, 8);
 
     //Intake
@@ -76,7 +76,7 @@ public class OperatorInterface {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
         gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
 
-        groundButtonUp.whileHeld(new RunGroundIntake(0.35));
+        groundButtonUp.whileHeld(new RunGroundIntake(0.8));
         groundButtonDown.whileHeld(new RunGroundIntake(-0.5));
         pusherButton.whenPressed(new SetPusher(PusherState.IN));
         pusherButton.whenReleased(new SetPusher(PusherState.OUT));
@@ -98,7 +98,7 @@ public class OperatorInterface {
             // threadbarState.whenPressed(new SetArm(ArmState.BALL));
             // threadbarState.whenInactive(new SetArm(ArmState.HATCH));
 
-            // VisionButton.whenPressed(new VisionSetThreadbar());
+            VisionButton.whenPressed(new VisionSetThreadbar());
 
            
             // }
