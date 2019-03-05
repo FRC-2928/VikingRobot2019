@@ -7,7 +7,7 @@ public class Intake {
     public Threadbar threadbar;
     //public Sensors sensors;
     public Wheels wheels;
-    public ArmPreSets armPresets;
+    public ArmPresets armPresets;
     public Drawbridge drawbridge;
 
     public Intake()
@@ -15,7 +15,7 @@ public class Intake {
         threadbar = new Threadbar();
         //sensors = new Sensors();
         wheels = new Wheels();
-        armPresets = new ArmPreSets();
+        armPresets = new ArmPresets();
         drawbridge = new Drawbridge();
     }
 

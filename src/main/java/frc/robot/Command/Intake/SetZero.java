@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
 
+/**
+ * Sets threadbar back to default position for cargo or hatch (depends on arm state)
+ */
 public class SetZero extends Command {
   private double currentPositonLeft;
   private double currentPositionRight;
@@ -28,17 +31,19 @@ public class SetZero extends Command {
 
   @Override
   protected void execute() {
-    currentPositonLeft = Robot.intake.threadbar.getLeftThreadbarEncoder() * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder() * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositonLeft = Robot.intake.threadbar.getLeftThreadbarEncoder()
+        * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()
+        * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     errorLeft = setpoint - currentPositonLeft;
     errorRight = setpoint - currentPositionRight;
 
-    if(errorLeft > 1 || errorRight > 1){
+    if (errorLeft > 1 || errorRight > 1) {
       outputLeft = errorLeft * kP;
       outputRight = errorRight * kP;
     }
 
-    if(errorLeft < 1 || errorRight < 1){
+    if (errorLeft < 1 || errorRight < 1) {
       outputLeft = errorLeft * kP + errorLeft * min_Command;
       outputRight = errorRight * kP + errorRight * min_Command;
     }
@@ -48,10 +53,7 @@ public class SetZero extends Command {
 
   @Override
   protected boolean isFinished() {
-    if(Math.abs(errorLeft) < 0.4 || Math.abs(errorRight) < 0.4){
-      return true;
-    }
-    return false;
+    return Math.abs(errorLeft) < 0.4 || Math.abs(errorRight) < 0.4;
   }
 
   @Override

@@ -10,7 +10,7 @@ public class RobotConstants {
 
     public static final double THREAD_ENCODER_TICKS_PER_INCH = 27927;
     public static final double THREAD_ENCODER_TICKS_TO_HATCH = 0; //placeholder, ticks from midpoint to hatch
-    public static final double THREAD_ENCODER_TICKS_TO_BALL = 6.25; //placeholder, ticks from midpoint to ball
+    public static final double THREAD_ENCODER_TICKS_TO_BALL = 6.1; //6.25 for fully inflated balls 
     public static final long THREAD_MAX_ENCODER_TICKS_LEFT = 118; //placeholder
     public static final long THREAD_MAX_ENCODER_TICKS_RIGHT = 148; //placeholder
     public static final double LIMELIGHT_DISTANCE_FROM_FRONT = 24.5; //inches
@@ -19,7 +19,7 @@ public class RobotConstants {
     public static final long ELEVATOR_ENCODER_TICKS_PER_INCH = 254; //placeholder
     public static final long ELEVATOR_MAX_ENCODER_TICKS = 48; //placeholder
     public static final long ELEVATOR_MIN_ENCODER_TICKS = 0; //placeholder
-    public static final long ELEVATOR_STOP_THRESHOLD = 2000; //placeholder
+    public static final long ELEVATOR_STOP_THRESHOLD = 2; //placeholder
 
     public static final long FOUR_BAR_ENCODER_TICKS_PER_INCH = 1011; //placeholder
     public static final long FOUR_BAR_MAX_ENCODER_TICKS = 5499; //placeholder

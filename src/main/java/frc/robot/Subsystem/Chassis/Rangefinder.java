@@ -4,10 +4,13 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Rangefinder sensor (for finding wall for platform climb level 3)
+ */
 public class Rangefinder extends Subsystem {
   public AnalogInput rangefinder;
 
-  Rangefinder(){
+  public Rangefinder() {
     rangefinder = new AnalogInput(3);
     rangefinder.setOversampleBits(8);
     rangefinder.setAverageBits(4);
@@ -21,7 +24,5 @@ public class Rangefinder extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }

@@ -11,44 +11,34 @@ public class Drawbridge extends Subsystem {
   public DrawbridgeState bridgeState;
   private double lastChange = 0;
 
-  public enum DrawbridgeState{
-
-    UP,
-    DOWN;
-
-    DrawbridgeState toggle(){
-
-      return this.equals(UP) ? DOWN: UP;
-
-    }
-
+  public enum DrawbridgeState {
+    UP, DOWN;
   }
 
-  public DrawbridgeState getDrawbridgeState(){
+  public DrawbridgeState getDrawbridgeState() {
     return bridgeState;
   }
 
-  public Drawbridge(){
+  public Drawbridge() {
     drawbridge = new Solenoid(RobotMap.SOLENOID_INTAKE_DRAWBRIDGE);
     bridgeState = DrawbridgeState.UP;
   }
 
-  public void switchBridge(DrawbridgeState state){
-
+  public void switchBridge(DrawbridgeState state) {
     double time = currentTimeMillis();
-    if ((time - lastChange) > RobotConstants.DRAWBRIDGE_DELAY_MS){
+    if ((time - lastChange) > RobotConstants.DRAWBRIDGE_DELAY_MS) {
 
-      switch(state){
-
-        case UP:  
-        drawbridge.set(false);
-        break;
-
+      switch (state) {
+        case UP:
+          drawbridge.set(false);
+          break;
         case DOWN:
-        drawbridge.set(true);
-        break;
-
+          drawbridge.set(true);
+          break;
+        default:
+          break;
       }
+
       lastChange = time;
       bridgeState = state;
     }

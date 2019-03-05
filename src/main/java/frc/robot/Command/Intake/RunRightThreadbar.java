@@ -19,7 +19,7 @@ public class RunRightThreadbar extends Command {
   @Override
   protected void execute() {
     Robot.intake.threadbar.getRightThreadbarEncoder();
-    
+
   }
 
   @Override
@@ -35,17 +35,5 @@ public class RunRightThreadbar extends Command {
   @Override
   protected void interrupted() {
     end();
-  }
-
-  public void resetEncoders(){
-
-    while(!false){
-
-      Robot.intake.threadbar.setRightThreadbarPower(power);
-
-    }
-
-
-
   }
 }

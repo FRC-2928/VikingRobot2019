@@ -1,10 +1,10 @@
  package frc.robot;
 
- //In here we map all the ports for the robot
-
+ /**
+  * Map all the ports for the robots
+  */
 public class RobotMap 
 {
-
     //Drivetrain motors
     //Back Talon on left and right are the leaders, rest are slaves
     public static final int VCTOR_FRONT_LEFT = 13;

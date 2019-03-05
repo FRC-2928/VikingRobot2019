@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
 
+/**
+ * Represents the folded intake going up or down
+ */
 public class SetDrawbridge extends Command {
   private DrawbridgeState target;
 

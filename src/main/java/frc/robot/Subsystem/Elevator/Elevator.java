@@ -6,8 +6,7 @@ package frc.robot.Subsystem.Elevator;
 public class Elevator {
     public Lift lift;
 
-    public Elevator(){
+    public Elevator() {
         this.lift = new Lift();
-
     }
 }

@@ -8,80 +8,59 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
-
 public class Lift extends Subsystem {
   private CANSparkMax liftMotor;
   private CANEncoder liftEncoder;
   private Solenoid brake;
   private BrakeState currentState;
-  
 
-  //Enum for the Elevator brake, set off before moving, set on to stay in place
-  public enum BrakeState{
-
-    OFF,
-    ON;
-
-      BrakeState toggle(){
-        return this.equals(OFF) ? BrakeState.ON : BrakeState.OFF;
-      }
-
+  // Enum for the Elevator brake, set off before moving, set on to stay in place
+  public enum BrakeState {
+    OFF, ON;
   }
 
-  public Lift(){
-
-    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR,MotorType.kBrushless);
+  public Lift() {
+    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR, MotorType.kBrushless);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
-    
+
     liftEncoder = liftMotor.getEncoder();
-    currentState = BrakeState.ON;  
+    currentState = BrakeState.ON;
   }
 
-  public void shiftBrake(BrakeState state){
-
-    switch(state){
-      
-      case OFF: 
-      brake.set(false);
-      break;
-
-      case ON: 
-      brake.set(true);
-      break;
+  public void shiftBrake(BrakeState state) {
+    switch (state) {
+      case OFF:
+        brake.set(false);
+        break;
+      case ON:
+        brake.set(true);
+        break;
+      default:
+        break;
     }
+
     currentState = state;
   }
 
-  public void toggleLiftBrake(){
-    shiftBrake(getBrakeState().toggle());
-  }
-
-  public BrakeState getBrakeState(){
+  public BrakeState getBrakeState() {
     return currentState;
   }
 
-  public void setLiftPower(double power){
-
+  public void setLiftPower(double power) {
     liftMotor.set(power);
   }
 
-  public double getLiftPosition(){
-
+  public double getLiftPosition() {
     double liftPosition = liftEncoder.getPosition();
     SmartDashboard.putNumber("Lift position inches", liftPosition);
     return liftPosition;
-    
   }
 
-  public void resetLiftEncoders(){
-
+  public void resetLiftEncoders() {
     liftEncoder.setPosition(0);
-
   }
-
+  
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
-import frc.robot.Subsystem.Intake.ArmPreSets.ArmState;
+import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -13,25 +13,26 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 //We're then bring the threadbar over
 
 public class VisionSetThreadbar extends Command {
-    //Reading values from the limelight
+  // Reading values from the limelight
 
-    // Based on the assumption that we're looking at both vision tapes, and finding an average in between
-    // Convert everything to inches, then to encoder ticks
-    // Initiates variables
-    private double currentPositionInchesLeft; 
-    private double currentPositionInchesRight;
-    private double desiredSetpoint;
-    private double errorInchesLeft;
-    private double errorInchesRight;
- 
-    private double threadbarInchesLeft;
-    private double threadbarInchesRight;
-    private double threadbarMovementLeft;
-    private double threadbarMovementRight;
+  // Based on the assumption that we're looking at both vision tapes, and finding
+  // an average in between
+  // Convert everything to inches, then to encoder ticks
+  // Initiates variables
+  private double currentPositionInchesLeft;
+  private double currentPositionInchesRight;
+  private double desiredSetpoint;
+  private double errorInchesLeft;
+  private double errorInchesRight;
 
-    private boolean leftLimitSwitch;
-    private boolean rightLimitSwitch;
-    private boolean finished;
+  private double threadbarInchesLeft;
+  private double threadbarInchesRight;
+  private double threadbarMovementLeft;
+  private double threadbarMovementRight;
+
+  private boolean leftLimitSwitch;
+  private boolean rightLimitSwitch;
+  private boolean finished;
 
   public VisionSetThreadbar() {
 
@@ -39,19 +40,19 @@ public class VisionSetThreadbar extends Command {
 
   }
 
-  public double getVisionErrorLeft(){
-    SmartDashboard.putNumber("Stop error left",errorInchesLeft);
+  public double getVisionErrorLeft() {
+    SmartDashboard.putNumber("Stop error left", errorInchesLeft);
     return errorInchesLeft;
   }
 
-  public double getVisionErrorRight(){
+  public double getVisionErrorRight() {
     SmartDashboard.putNumber("Stop error right", errorInchesRight);
     return errorInchesRight;
   }
 
   @Override
   protected void initialize() {
-    
+
     finished = false;
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
 
@@ -66,76 +67,80 @@ public class VisionSetThreadbar extends Command {
     leftLimitSwitch = Robot.intake.threadbar.getLeftThreadbarLimitSwitch();
     rightLimitSwitch = Robot.intake.threadbar.getRightThreadbarLimitSwitch();
 
-    currentPositionInchesLeft = -Robot.intake.threadbar.getLeftThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    currentPositionInchesRight = -Robot.intake.threadbar.getRightThreadbarEncoder() / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionInchesLeft = -Robot.intake.threadbar.getLeftThreadbarEncoder()
+        / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    currentPositionInchesRight = -Robot.intake.threadbar.getRightThreadbarEncoder()
+        / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
 
-    //Creates a setpoint that's in the middle of the two arms
+    // Creates a setpoint that's in the middle of the two arms
     desiredSetpoint = x * RobotConstants.LIMELIGHT_ROCKET_TAPE_INCHES_PER_DEGREES;
 
-    //Creates setpoints for each arm, differs based on Hatch or Ball state
-    if(Robot.intake.armPresets.currentState == ArmState.HATCH){
-    errorInchesLeft = desiredSetpoint - currentPositionInchesLeft;
-    errorInchesRight = desiredSetpoint - currentPositionInchesRight;
+    // Creates setpoints for each arm, differs based on Hatch or Ball state
+    if (Robot.intake.armPresets.currentState == ArmState.HATCH) {
+      errorInchesLeft = desiredSetpoint - currentPositionInchesLeft;
+      errorInchesRight = desiredSetpoint - currentPositionInchesRight;
     }
 
-    if(Robot.intake.armPresets.currentState == ArmState.BALL){
-    errorInchesLeft = (desiredSetpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesLeft;
-    errorInchesRight = (desiredSetpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesRight;
+    if (Robot.intake.armPresets.currentState == ArmState.BALL) {
+      errorInchesLeft = (desiredSetpoint - RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesLeft;
+      errorInchesRight = (desiredSetpoint + RobotConstants.THREAD_ENCODER_TICKS_TO_BALL) - currentPositionInchesRight;
 
     }
-    
-    //kP is multiplied by error to get the power
-    //min_Command helps give a little extra power when the threadbar is close
+
+    // kP is multiplied by error to get the power
+    // min_Command helps give a little extra power when the threadbar is close
     double kP = 0.4;
     double min_Command = 0.3;
 
-    //Setting up how much power we're giving the threadbars
-    if(Math.abs(errorInchesLeft) > 2){
+    // Setting up how much power we're giving the threadbars
+    if (Math.abs(errorInchesLeft) > 2) {
 
       threadbarInchesLeft = kP * errorInchesLeft;
 
     }
 
-    if(Math.abs(errorInchesLeft) < 2){
+    if (Math.abs(errorInchesLeft) < 2) {
 
-      threadbarInchesLeft = kP * errorInchesLeft + min_Command * errorInchesLeft; 
+      threadbarInchesLeft = kP * errorInchesLeft + min_Command * errorInchesLeft;
 
     }
 
-    if(Math.abs(errorInchesRight) > 2){
+    if (Math.abs(errorInchesRight) > 2) {
 
       threadbarInchesRight = kP * errorInchesRight;
 
     }
 
-    if(Math.abs(errorInchesRight) < 2){
+    if (Math.abs(errorInchesRight) < 2) {
 
       threadbarInchesRight = kP * errorInchesRight + min_Command * errorInchesRight;
 
     }
-    
-    
 
     threadbarMovementLeft = threadbarInchesLeft * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     threadbarMovementRight = threadbarInchesRight * RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    
-    // if(leftLimitSwitch == true && (threadbarMovementLeft < 0 || threadbarMovementRight < 0)){
-    //   threadbarMovementLeft = 0;
-    //   threadbarMovementRight = 0;
-    //   finished = true;
-    // } //Not finished, need to  confirm the limit switch
 
-    // if(rightLimitSwitch == true && (threadbarMovementLeft > 0 || threadbarMovementRight > 0)){
-    //   threadbarMovementLeft = 0;
-    //   threadbarMovementRight = 0;
-    //   finished = true;
+    // if(leftLimitSwitch == true && (threadbarMovementLeft < 0 ||
+    // threadbarMovementRight < 0)){
+    // threadbarMovementLeft = 0;
+    // threadbarMovementRight = 0;
+    // finished = true;
+    // } //Not finished, need to confirm the limit switch
+
+    // if(rightLimitSwitch == true && (threadbarMovementLeft > 0 ||
+    // threadbarMovementRight > 0)){
+    // threadbarMovementLeft = 0;
+    // threadbarMovementRight = 0;
+    // finished = true;
     // }
 
     Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
     // Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
     SmartDashboard.putNumber("X, Limelight", x);
-    // SmartDashboard.putNumber("Left Threadbar current position inches left", currentPositionInchesLeft);
-    // SmartDashboard.putNumber("Right Threadbar current position inches right", currentPositionInchesRight);
+    // SmartDashboard.putNumber("Left Threadbar current position inches left",
+    // currentPositionInchesLeft);
+    // SmartDashboard.putNumber("Right Threadbar current position inches right",
+    // currentPositionInchesRight);
     // SmartDashboard.putNumber("Limelight desired setpoint", desiredSetpoint);
     // SmartDashboard.putNumber("Limelight error left", errorInchesLeft);
     // SmartDashboard.putNumber("Limelight error right", errorInchesRight);
@@ -143,15 +148,8 @@ public class VisionSetThreadbar extends Command {
 
   @Override
   protected boolean isFinished() {
-    //Stops if within 1 inches
-    if (Math.abs(errorInchesLeft) < 0.5 && Math.abs(errorInchesRight) < 0.5){
-      // SmartDashboard.putString("Threadbar is Finished", "Left side is done");
-      return true;
-    }
-    // if (finished = true){
-    //   return true;
-    // }
-      return false;
+    // Stops if within 1 inches
+    return Math.abs(errorInchesLeft) < 0.5 && Math.abs(errorInchesRight) < 0.5;
   }
 
   @Override
@@ -166,4 +164,3 @@ public class VisionSetThreadbar extends Command {
     end();
   }
 }
-
