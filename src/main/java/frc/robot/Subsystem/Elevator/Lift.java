@@ -11,7 +11,8 @@ import frc.robot.RobotMap;
 public class Lift extends Subsystem {
   private CANSparkMax liftMotor;
   private CANEncoder liftEncoder;
-  private Solenoid brake;
+  private Solenoid brakeIn;
+  private Solenoid brakeOut;
   private BrakeState currentState;
 
   // Enum for the Elevator brake, set off before moving, set on to stay in place
@@ -21,22 +22,26 @@ public class Lift extends Subsystem {
 
   public Lift() {
     liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR, MotorType.kBrushless);
-    brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
-
+    brakeIn = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE_IN);
+    brakeOut = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE_OUT);
     liftEncoder = liftMotor.getEncoder();
     currentState = BrakeState.ON;
   }
 
   public void shiftBrake(BrakeState state) {
     switch (state) {
-      case OFF:
-        brake.set(false);
-        break;
-      case ON:
-        brake.set(true);
-        break;
+      case OFF: 
+      brakeOut.set(true);
+      brakeIn.set(false);
+      break;
+
+      case ON: 
+      brakeOut.set(false);
+      brakeIn.set(true);
+      break;
+
       default:
-        break;
+      break;
     }
 
     currentState = state;
