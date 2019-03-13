@@ -108,11 +108,11 @@ public class OperatorInterface {
         drawbridge.whenInactive(new SetDrawbridge(DrawbridgeState.DOWN));
 
         armCurrentState = getArmState();
-        SmartDashboard.putString("ARM CURRENT STATE FOR OPERATOR CONSOLE",
-                armCurrentState == ArmState.BALL ? "BALL" : "HATCH");
-        elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
         elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
         elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
+        elevatorUp.whileHeld(new RunElevator(0.5));
+        elevatorDown.whileHeld(new RunElevator(-0.1));
+        elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
         elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
         elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
@@ -135,6 +135,10 @@ public class OperatorInterface {
 
     public double getDriveZ() {
         return driveStick.getZ();
+    }
+
+    public double getSlider(){
+        return driveStick.getThrottle();
     }
 
     private ArmState getArmState() {

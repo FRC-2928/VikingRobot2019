@@ -57,6 +57,9 @@ public class Drivetrain extends Subsystem {
     right_follower_1.setNeutralMode(NeutralMode.Brake);
     right_follower_2.setNeutralMode(NeutralMode.Brake);
 
+    left.configPeakCurrentLimit(55, 10);
+    right.configPeakCurrentLimit(55, 10);
+
     left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     left.configNeutralDeadband(0.01);

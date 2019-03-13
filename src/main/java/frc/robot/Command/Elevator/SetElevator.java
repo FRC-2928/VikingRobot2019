@@ -101,14 +101,13 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.055; // 0.07
-      kI = 0.01;
-      kD = 0.175;
-      min_Command = 0.006; // 0.05
+      kP = 0.0675; // 0.07
+      kI = 0.035;
+      kD = 0.2;
     }
 
     if (error < 0) {
-      kP = 0.015;
+      kP = 0.02;
       kI = 0.001;
       kD = 0;
     }
@@ -119,7 +118,7 @@ public class SetElevator extends Command {
     }
 
     if (Math.abs(error) < 2) {
-      elevatorMovement = ((kP + min_Command) * error) + (kI * errorSum) + (kD * derivative);
+      elevatorMovement = (kP * error) + (kI * errorSum) + (kD * derivative);
     }
 
     // if(inZone()){
@@ -133,13 +132,12 @@ public class SetElevator extends Command {
     previousError = error;
     SmartDashboard.putNumber("Elevator PID movement", elevatorMovement);
     SmartDashboard.putNumber("Elevator PID Error", error);
-    SmartDashboard.putNumber("Elevator Integral", errorSum * kI);
     SmartDashboard.putNumber("Elevator PID Setpoint", setpointInches);
 
   }
 
   private boolean inZone() {
-    return Math.abs(error) < 0.3;
+    return Math.abs(error) < 0.4;
   }
 
   @Override
@@ -158,15 +156,7 @@ public class SetElevator extends Command {
     // }
 
     if (inZone()) {
-      if (stopTime == 0) {
-        stopTime = currentTimeMillis();
-      }
-      if (currentTimeMillis() - stopTime > 250) {
-        return true;
-      }
-
-    } else {
-      stopTime = 0;
+      return true;
     }
 
     // if (isFinished == true){

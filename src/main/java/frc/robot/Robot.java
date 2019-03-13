@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -34,7 +36,6 @@ public class Robot extends TimedRobot {
         // groundintake = new GroundIntake();
         elevator = new Elevator();
         intake = new Intake();
-        //sensors = new Sensors();
 
         // This has to be at the bottom or things crash
         // OI requires everything to be initialized
@@ -67,7 +68,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         // NetworkTableEntry tx = table.getEntry("tx");
         // double x = tx.getDouble(0.0);
         // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);

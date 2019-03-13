@@ -32,13 +32,13 @@ public class Drawbridge extends Subsystem {
 
       switch (state) {
         case UP:  
-        drawbridgeUp.set(true);
-        drawbridgeDown.set(false);
+        drawbridgeUp.set(false);
+        drawbridgeDown.set(true);
         break;
 
         case DOWN:
-        drawbridgeUp.set(false);
-        drawbridgeDown.set(true);
+        drawbridgeUp.set(true);
+        drawbridgeDown.set(false);
         break;
         default:
           break;
