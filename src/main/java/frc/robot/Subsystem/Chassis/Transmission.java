@@ -19,10 +19,8 @@ public class Transmission extends Subsystem {
         HIGH, LOW;
     }
 
-    public Transmission() {
+    public Transmission(){
         shiftSolenoid = new Solenoid(RobotMap.SOLENOID_TRANSMISSION);
-        shiftSolenoid.set(false);
-        currentState = LOW;
     }
 
     public void shift(GearState state) {

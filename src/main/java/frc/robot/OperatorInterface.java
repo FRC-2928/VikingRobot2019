@@ -23,6 +23,7 @@ public class OperatorInterface {
     private static final Joystick driveStick = new Joystick(0);
     private static final Joystick operatorConsole = new Joystick(1);
     private static final Joystick driverConsole = new Joystick(2);
+   
 
     private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
     private static final JoystickButton groundButtonUp = new JoystickButton(operatorConsole, 12);
@@ -110,7 +111,7 @@ public class OperatorInterface {
         armCurrentState = getArmState();
         elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
         elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
-        elevatorUp.whileHeld(new RunElevator(0.5));
+        elevatorUp.whileHeld(new RunElevator(0.75));
         elevatorDown.whileHeld(new RunElevator(-0.1));
         elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
         elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));

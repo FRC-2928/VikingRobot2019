@@ -3,34 +3,46 @@ package frc.robot.Subsystem.Chassis;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.Command.Endgame.RunFourBar;
 
 /** 
  * Four bar system for climbing
  */
 public class FourBar extends Subsystem {
-  private WPI_TalonSRX fourBarMotor;
+  private CANSparkMax fourBarMotor;
+  private CANEncoder fourBarEncoder;
+  public boolean stopDefaultFourBar;
 
   public FourBar() {
-    fourBarMotor = new WPI_TalonSRX(RobotMap.TALON_FOUR_BAR);
-    fourBarMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-    fourBarMotor.configOpenloopRamp(0.75);
+    fourBarMotor = new CANSparkMax(RobotMap.SPARK_FOUR_BAR, MotorType.kBrushless);
+    fourBarEncoder = fourBarMotor.getEncoder();
+    fourBarMotor.setOpenLoopRampRate(0.75);
   }
 
   public void setFourBarPower(double power) {
-    fourBarMotor.set(ControlMode.PercentOutput, power);
+    fourBarMotor.set(power);
+  }
+
+  public void setDefaultFourBar(boolean state){
+    stopDefaultFourBar = state;
+  }
+
+  public boolean getDefaultFourBarState(){
+    return stopDefaultFourBar;
   }
 
   public double getFourBarPosition() {
-    SmartDashboard.putNumber("FourBar position", fourBarMotor.getSelectedSensorPosition());
-    return fourBarMotor.getSelectedSensorPosition();
+    SmartDashboard.putNumber("FourBar position", fourBarEncoder.getPosition());
+    return fourBarEncoder.getPosition();
   }
 
   @Override
   public void initDefaultCommand() {
-
   }
 }

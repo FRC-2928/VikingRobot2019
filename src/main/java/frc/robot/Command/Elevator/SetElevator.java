@@ -49,7 +49,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 8.3;
+        setpointInches = 8.35;
       } else {
         setpointInches = 13;
       }
@@ -101,7 +101,7 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.0675; // 0.07
+      kP = 0.0675; // 0.0675
       kI = 0.035;
       kD = 0.2;
     }

@@ -31,12 +31,12 @@ public class Drawbridge extends Subsystem {
     if ((time - lastChange) > RobotConstants.DRAWBRIDGE_DELAY_MS) {
 
       switch (state) {
-        case UP:  
+        case DOWN:  
         drawbridgeUp.set(false);
         drawbridgeDown.set(true);
         break;
 
-        case DOWN:
+        case UP:
         drawbridgeUp.set(true);
         drawbridgeDown.set(false);
         break;
