@@ -56,7 +56,7 @@ public class Threadbar extends Subsystem {
   }
 
   public double getRightThreadbarEncoder(){
-    SmartDashboard.putNumber("Left Threadbar encoder", rightThreadbarMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Threadbar encoder", rightThreadbarMotor.getSelectedSensorPosition());
     return rightThreadbarMotor.getSelectedSensorPosition();
   }
 

@@ -7,16 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Elevator.SetElevator.LiftState;
-// import frc.robot.Command.GroundIntake.RunGroundIntake;
-// import frc.robot.Command.GroundIntake.SetPusher;
-import frc.robot.Command.Endgame.RunFourBar;
-import frc.robot.Command.Endgame.ClimbWithFourBar;
 import frc.robot.Subsystem.Chassis.Transmission;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 // import frc.robot.Subsystem.GroundIntake.Pusher.PusherState;
 import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
-import frc.robot.Command.*;
 
 public class OperatorInterface {
 
@@ -66,12 +61,6 @@ public class OperatorInterface {
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
     private static final JoystickButton elevatorState = new JoystickButton(driverConsole, 6);
 
-    // Endgame
-    private static final JoystickButton endgame = new JoystickButton(operatorConsole, 2928);
-    private static final JoystickButton endgameStop = new JoystickButton(operatorConsole, 987);
-    private static final JoystickButton fourBarUp = new JoystickButton(driveStick, 4);
-    private static final JoystickButton fourBarDown = new JoystickButton(driveStick, 3);
-
     OperatorInterface() {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
         gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
@@ -119,11 +108,6 @@ public class OperatorInterface {
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
-
-        // endgame.whenPressed(new Endgame());
-        // endgameStop.whenPressed(new SetFourBar(false));
-        fourBarUp.whileHeld(new RunFourBar(-0.8));
-        fourBarDown.whileHeld(new RunFourBar(0.8));
     }
 
     public double getDriveY() {

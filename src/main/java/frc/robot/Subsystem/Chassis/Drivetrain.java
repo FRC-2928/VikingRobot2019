@@ -34,6 +34,8 @@ public class Drivetrain extends Subsystem {
   }
 
   public Drivetrain() {
+    pigeon = new PigeonIMU(RobotMap.PIGEON);
+
     left = new WPI_TalonSRX(RobotMap.TALON_BACK_LEFT);
     left_follower_1 = new WPI_VictorSPX(RobotMap.VICTOR_MIDDLE_LEFT);
     left_follower_1.follow(left);
@@ -62,6 +64,9 @@ public class Drivetrain extends Subsystem {
     left.configNeutralDeadband(0.01);
     right.configNeutralDeadband(0.01);
 
+    left.configPeakCurrentLimit(55, 10);
+    right.configPeakCurrentLimit(55, 10);
+
     drive = new DifferentialDrive(left, right);
   }
 
@@ -81,6 +86,10 @@ public class Drivetrain extends Subsystem {
     double[] angles = { 0, 0, 0 };
     pigeon.getYawPitchRoll(angles);
     return angles[0];
+  }
+
+  public void zeroGyro(){
+    pigeon.setYaw(0);
   }
 
   public double getEncoderPositionLeft() {

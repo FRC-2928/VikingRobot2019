@@ -73,6 +73,7 @@ public class SetArm extends Command {
         / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     errorLeft = setpointLeft - currentPositionLeft;
     errorRight = setpointRight - currentPositionRight;
+    
     double kP = 0.6; // Normally 0.5, testing rn
     double min_Command = 0.25;
     double kI = 0.01;

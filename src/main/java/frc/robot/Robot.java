@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Subsystem.Chassis.*;
+import frc.robot.Subsystem.Chassis.Transmission.GearState;
 import frc.robot.Subsystem.Elevator.Elevator;
 // import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
         intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
         intake.threadbar.resetThreadbarEncoders();
         elevator.lift.resetLiftEncoders();
-
+        chassis.transmission.shift(GearState.LOW);
 
     }
 

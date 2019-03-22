@@ -102,8 +102,8 @@ public class SetElevator extends Command {
 
     if (error > 0) {
       kP = 0.055; // 0.07
-      kI = 0.01;
-      kD = 0.175;
+      kI = 0.015;
+      kD = 0.25;
       min_Command = 0.006; // 0.05
     }
 
