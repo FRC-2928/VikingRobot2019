@@ -63,9 +63,9 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 47;
+        setpointInches = 46;
       } else {
-        setpointInches = 47;
+        setpointInches = 46;
       }
       break;
     case GROUND_LEVEL:

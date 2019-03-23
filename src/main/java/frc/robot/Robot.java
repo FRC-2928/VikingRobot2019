@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
         // groundintake = new GroundIntake();
         elevator = new Elevator();
         intake = new Intake();
-        chassis.fourbar.setDefaultFourBar(true);
         
         // This has to be at the bottom or things crash
         // OI requires everything to be initialized
