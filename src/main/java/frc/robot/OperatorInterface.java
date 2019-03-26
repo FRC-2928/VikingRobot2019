@@ -20,10 +20,7 @@ public class OperatorInterface {
     private static final Joystick operatorConsole = new Joystick(1);
     private static final Joystick driverConsole = new Joystick(2);
 
-    private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
-    private static final JoystickButton groundButtonUp = new JoystickButton(operatorConsole, 12);
-    private static final JoystickButton groundButtonDown = new JoystickButton(operatorConsole, 11);
-    private static final JoystickButton pusherButton = new JoystickButton(operatorConsole, 10);
+    private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);  
 
     // Testing autos
     private static final JoystickButton VisionButton = new JoystickButton(driveStick, 5);
@@ -36,7 +33,6 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
-    private static final JoystickButton threadbarState = new JoystickButton(operatorConsole, 9);
     private static final JoystickButton threadbarHatch = new JoystickButton(driverConsole, 9); // placeholder
     private static final JoystickButton threadbarBall = new JoystickButton(driverConsole, 8); // placeholder
     private static final JoystickButton opThreadbar = new JoystickButton(operatorConsole, 9);
@@ -44,7 +40,6 @@ public class OperatorInterface {
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
     private static final JoystickButton opIntake = new JoystickButton(operatorConsole, 7);
     private static final JoystickButton opOuttake = new JoystickButton(operatorConsole, 8);
-    private DrawbridgeState drawbridgeState = Robot.intake.drawbridge.getDrawbridgeState();
     private static final JoystickButton drawbridge = new JoystickButton(driverConsole, 6);
 
     // Elevator
@@ -59,7 +54,6 @@ public class OperatorInterface {
     private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
     private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
-    private static final JoystickButton elevatorState = new JoystickButton(driverConsole, 6);
 
     OperatorInterface() {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
@@ -84,8 +78,6 @@ public class OperatorInterface {
 
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));
-        // threadbarState.whenPressed(new SetArm(ArmState.BALL));
-        // threadbarState.whenInactive(new SetArm(ArmState.HATCH));
 
         VisionButton.whenPressed(new VisionSetThreadbar());
 

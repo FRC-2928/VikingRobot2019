@@ -101,14 +101,14 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.055; // 0.07
-      kI = 0.015;
-      kD = 0.25;
+      kP = 0.0525; // 0.07
+      kI = 0.0185;
+      kD = 0.275;
       min_Command = 0.006; // 0.05
     }
 
     if (error < 0) {
-      kP = 0.015;
+      kP = 0.014;
       kI = 0.001;
       kD = 0;
     }
@@ -158,15 +158,7 @@ public class SetElevator extends Command {
     // }
 
     if (inZone()) {
-      if (stopTime == 0) {
-        stopTime = currentTimeMillis();
-      }
-      if (currentTimeMillis() - stopTime > 250) {
-        return true;
-      }
-
-    } else {
-      stopTime = 0;
+      return true;
     }
 
     // if (isFinished == true){
