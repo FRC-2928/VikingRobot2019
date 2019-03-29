@@ -30,7 +30,7 @@ public class SetElevator extends Command {
   private long currentTime;
   private int counter;
 
-  public enum LiftState { // TODO: Add in enum stuff, currently not in use
+  public enum LiftState { 
     LEVEL_1, LEVEL_2, LEVEL_3, CARGO_SHIP_BALL, CARGO_LOADER_BALL, GROUND_LEVEL;
   }
 
@@ -49,7 +49,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 8.35;
+        setpointInches = 7.65;
       } else {
         setpointInches = 13;
       }
@@ -101,13 +101,13 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.064; // 0.0675
-      kI = 0.037;
-      kD = 0.2;
+      kP = 0.06; // 0.0675
+      kI = 0.07;
+      kD = 0.215;
     }
 
     if (error < 0) {
-      kP = 0.0135;
+      kP = 0.012;
       kI = 0.001;
       kD = 0;
     }
@@ -137,7 +137,7 @@ public class SetElevator extends Command {
   }
 
   private boolean inZone() {
-    return Math.abs(error) < 0.4;
+    return Math.abs(error) < 0.3;
   }
 
   @Override
