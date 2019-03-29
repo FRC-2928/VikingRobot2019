@@ -7,10 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Elevator.SetElevator.LiftState;
-// import frc.robot.Command.GroundIntake.RunGroundIntake;
-// import frc.robot.Command.GroundIntake.SetPusher;
-import frc.robot.Command.Endgame.RunFourBar;
-import frc.robot.Command.Endgame.ClimbWithFourBar;
 import frc.robot.Subsystem.Chassis.Transmission;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 // import frc.robot.Subsystem.GroundIntake.Pusher.PusherState;
@@ -119,11 +115,6 @@ public class OperatorInterface {
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
-
-        // endgame.whenPressed(new Endgame());
-        // endgameStop.whenPressed(new SetFourBar(false));
-        fourBarUp.whileHeld(new RunFourBar(-0.8));
-        fourBarDown.whileHeld(new RunFourBar(0.8));
     }
 
     public double getDriveY() {

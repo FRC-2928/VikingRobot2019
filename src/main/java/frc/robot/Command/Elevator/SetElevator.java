@@ -101,13 +101,13 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.0675; // 0.0675
-      kI = 0.035;
+      kP = 0.064; // 0.0675
+      kI = 0.037;
       kD = 0.2;
     }
 
     if (error < 0) {
-      kP = 0.02;
+      kP = 0.0135;
       kI = 0.001;
       kD = 0;
     }

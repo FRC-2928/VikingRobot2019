@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.Command.Endgame.DefaultRunFourBar;
-import frc.robot.Command.Endgame.Endgame;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.Elevator.Elevator;
 // import frc.robot.Subsystem.GroundIntake.*;
@@ -70,7 +68,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        chassis.fourbar.getFourBarPosition();
         // NetworkTableEntry tx = table.getEntry("tx");
         // double x = tx.getDouble(0.0);
         // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
