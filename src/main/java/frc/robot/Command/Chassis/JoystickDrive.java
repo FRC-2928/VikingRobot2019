@@ -29,6 +29,19 @@ public class JoystickDrive extends Command {
       driveY = 0;
     }
 
+    /*
+    double driveY = Robot.oi.getControllerY();
+    if (Math.abs(Robot.oi.getControllerY()) < 0.075){
+      driveY = 0;
+    }
+
+    double driveX = Robot.oi.getControllerZ();
+    if (Math.abs(Robot.oi.getControllerZ() < 0.075)){
+      driveX = 0;
+    }
+    */
+  
+
     Robot.chassis.drivetrain.drive(driveY, driveX);
   }
 
