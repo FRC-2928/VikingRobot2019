@@ -29,7 +29,7 @@ public class JoystickDrive extends Command {
       driveY = 0;
     }
 
-    Robot.chassis.drivetrain.drive(driveY, -driveX);
+    Robot.chassis.drivetrain.drive(driveY, driveX);
   }
 
   @Override

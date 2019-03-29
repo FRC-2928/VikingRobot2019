@@ -34,8 +34,9 @@ public class RobotMap
     public static final int PIGEON = 3;
 
     //Solenoids
-    public static final int SOLENOID_TRANSMISSION = 0;
-    public static final int SOLENOID_GROUND_HATCH = 1;
+    public static final int SOLENOID_TRANSMISSION_HIGH = 0;
+    public static final int SOLENOID_TRANSMISSION_LOW = 1;
+    public static final int SOLENOID_GROUND_HATCH = 6;
     public static final int SOLENOID_INTAKE_DRAWBRIDGE_UP = 4;
     public static final int SOLENOID_INTAKE_DRAWBRIDGE_DOWN = 3;
     public static final int SOLENOID_ELEVATOR_BRAKE_IN= 5;

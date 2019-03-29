@@ -68,12 +68,12 @@ public class SetArm extends Command {
     errorRight = setpointRight + currentPositionRight;
     ballOffset = Robot.oi.getSlider();
 
-    double kP = 0.6; // Normally 0.5, testing rn
-    double min_Command = 0.25;
+    double kP = 0.4; // Normally 0.5, testing rn
+    double min_Command = 0.15;
     double kI = 0.01;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) >= 1) {
-      outputLeft = errorLeft * kP;
+      outputLeft = errorLeft * (kP +0.2);
     }
 
     if (Math.abs(errorLeft) < 1) {
@@ -105,7 +105,7 @@ public class SetArm extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Math.abs(errorLeft) < 0.1 && Math.abs(errorRight) < 0.1;
+    return Math.abs(errorLeft) < 0.3 && Math.abs(errorRight) < 0.1;
   }
 
   @Override

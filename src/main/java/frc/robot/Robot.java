@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
         compressor = new Compressor();
         compressor.start();
         chassis = new Chassis();
-        // groundintake = new GroundIntake();
         elevator = new Elevator();
         intake = new Intake();
 
@@ -45,10 +44,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
-        chassis.drivetrain.resetEncoderPosition();
-        intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
-        intake.threadbar.resetThreadbarEncoders();
-        elevator.lift.resetLiftEncoders();
 
 
     }
