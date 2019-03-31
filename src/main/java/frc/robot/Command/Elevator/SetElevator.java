@@ -49,7 +49,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 7.65;
+        setpointInches = 7.8;
       } else {
         setpointInches = 13;
       }
@@ -63,9 +63,9 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 46;
+        setpointInches = 45;
       } else {
-        setpointInches = 46;
+        setpointInches = 45;
       }
       break;
     case GROUND_LEVEL:
@@ -102,12 +102,12 @@ public class SetElevator extends Command {
 
     if (error > 0) {
       kP = 0.06; // 0.0675
-      kI = 0.07;
-      kD = 0.215;
+      kI = 0.08;
+      kD = 0.325;
     }
 
     if (error < 0) {
-      kP = 0.012;
+      kP = 0.011;
       kI = 0.001;
       kD = 0;
     }
@@ -137,7 +137,7 @@ public class SetElevator extends Command {
   }
 
   private boolean inZone() {
-    return Math.abs(error) < 0.3;
+    return Math.abs(error) < 0.2;
   }
 
   @Override
