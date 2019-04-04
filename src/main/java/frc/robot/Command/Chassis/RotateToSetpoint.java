@@ -1,24 +1,31 @@
 package frc.robot.Command.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class RotateToSetpoint extends Command {
-  public RotateToSetpoint() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  private double setpoint;
+  private double error;
+  private double kP;
+  private double kI;
+  private double kD;
+  private double errorSum;
+  private double derivative;
+
+  public RotateToSetpoint(double target) {
+    requires(Robot.chassis.drivetrain);
+    this.setpoint = target;
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;

@@ -30,7 +30,7 @@ public class SetElevator extends Command {
   private long currentTime;
   private int counter;
 
-  public enum LiftState { // TODO: Add in enum stuff, currently not in use
+  public enum LiftState { 
     LEVEL_1, LEVEL_2, LEVEL_3, CARGO_SHIP_BALL, CARGO_LOADER_BALL, GROUND_LEVEL;
   }
 
