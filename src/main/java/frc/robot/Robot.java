@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
         chassis.drivetrain.resetEncoderPosition();
         intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
         intake.threadbar.resetThreadbarEncoders();
-        elevator.lift.resetLiftEncoders();
         chassis.transmission.shift(GearState.LOW);
 
     }
@@ -60,7 +59,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        Scheduler.getInstance().removeAll();
+        Scheduler.getInstance().run(); //Test out running the scheduler into teleop
         //chassis.drivetrain.setMotorSafetyEnabled(true);
         
     }

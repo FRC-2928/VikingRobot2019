@@ -5,6 +5,7 @@ import frc.robot.Robot;
 
 public class RotateToSetpoint extends Command {
   private double setpoint;
+  private double currentAngle;
   private double error;
   private double kP;
   private double kI;
@@ -19,11 +20,15 @@ public class RotateToSetpoint extends Command {
 
   @Override
   protected void initialize() {
-
+    Robot.chassis.drivetrain.zeroGyro();
   }
 
   @Override
   protected void execute() {
+    
+    currentAngle = Robot.chassis.drivetrain.getYaw();
+    error = setpoint - currentAngle;
+
   }
 
   @Override

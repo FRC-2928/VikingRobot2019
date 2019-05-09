@@ -63,9 +63,9 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 47;
+        setpointInches = 48;
       } else {
-        setpointInches = 47;
+        setpointInches = 48;
       }
       break;
     case GROUND_LEVEL:
@@ -101,24 +101,25 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.0525; // 0.07
-      kI = 0.0185;
+      kP = 0.074; // 0.07
+      kI = 0.07;
       kD = 0.275;
       min_Command = 0.006; // 0.05
     }
 
     if (error < 0) {
-      kP = 0.014;
-      kI = 0.001;
+      kP = 0.012;
+      kI = 0.02;
+      min_Command = 0;
       kD = 0;
     }
 
-    if (Math.abs(error) >= 2) {
+    if (Math.abs(error) >= 4) {
       elevatorMovement = (kP * error) + (kI * errorSum) - (kD * derivative);
 
     }
 
-    if (Math.abs(error) < 2) {
+    if (Math.abs(error) < 4) {
       elevatorMovement = ((kP + min_Command) * error) + (kI * errorSum) + (kD * derivative);
     }
 
@@ -139,7 +140,13 @@ public class SetElevator extends Command {
   }
 
   private boolean inZone() {
-    return Math.abs(error) < 0.3;
+    if(setpointInches == 0){
+      return Math.abs(error) < 0.75;
+    }
+    if(error < 0){
+      return Math.abs(error) < 3;
+    }
+    return Math.abs(error) < 1.25;
   }
 
   @Override
@@ -189,7 +196,7 @@ public class SetElevator extends Command {
   @Override
   protected void end() {
     Robot.elevator.lift.shiftBrake(BrakeState.ON);
-    Robot.elevator.lift.setLiftPower(0);
+    Robot.elevator.lift.setLiftPower(0); //Note to see if command is interrupted, what happens
   }
 
   @Override

@@ -74,8 +74,8 @@ public class SetArm extends Command {
     errorLeft = setpointLeft - currentPositionLeft;
     errorRight = setpointRight - currentPositionRight;
     
-    double kP = 0.6; // Normally 0.5, testing rn
-    double min_Command = 0.25;
+    double kP = 0.35; // Normally 0.5, testing rn
+    double min_Command = 0.1;
     double kI = 0.01;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) >= 1) {
@@ -98,7 +98,7 @@ public class SetArm extends Command {
     }
 
     Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
-    Robot.intake.threadbar.setRightThreadbarPower(outputRight);
+    Robot.intake.threadbar.setRightThreadbarPower(-outputRight);
 
     SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);
     SmartDashboard.putNumber("Arm State current position right", currentPositionRight);
@@ -113,7 +113,7 @@ public class SetArm extends Command {
   protected boolean isFinished() {
     SmartDashboard.putNumber("Is Finished error left", errorLeft);
     SmartDashboard.putNumber("Is Finished error right", errorRight);
-    return Math.abs(errorLeft) < 0.1 && Math.abs(errorRight) < 0.1;
+    return Math.abs(errorLeft) < 0.2 && Math.abs(errorRight) < 0.2;
   }
 
   @Override

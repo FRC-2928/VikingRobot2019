@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Command.Chassis.Shift;
+import frc.robot.Command.Chassis.*;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Elevator.SetElevator.LiftState;
 import frc.robot.Subsystem.Chassis.Transmission;
@@ -21,9 +21,10 @@ public class OperatorInterface {
     private static final Joystick driverConsole = new Joystick(2);
 
     private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);  
+    private static final JoystickButton visionButton = new JoystickButton(driveStick, 3);
 
     // Testing autos
-    private static final JoystickButton VisionButton = new JoystickButton(driveStick, 5);
+    private static final JoystickButton VisionButton = new JoystickButton(driverConsole, 2);
     // private static final JoystickButton LifterTest = new
     // JoystickButton(driveStick, 8);
 
@@ -33,8 +34,8 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
-    private static final JoystickButton threadbarHatch = new JoystickButton(driverConsole, 9); // placeholder
-    private static final JoystickButton threadbarBall = new JoystickButton(driverConsole, 8); // placeholder
+    private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7); // placeholder
+    private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 8); // placeholder
     private static final JoystickButton opThreadbar = new JoystickButton(operatorConsole, 9);
     private static final JoystickButton intake = new JoystickButton(driverConsole, 5);
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
@@ -43,21 +44,21 @@ public class OperatorInterface {
     private static final JoystickButton drawbridge = new JoystickButton(driverConsole, 6);
 
     // Elevator
-
-    private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 8);
-    private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 7);
+    
     private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 6);// placeholder
     private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 5);// placeholder
     private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 4);// placeholder
     private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 3);
     private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 1);
     private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
-    private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
+    // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
+    private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 3);
 
     OperatorInterface() {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
         gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
+        visionButton.whileHeld(new VisionAlignment());
 
         // groundButtonUp.whileHeld(new RunGroundIntake(0.8));
         // groundButtonDown.whileHeld(new RunGroundIntake(-0.5));
@@ -93,13 +94,14 @@ public class OperatorInterface {
         SmartDashboard.putString("ARM CURRENT STATE FOR OPERATOR CONSOLE",
                 armCurrentState == ArmState.BALL ? "BALL" : "HATCH");
         elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
-        elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
+        // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
         elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
         elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
         elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
+        elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
     }
 
     public double getDriveY() {
