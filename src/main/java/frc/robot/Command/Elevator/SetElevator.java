@@ -108,7 +108,7 @@ public class SetElevator extends Command {
     }
 
     if (error < 0) {
-      kP = 0.012;
+      kP = 0.025;
       kI = 0.02;
       min_Command = 0;
       kD = 0;
@@ -129,6 +129,10 @@ public class SetElevator extends Command {
     // else{
     // Robot.elevator.lift.shiftBrake(BrakeState.OFF);
     // }
+
+    if (elevatorMovement < -0.4){
+      elevatorMovement = -0.4;
+    }
 
     Robot.elevator.lift.setLiftPower(elevatorMovement);
     previousError = error;
