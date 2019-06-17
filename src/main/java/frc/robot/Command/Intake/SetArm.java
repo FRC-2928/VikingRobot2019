@@ -9,7 +9,6 @@ import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 public class SetArm extends Command {
   private double leftPreviousPosition;
   private double rightPreviousPosition;
-  private double midpoint;
   private double setpointLeft;
   private double setpointRight;
   private double currentPositionLeft;
@@ -33,15 +32,14 @@ public class SetArm extends Command {
         / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     rightPreviousPosition = Robot.intake.threadbar.getRightThreadbarEncoder()
         / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    midpoint = (leftPreviousPosition + rightPreviousPosition) / 2;
     currentState = Robot.intake.armPresets.currentState;
 
     // Left positive, right negative
     switch (target) {
     case HATCH:
-      setpointLeft = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH; // midpoint;// +
+      setpointLeft = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH; //  +
                                                                    // RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
-      setpointRight = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;// midpoint;//-
+      setpointRight = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;// -
                                                                    // RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
       break;
 
@@ -57,7 +55,6 @@ public class SetArm extends Command {
 
     // SmartDashboard.putString("Current State",
     // Robot.intake.armPresets.currentState.toString());
-    SmartDashboard.putNumber("Arm State Midpoint", midpoint);
     SmartDashboard.putNumber("Arm State Left Previous Position", leftPreviousPosition);
     SmartDashboard.putNumber("Arm State Right Previous Position", rightPreviousPosition);
     SmartDashboard.putNumber("Arm State Left Setpoint", setpointLeft);
@@ -84,7 +81,7 @@ public class SetArm extends Command {
 
     if (Math.abs(errorLeft) < 1) {
 
-      double errorSumLeft = +errorLeft * 0.2;
+      double errorSumLeft =+ errorLeft * 0.2;
       outputLeft = (errorLeft * kP) + (min_Command * errorLeft) + (kI * errorSumLeft);
     }
 

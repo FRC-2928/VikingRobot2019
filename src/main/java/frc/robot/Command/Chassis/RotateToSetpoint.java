@@ -25,9 +25,10 @@ public class RotateToSetpoint extends Command {
 
   @Override
   protected void execute() {
-    
     currentAngle = Robot.chassis.drivetrain.getYaw();
     error = setpoint - currentAngle;
+
+    
 
   }
 

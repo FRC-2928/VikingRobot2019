@@ -120,7 +120,7 @@ public class SetElevator extends Command {
     }
 
     if (Math.abs(error) < 4) {
-      elevatorMovement = ((kP + min_Command) * error) + (kI * errorSum) + (kD * derivative);
+      elevatorMovement = ((kP + min_Command) * error) + (kI * errorSum) + (kD * derivative); //Why the hell is this derivative a plus and not a minus
     }
 
     // if(inZone()){
@@ -140,17 +140,16 @@ public class SetElevator extends Command {
     SmartDashboard.putNumber("Elevator PID Error", error);
     SmartDashboard.putNumber("Elevator Integral", errorSum * kI);
     SmartDashboard.putNumber("Elevator PID Setpoint", setpointInches);
-
   }
 
   private boolean inZone() {
     if(setpointInches == 0){
-      return Math.abs(error) < 0.75;
+      return Math.abs(error) < 1.25;
     }
     if(error < 0){
-      return Math.abs(error) < 3;
+      return Math.abs(error) < 2;
     }
-    return Math.abs(error) < 1.25;
+    return Math.abs(error) < 1;
   }
 
   @Override

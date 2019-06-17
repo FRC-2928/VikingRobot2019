@@ -8,7 +8,6 @@ import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import static java.lang.System.currentTimeMillis;
 
 //Using the limelight to see vision tape on rocket
 //We're then bring the threadbar over
@@ -148,12 +147,6 @@ public class VisionSetThreadbar extends Command {
     // finished = true;
     // }
 
-    Robot.intake.threadbar.setLeftThreadbarPower(threadbarMovementLeft);
-    Robot.intake.threadbar.setRightThreadbarPower(threadbarMovementRight);
-    SmartDashboard.putNumber("Left Threadbar current position inches left",currentPositionInchesLeft);
-    SmartDashboard.putNumber("Right Threadbar current position inches right",currentPositionInchesRight);
-    SmartDashboard.putNumber("Left Threadbar Error", errorInchesLeft);
-    SmartDashboard.putNumber("Right Threadbar Error", errorInchesRight);
   }
 
   private boolean inZone() {
