@@ -78,7 +78,9 @@ public class OperatorInterface {
         opThreadbar.whenInactive(new SetArm(ArmState.BALL));
 
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
+        threadbarHatch.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));
+        threadbarBall.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
 
         VisionButton.whileHeld(new VisionAlignment());
 
