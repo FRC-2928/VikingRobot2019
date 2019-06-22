@@ -64,8 +64,8 @@ public class Drivetrain extends Subsystem {
     left.configNeutralDeadband(0.01);
     right.configNeutralDeadband(0.01);
 
-    left.configPeakCurrentLimit(55, 10);
-    right.configPeakCurrentLimit(55, 10);
+    left.configPeakCurrentLimit(50, 10);
+    right.configPeakCurrentLimit(50, 10);
 
     drive = new DifferentialDrive(left, right);
   }
@@ -80,6 +80,11 @@ public class Drivetrain extends Subsystem {
 
   public void setMotorSafetyEnabled(boolean safety) {
     drive.setSafetyEnabled(safety);
+  }
+
+  public void setRampRate(double rampRate){
+    left.configOpenloopRamp(rampRate);
+    right.configOpenloopRamp(rampRate);
   }
 
   public double getYaw() {

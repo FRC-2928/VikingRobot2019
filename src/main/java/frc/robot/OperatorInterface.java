@@ -20,11 +20,11 @@ public class OperatorInterface {
     private static final Joystick operatorConsole = new Joystick(1);
     private static final Joystick driverConsole = new Joystick(2);
 
-    private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);  
-    private static final JoystickButton visionButton = new JoystickButton(driveStick, 3);
+    private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
 
     // Testing autos
-    private static final JoystickButton VisionButton = new JoystickButton(driverConsole, 2);
+    private static final JoystickButton VisionButtonIntake = new JoystickButton(driverConsole, 3);
+    private static final JoystickButton VisionButtonOuttake = new JoystickButton(driverConsole, 4);
     // private static final JoystickButton LifterTest = new
     // JoystickButton(driveStick, 8);
 
@@ -53,12 +53,11 @@ public class OperatorInterface {
     private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
     // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
-    private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 3);
+    private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 2);
 
     OperatorInterface() {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
         gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
-        visionButton.whileHeld(new VisionAlignment());
 
         // groundButtonUp.whileHeld(new RunGroundIntake(0.8));
         // groundButtonDown.whileHeld(new RunGroundIntake(-0.5));
@@ -82,7 +81,8 @@ public class OperatorInterface {
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));
         threadbarBall.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
 
-        VisionButton.whileHeld(new VisionAlignment());
+        VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
+        VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
 
         intake.whileHeld(new RunWheels(0.9));
         outtake.whileHeld(new RunWheels(-0.9));
@@ -97,7 +97,7 @@ public class OperatorInterface {
                 armCurrentState == ArmState.BALL ? "BALL" : "HATCH");
         elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
         // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
-        elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
+        // elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
         elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
         elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
