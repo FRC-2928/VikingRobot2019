@@ -52,13 +52,6 @@ public class Drivetrain extends Subsystem {
     left_follower_1.setInverted(true);
     left_follower_2.setInverted(true);
 
-    left.setNeutralMode(NeutralMode.Brake);
-    left_follower_1.setNeutralMode(NeutralMode.Brake);
-    left_follower_2.setNeutralMode(NeutralMode.Brake);
-    right.setNeutralMode(NeutralMode.Brake);
-    right_follower_1.setNeutralMode(NeutralMode.Brake);
-    right_follower_2.setNeutralMode(NeutralMode.Brake);
-
     left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     left.configNeutralDeadband(0.01);
@@ -85,6 +78,30 @@ public class Drivetrain extends Subsystem {
   public void setRampRate(double rampRate){
     left.configOpenloopRamp(rampRate);
     right.configOpenloopRamp(rampRate);
+  }
+
+  public void setBrakeMode(boolean mode){
+    if(mode == true){
+      left.setNeutralMode(NeutralMode.Brake);
+      left_follower_1.setNeutralMode(NeutralMode.Brake);
+      left_follower_2.setNeutralMode(NeutralMode.Brake);
+      right.setNeutralMode(NeutralMode.Brake);
+      right_follower_1.setNeutralMode(NeutralMode.Brake);
+      right_follower_2.setNeutralMode(NeutralMode.Brake);
+    }
+    if(mode == false){
+      left.setNeutralMode(NeutralMode.Coast);
+      left_follower_1.setNeutralMode(NeutralMode.Coast);
+      left_follower_2.setNeutralMode(NeutralMode.Coast);
+      right.setNeutralMode(NeutralMode.Coast);
+      right_follower_1.setNeutralMode(NeutralMode.Coast);
+      right_follower_2.setNeutralMode(NeutralMode.Coast);
+    }
+  }
+
+  public void setAmpLimit(int amps){
+    left.configPeakCurrentLimit(amps, 10);
+    right.configPeakCurrentLimit(amps, 10);
   }
 
   public double getYaw() {

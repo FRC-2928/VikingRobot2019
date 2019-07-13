@@ -31,10 +31,10 @@ public class VisionAlignmentIntake extends Command {
   protected void initialize() {
     currentGear = Robot.chassis.transmission.getGear();
     table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
     setpoint = 0;
     errorSum = 0;
-    Robot.chassis.transmission.shift(GearState.LOW);
+    // Robot.chassis.transmission.shift(GearState.LOW);
     
   }
 
@@ -59,7 +59,6 @@ public class VisionAlignmentIntake extends Command {
 
     if(currentGear == GearState.HIGH){
       if(x > Math.abs(8)){
-        Robot.chassis.drivetrain.setRampRate(0.8);
       }
       else{
         Robot.chassis.drivetrain.setRampRate(0);
@@ -113,9 +112,9 @@ public class VisionAlignmentIntake extends Command {
   protected void end() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
     Robot.chassis.drivetrain.drive(0,0);
-    Robot.chassis.drivetrain.setRampRate(0);
+    // Robot.chassis.drivetrain.setRampRate(0);
     Robot.intake.wheels.setWheelPower(-0.3);
-    Robot.chassis.transmission.shift(GearState.HIGH);
+    // Robot.chassis.transmission.shift(GearState.HIGH);
     // Robot.chassis.transmission.shift(GearState.HIGH);
   }
 

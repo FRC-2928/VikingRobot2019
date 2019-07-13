@@ -3,6 +3,7 @@ package frc.robot.Subsystem.Chassis;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.RobotMap;
 import static java.lang.System.currentTimeMillis;
@@ -30,9 +31,13 @@ public class Transmission extends Subsystem {
         if ((time - lastShift) > RobotConstants.SHIFT_DELAY_MS) {
             if (state == HIGH) {
                 shiftSolenoid.set(false);
+                Robot.chassis.drivetrain.setBrakeMode(false);
+                Robot.chassis.drivetrain.setRampRate(0);
             }
             if (state == LOW) {
                 shiftSolenoid.set(true);
+                Robot.chassis.drivetrain.setBrakeMode(true);
+                Robot.chassis.drivetrain.setRampRate(0);
             }
             currentState = state;
             lastShift = time;
