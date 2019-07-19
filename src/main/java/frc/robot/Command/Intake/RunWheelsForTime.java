@@ -1,44 +1,44 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.Command.Intake;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 
 public class RunWheelsForTime extends Command {
-  public RunWheelsForTime() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
+  private double power;
+  private double time;
+  public RunWheelsForTime(double power, double time){
+  requires(Robot.intake.wheels);
+  this.power = power;
+}
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
+@Override
+protected void initialize() {
+  if (Robot.intake.armPresets.currentState == ArmState.HATCH) {
+    Robot.intake.wheels.setWheelPower(-power);
   }
+  
+  if (Robot.intake.armPresets.currentState == ArmState.BALL) {
+    Robot.intake.wheels.setWheelPower(power);
+  }
+}
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+@Override
+protected void execute() {
+}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+@Override
+protected boolean isFinished() {
+  return false;
+}
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+@Override
+protected void end() {
+  Robot.intake.wheels.setWheelPower(0);
+}
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+@Override
+protected void interrupted() {
+  end();
+}
 }

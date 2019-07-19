@@ -6,6 +6,8 @@ import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
+import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
+
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -66,10 +68,12 @@ public class SetElevator extends Command {
         setpointInches = 48;
       } else {
         setpointInches = 48;
+        Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
       }
       break;
     case GROUND_LEVEL:
       setpointInches = 0;
+      Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
       break;
     case CARGO_SHIP_BALL:
       setpointInches = 23.25;
