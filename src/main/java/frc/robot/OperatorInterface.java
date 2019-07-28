@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -111,13 +112,23 @@ public class OperatorInterface {
         return driveStick.getY();
     }
 
+    public double getDriveYL(){
+        return driveStick.getY(Hand.kLeft);
+    }
+
     public double getDriveX() {
         return driveStick.getX();
+    }
+
+    public double getDriveXL(){
+        return driveStick.getX(Hand.kRight);
     }
 
     public double getDriveZ() {
         return driveStick.getZ();
     }
+
+   
 
     private ArmState getArmState() {
         return Robot.intake.armPresets.getArmState();

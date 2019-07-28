@@ -31,7 +31,7 @@ public class Transmission extends Subsystem {
         if ((time - lastShift) > RobotConstants.SHIFT_DELAY_MS) {
             if (state == HIGH) {
                 shiftSolenoid.set(false);
-                Robot.chassis.drivetrain.setBrakeMode(false);
+                Robot.chassis.drivetrain.setBrakeMode(true);
                 Robot.chassis.drivetrain.setRampRate(0);
             }
             if (state == LOW) {

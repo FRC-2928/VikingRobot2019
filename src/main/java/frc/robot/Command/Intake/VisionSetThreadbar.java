@@ -101,29 +101,29 @@ public class VisionSetThreadbar extends Command {
     // min_Command helps give a little extra power when the threadbar is close
     double kP = 0.6;
     double min_Command = 0.2;
-    double kI = 0.01;
+    double kI = 0.015;
 
     // Setting up how much power we're giving the threadbars
-    if (Math.abs(errorInchesLeft) >= 1) {
+    if (Math.abs(errorInchesLeft) >= 0.75) {
 
       threadbarInchesLeft = kP * errorInchesLeft;
 
     }
 
-    if (Math.abs(errorInchesLeft) < 1) {
+    if (Math.abs(errorInchesLeft) < 0.75) {
 
       errorSumLeft =+ errorInchesLeft * 0.2;
       threadbarInchesLeft = kP * errorInchesLeft + min_Command * errorInchesLeft + kI * errorSumLeft;
 
     }
 
-    if (Math.abs(errorInchesRight) >= 1) {
+    if (Math.abs(errorInchesRight) >= 0.75) {
 
       threadbarInchesRight = kP * errorInchesRight;
 
     }
 
-    if (Math.abs(errorInchesRight) < 1) {
+    if (Math.abs(errorInchesRight) < 0.75) {
 
       errorSumRight =+ errorInchesRight * 0.2;
       threadbarInchesRight = kP * errorInchesRight + min_Command * errorInchesRight + kI * errorSumRight;
