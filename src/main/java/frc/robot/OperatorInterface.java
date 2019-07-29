@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,11 +18,12 @@ import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
 public class OperatorInterface {
 
     // Driving
-    private static final Joystick driveStick = new Joystick(0);
+    private static final XboxController driveStick = new XboxController(0);
     private static final Joystick operatorConsole = new Joystick(1);
     private static final Joystick driverConsole = new Joystick(2);
 
-    private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
+    private static final JoystickButton gearButton = new JoystickButton(driveStick, 9);
+    private static final JoystickButton gearButtonHigh = new JoystickButton(driveStick, 10);
 
     // Testing autos
     private static final JoystickButton VisionButtonIntake = new JoystickButton(driverConsole, 3);
@@ -31,18 +33,20 @@ public class OperatorInterface {
 
     // Intake
     private ArmState armCurrentState; // true == cargo, false == hatch
-    private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
-    private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
-    private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
-    private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
+    private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 3);
+    // private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 3);
+    private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 987);
+    private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 4);
     private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7); // placeholder
     private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 8); // placeholder
     private static final JoystickButton opThreadbar = new JoystickButton(operatorConsole, 9);
-    private static final JoystickButton intake = new JoystickButton(driverConsole, 5);
+    private static final JoystickButton intake = new JoystickButton(driveStick, 1);
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
     private static final JoystickButton opIntake = new JoystickButton(operatorConsole, 7);
     private static final JoystickButton opOuttake = new JoystickButton(operatorConsole, 8);
     private static final JoystickButton drawbridge = new JoystickButton(driverConsole, 6);
+    // private static final JoystickButton drawbridgeDown = new JoystickButton(driveStick, 1);
+
 
     // Elevator
     
@@ -55,10 +59,12 @@ public class OperatorInterface {
     // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
     private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 2);
+    private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 6);
+    private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 5);
 
     OperatorInterface() {
-        gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
-        gearButton.whenInactive(new Shift(Transmission.GearState.LOW));
+        gearButtonHigh.whenPressed(new Shift(Transmission.GearState.HIGH));
+        gearButton.whenPressed(new Shift(Transmission.GearState.LOW));
 
         // groundButtonUp.whileHeld(new RunGroundIntake(0.8));
         // groundButtonDown.whileHeld(new RunGroundIntake(-0.5));
@@ -73,7 +79,7 @@ public class OperatorInterface {
         threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
         // threadbarRight.whileHeld(new RunRightThreadbar(0.8));
         threadbarLeftLeft.whileHeld(new RunRightThreadbar(-0.8));
-        threadbarLeftRight.whileHeld(new RunRightThreadbar(0.8));
+        // threadbarLeftRight.whileHeld(new RunRightThreadbar(0.8));
         opThreadbar.whenPressed(new SetArm(ArmState.HATCH));
         opThreadbar.whenInactive(new SetArm(ArmState.BALL));
 
@@ -106,6 +112,8 @@ public class OperatorInterface {
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
         elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
+        elevatorUp.whileHeld(new RunElevator(0.9));
+        elevatorDown.whileHeld(new RunElevator(-0.5));
     }
 
     public double getDriveY() {
@@ -120,14 +128,17 @@ public class OperatorInterface {
         return driveStick.getX();
     }
 
-    public double getDriveXL(){
+    public double getDriveXR(){
         return driveStick.getX(Hand.kRight);
     }
 
-    public double getDriveZ() {
-        return driveStick.getZ();
+    public double getLeftTrigger(){
+        return driveStick.getTriggerAxis(Hand.kLeft);
     }
 
+    public double getRightTrigger(){
+        return driveStick.getTriggerAxis(Hand.kRight);
+    }
    
 
     private ArmState getArmState() {

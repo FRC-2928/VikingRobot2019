@@ -21,13 +21,13 @@ public class JoystickDrive extends Command {
   @Override
   protected void execute() {
     currentGear = Robot.chassis.transmission.getGear();
-    double driveX = Robot.oi.getDriveX();
-    if (Math.abs(Robot.oi.getDriveX()) < 0.075) {
+    double driveX = Robot.oi.getDriveXR();
+    if (Math.abs(Robot.oi.getDriveXR()) < 0.075) {
       driveX = 0;
     }
 
-    double driveY = Robot.oi.getDriveY();
-    if (Math.abs(Robot.oi.getDriveY()) < 0.075) {
+    double driveY = Robot.oi.getDriveYL();
+    if (Math.abs(Robot.oi.getDriveYL()) < 0.075) {
       driveY = 0;
     }
 
