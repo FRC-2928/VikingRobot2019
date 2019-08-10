@@ -148,13 +148,13 @@ public class SetElevator extends Command {
 
   private boolean inZone() {
     if(setpointInches == 0){
-      return Math.abs(error) < 1.25;
+      return Math.abs(error) < 1;
     }
     else if(error < 0){
       return Math.abs(error) < 2;
     }
     else{
-      return Math.abs(error) < 1;
+      return Math.abs(error) < 0.75;
     }
   }
 

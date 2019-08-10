@@ -30,16 +30,6 @@ public class JoystickDrive extends Command {
     if (Math.abs(Robot.oi.getDriveY()) < 0.075) {
       driveY = 0;
     }
-
-    if(currentGear == GearState.HIGH){
-      if(Math.abs(driveY) > 0.8){
-        driveY *= 0.8;
-      }
-      if(Math.abs(driveX) > 0.8){
-        driveX *= 0.8;
-      }
-    }
-
     Robot.chassis.drivetrain.drive(driveY, -driveX);
   }
 

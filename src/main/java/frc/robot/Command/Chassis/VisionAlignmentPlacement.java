@@ -31,7 +31,7 @@ public class VisionAlignmentPlacement extends Command {
   protected void initialize() {
     currentGear = Robot.chassis.transmission.getGear();
     table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
     setpoint = 0;
     errorSum = 0;
     
@@ -55,18 +55,18 @@ public class VisionAlignmentPlacement extends Command {
     }
 
     if(currentGear == GearState.HIGH){
-    kP = 0.04;
-    kI = 0.0025;
+    kP = 0.05;
+    kI = 0.003;
     kD = 0.15;
     }
 
     if(currentGear == GearState.LOW){
-      if(Math.abs(x) < 4.5){
+      if(Math.abs(x) < 4){
         if(y > 3){
           driveOutput = 0.5;
         }
         if(y > 10){
-          driveOutput = 0.7;
+          driveOutput = 0.6;
         }
         rotationOutput = 0;
       }
@@ -76,12 +76,12 @@ public class VisionAlignmentPlacement extends Command {
     } 
 
     if(currentGear == GearState.HIGH){
-      if(Math.abs(x) < 4.5){
-        if(y > 3){
-          driveOutput = 0.5;
+      if(Math.abs(x) < 4){
+        if(y > 4){
+          driveOutput = 0.45;
         }
         if(y > 10){
-          driveOutput = 0.65;
+          driveOutput = 0.55;
         }
         rotationOutput = 0;
       }
