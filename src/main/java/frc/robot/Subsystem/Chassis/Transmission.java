@@ -38,6 +38,7 @@ public class Transmission extends Subsystem {
                 shiftSolenoid.set(true);
                 Robot.chassis.drivetrain.setBrakeMode(true);
                 Robot.chassis.drivetrain.setRampRate(0);
+                Robot.chassis.drivetrain.setBrakeMode(true);
             }
             currentState = state;
             lastShift = time;
