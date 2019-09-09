@@ -51,6 +51,8 @@ public class OperatorInterface {
     private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 3);
     private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 1);
     private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
+    private static final JoystickButton elevatorUp = new JoystickButton(operatorConsole, 12);
+    private static final JoystickButton elevatorDown = new JoystickButton(operatorConsole, 11);
     // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
     private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 2);
@@ -105,6 +107,8 @@ public class OperatorInterface {
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
         elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
+        elevatorDown.whileHeld(new RunElevator(-0.7));
+        elevatorUp.whileHeld(new RunElevator(0.7));
     }
 
     public double getDriveY() {

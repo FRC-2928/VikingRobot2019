@@ -64,12 +64,15 @@ public class VisionAlignmentIntake extends Command {
     }
 
     if(currentGear == GearState.LOW){
-      if(Math.abs(x) < 4){
-        if(y > 3){
-          driveOutput = 0.5;
-        }
-        if(y > 10){
+      if(Math.abs(x) < 3.5){
+        if(y > -30){
           driveOutput = 0.6;
+        }
+        if(y > -10){
+          driveOutput = 0.65;
+        }
+        if(y > 5){
+          driveOutput = 0.7;
         }
         rotationOutput = 0;
       }
@@ -79,12 +82,15 @@ public class VisionAlignmentIntake extends Command {
     }  
     
     if(currentGear == GearState.HIGH){
-      if(Math.abs(x) < 4){
-        if(y > 4){
-          driveOutput = 0.4;
+      if(Math.abs(x) < 3){
+        if(y > -30){
+          driveOutput = 0.55;
         }
-        if(y > 10){
-          driveOutput = 0.5;
+        if(y > -10){
+          driveOutput = 0.6;
+        }
+        if(y > 5){
+          driveOutput = 0.7;
         }
         rotationOutput = 0;
       }
@@ -96,7 +102,7 @@ public class VisionAlignmentIntake extends Command {
     rotationOutput = (kP * x) + (kI * errorSum) + (kD *derivative);
     if(currentGear == GearState.HIGH){
       if(rotationOutput > Math.abs(0.6)){
-        rotationOutput = 0.7;
+        rotationOutput = 0.6;
       }
     }
 
