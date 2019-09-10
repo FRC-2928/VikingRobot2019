@@ -7,8 +7,7 @@ import frc.robot.RobotConstants;
 import frc.robot.RobotMap;
 
 public class Drawbridge extends Subsystem {
-  private Solenoid drawbridgeUp;
-  private Solenoid drawbridgeDown;
+  private Solenoid drawbridge;
   public DrawbridgeState bridgeState;
   private double lastChange = 0;
 
@@ -21,8 +20,7 @@ public class Drawbridge extends Subsystem {
   }
 
   public Drawbridge() {
-    drawbridgeUp = new Solenoid(RobotMap.SOLENOID_INTAKE_DRAWBRIDGE_UP);
-    drawbridgeDown = new Solenoid(RobotMap.SOLENOID_INTAKE_DRAWBRIDGE_DOWN);
+    drawbridge = new Solenoid(RobotMap.SOLENOID_INTAKE_DRAWBRIDGE);
     bridgeState = DrawbridgeState.UP;
   }
 
@@ -32,16 +30,15 @@ public class Drawbridge extends Subsystem {
 
       switch (state) {
         case DOWN:  
-        drawbridgeUp.set(false);
-        drawbridgeDown.set(true);
+        drawbridge.set(true);
         break;
 
         case UP:
-        drawbridgeUp.set(true);
-        drawbridgeDown.set(false);
+        drawbridge.set(false);
         break;
+
         default:
-          break;
+        break;
       }
 
       lastChange = time;
