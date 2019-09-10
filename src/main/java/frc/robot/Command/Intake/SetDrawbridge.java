@@ -9,11 +9,11 @@ import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
  */
 public class SetDrawbridge extends Command {
   private DrawbridgeState target;
+  private double targetState;
 
-  public SetDrawbridge(DrawbridgeState target) {
+  public SetDrawbridge() {
     requires(Robot.intake.drawbridge);
     requires(Robot.intake.threadbar);
-    this.target = target;
   }
 
   @Override
@@ -22,7 +22,15 @@ public class SetDrawbridge extends Command {
 
   @Override
   protected void execute() {
-    Robot.intake.drawbridge.switchBridge(target);
+
+    if(Robot.oi.getPOV() == 0){
+      Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
+    }
+
+    if(Robot.oi.getPOV() == 180){
+      Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
+    }
+
   }
 
   @Override

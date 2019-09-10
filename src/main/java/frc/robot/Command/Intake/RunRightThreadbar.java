@@ -8,6 +8,7 @@ public class RunRightThreadbar extends Command {
 
   public RunRightThreadbar(double power) {
     requires(Robot.intake.threadbar);
+    requires(Robot.intake.drawbridge);
     this.power = power;
   }
 

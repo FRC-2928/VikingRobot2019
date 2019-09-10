@@ -23,7 +23,7 @@ public class SetArm extends Command {
   public SetArm(ArmState state) {
     this.target = state;
     requires(Robot.intake.threadbar);
-
+    requires(Robot.intake.drawbridge);
   }
 
   @Override

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
@@ -40,25 +41,10 @@ public class OperatorInterface {
     private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7); // placeholder
     private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 8); // placeholder
     private static final JoystickButton opThreadbar = new JoystickButton(operatorConsole, 9);
-    private static final JoystickButton intake = new JoystickButton(driveStick, 1);
-    private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
-    private static final JoystickButton opIntake = new JoystickButton(operatorConsole, 7);
-    private static final JoystickButton opOuttake = new JoystickButton(operatorConsole, 8);
-    private static final JoystickButton drawbridge = new JoystickButton(driverConsole, 6);
     // private static final JoystickButton drawbridgeDown = new JoystickButton(driveStick, 1);
 
 
     // Elevator
-    
-    private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 6);// placeholder
-    private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 5);// placeholder
-    private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 4);// placeholder
-    private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 3);
-    private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 1);
-    private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
-    // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
-    private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
-    private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 2);
     private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 6);
     private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 5);
 
@@ -84,34 +70,12 @@ public class OperatorInterface {
         opThreadbar.whenInactive(new SetArm(ArmState.BALL));
 
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
-        threadbarHatch.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));
-        threadbarBall.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
 
         VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
         VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,750));
         VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
 
-        intake.whileHeld(new RunWheels(0.9));
-        outtake.whileHeld(new RunWheels(-0.9));
-        opIntake.whileHeld(new RunWheels(0.9));
-        opOuttake.whileHeld(new RunWheels(-0.9));
-
-        drawbridge.whenPressed(new SetDrawbridge(DrawbridgeState.UP));
-        drawbridge.whenInactive(new SetDrawbridge(DrawbridgeState.DOWN));
-
-        armCurrentState = getArmState();
-        SmartDashboard.putString("ARM CURRENT STATE FOR OPERATOR CONSOLE",
-                armCurrentState == ArmState.BALL ? "BALL" : "HATCH");
-        elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
-        // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
-        // elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
-        elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
-        elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
-        elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
-        elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
-        elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
-        elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
         elevatorUp.whileHeld(new RunElevator(0.9));
         elevatorDown.whileHeld(new RunElevator(-0.5));
     }
@@ -139,7 +103,15 @@ public class OperatorInterface {
     public double getRightTrigger(){
         return driveStick.getTriggerAxis(Hand.kRight);
     }
+
+    public double getPOV(){
+        return driveStick.getPOV();
+    }
    
+    public void setRumble(double rumble){
+        driveStick.setRumble(RumbleType.kLeftRumble, rumble);
+        driveStick.setRumble(RumbleType.kRightRumble, rumble);
+    }
 
     private ArmState getArmState() {
         return Robot.intake.armPresets.getArmState();

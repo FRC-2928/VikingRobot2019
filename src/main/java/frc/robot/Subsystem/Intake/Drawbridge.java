@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotConstants;
 import frc.robot.RobotMap;
+import frc.robot.Command.Intake.SetDrawbridge;
 
 public class Drawbridge extends Subsystem {
   private Solenoid drawbridge;
@@ -13,6 +14,11 @@ public class Drawbridge extends Subsystem {
 
   public enum DrawbridgeState {
     UP, DOWN;
+  }  
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new SetDrawbridge());
   }
 
   public DrawbridgeState getDrawbridgeState() {
@@ -42,9 +48,5 @@ public class Drawbridge extends Subsystem {
       lastChange = time;
       bridgeState = state;
     }
-  }
-
-  @Override
-  public void initDefaultCommand() {
   }
 }

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.Chassis.Transmission.GearState;
 import frc.robot.Subsystem.Elevator.Elevator;
@@ -18,13 +19,9 @@ public class Robot extends TimedRobot {
     private SendableChooser<ArmState> armPresetSelector;
     private Compressor compressor;
     public static Chassis chassis;
-    // public static GroundIntake groundintake;
-    public static OperatorInterface oi;
     public static Intake intake;
     public static Elevator elevator;
-
-    
-    //public static Sensors sensors;
+    public static OperatorInterface oi;
 
     @Override
     public void robotInit() {
