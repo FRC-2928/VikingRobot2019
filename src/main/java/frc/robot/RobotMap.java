@@ -26,6 +26,7 @@ public class RobotMap
 
     //Elevator motors
     public static final int SPARK_ELEVATOR = 7;
+    public static final int SPARK_ELEVATOR_TOP = 8;
 
     //Four-Bar motors
     public static final int SPARK_FOUR_BAR = 6;
