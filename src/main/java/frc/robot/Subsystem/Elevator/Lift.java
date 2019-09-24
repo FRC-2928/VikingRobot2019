@@ -10,6 +10,7 @@ import frc.robot.RobotMap;
 
 public class Lift extends Subsystem {
   private CANSparkMax liftMotor;
+  private CANSparkMax lfitMotorSlave;
   private CANEncoder liftEncoder;
   private Solenoid brake;
   private BrakeState currentState;
@@ -21,6 +22,8 @@ public class Lift extends Subsystem {
 
   public Lift() {
     liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR, MotorType.kBrushless);
+    liftMotorSlave = new CANSparkMax(RobotMap.SPARK_ELEVATOR_TOP, MotorType.kBrushless);
+    liftMotorSlave.follow(CANSparkMax, RobotMap.SPARK_ELEVATOR);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     liftEncoder = liftMotor.getEncoder();
     currentState = BrakeState.ON;
