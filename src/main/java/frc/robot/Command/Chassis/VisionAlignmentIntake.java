@@ -65,16 +65,19 @@ public class VisionAlignmentIntake extends Command {
 
     if(currentGear == GearState.LOW){
       if(Math.abs(x) < 3){
-        if(y > -30){
-          driveOutput = 0.4;
+        if(y == 0){
+          driveOutput = 0.2;
         }
-        if(y > -10){
-          driveOutput = 0.65;
+        else if(y > -30){
+          driveOutput = 0.3;
         }
-        if(y > 5){
+        else if(y > -10){
+          driveOutput = 0.6;
+        }
+        else if(y > 5){
           driveOutput = 0.7;
         }
-        if(y > 10){
+        else if(y > 10){
           driveOutput = 0.8;
         }
         rotationOutput = 0;
@@ -84,17 +87,17 @@ public class VisionAlignmentIntake extends Command {
     
     if(currentGear == GearState.HIGH){
       if(Math.abs(x) < 3){
-        if(y > -30){
-          driveOutput = 0.45;
+        if(y == 0){
+          driveOutput = 0.2;
         }
-        if(y > -10){
-          driveOutput = 0.6;
+        else if(y > -30){
+          driveOutput = 0.4;
         }
-        if(y > 5){
+        else if(y > -10){
+          driveOutput = 0.55;
+        }
+        else if(y > 5){
           driveOutput = 0.7;
-        }
-        if(y > 10){
-          driveOutput = 0.8;
         }
         rotationOutput = 0;
         errorSum = 0;
@@ -109,13 +112,6 @@ public class VisionAlignmentIntake extends Command {
     }
 
     Robot.chassis.drivetrain.drive(-driveOutput, -rotationOutput);
-
-    SmartDashboard.putNumber("Vision Aligment P", kP*x);
-    SmartDashboard.putNumber("Vision Alignment I", kI*errorSum);
-    SmartDashboard.putNumber("Vision Alignment derivative",derivative);
-    SmartDashboard.putNumber("Vision Alignment D", kD *derivative);
-    SmartDashboard.putNumber("Vision Alignment error",x);
-    SmartDashboard.putNumber("Vision Alignment Rotation", rotationOutput);
     previousError = x;
   }
 
@@ -127,11 +123,6 @@ public class VisionAlignmentIntake extends Command {
   @Override
   protected void end() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-    Robot.chassis.drivetrain.drive(0,0);
-    // Robot.chassis.drivetrain.setRampRate(0);
-    Robot.intake.wheels.setWheelPower(-0.3);
-    // Robot.chassis.transmission.shift(GearState.HIGH);
-    // Robot.chassis.transmission.shift(GearState.HIGH);
   }
 
   @Override

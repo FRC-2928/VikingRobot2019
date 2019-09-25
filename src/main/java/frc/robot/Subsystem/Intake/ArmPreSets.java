@@ -12,7 +12,7 @@ public class ArmPresets extends Subsystem {
     HATCH, BALL;
   }
 
-  public ArmPresets() {
+  public ArmPresets(){
     currentState = ArmState.HATCH;
   }
 
