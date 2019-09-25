@@ -21,9 +21,9 @@ public class Lift extends Subsystem {
   }
 
   public Lift() {
-    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR, MotorType.kBrushless);
-    liftMotorSlave = new CANSparkMax(RobotMap.SPARK_ELEVATOR_TOP, MotorType.kBrushless);
-    liftMotorSlave.follow(CANSparkMax, RobotMap.SPARK_ELEVATOR);
+    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR_BOTTOM, MotorType.kBrushless);
+    lfitMotorSlave = new CANSparkMax(RobotMap.SPARK_ELEVATOR_TOP, MotorType.kBrushless);
+    lfitMotorSlave.follow(liftMotor);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     liftEncoder = liftMotor.getEncoder();
     currentState = BrakeState.ON;
@@ -56,7 +56,6 @@ public class Lift extends Subsystem {
 
   public double getLiftPosition() {
     double liftPosition = liftEncoder.getPosition();
-    SmartDashboard.putNumber("Lift position inches", liftPosition);
     return liftPosition;
   }
 

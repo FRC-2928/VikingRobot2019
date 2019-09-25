@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Command.Chassis.Shift;
+import frc.robot.Command.Chassis.*;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Elevator.SetElevator.LiftState;
 import frc.robot.Subsystem.Chassis.Transmission;
@@ -19,15 +19,12 @@ public class OperatorInterface {
     private static final Joystick driveStick = new Joystick(0);
     private static final Joystick operatorConsole = new Joystick(1);
     private static final Joystick driverConsole = new Joystick(2);
-   
 
     private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
-    private static final JoystickButton groundButtonUp = new JoystickButton(operatorConsole, 12);
-    private static final JoystickButton groundButtonDown = new JoystickButton(operatorConsole, 11);
-    private static final JoystickButton pusherButton = new JoystickButton(operatorConsole, 10);
 
     // Testing autos
-    private static final JoystickButton VisionButton = new JoystickButton(driveStick, 5);
+    private static final JoystickButton VisionButtonIntake = new JoystickButton(driverConsole, 3);
+    private static final JoystickButton VisionButtonOuttake = new JoystickButton(driverConsole, 4);
     // private static final JoystickButton LifterTest = new
     // JoystickButton(driveStick, 8);
 
@@ -37,36 +34,28 @@ public class OperatorInterface {
     private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
-    private static final JoystickButton threadbarState = new JoystickButton(operatorConsole, 9);
-    private static final JoystickButton threadbarHatch = new JoystickButton(driverConsole, 9); // placeholder
-    private static final JoystickButton threadbarBall = new JoystickButton(driverConsole, 8); // placeholder
+    private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7); // placeholder
+    private static final JoystickButton threadbarBall = new JoystickButton(driveStick, 8); // placeholder
     private static final JoystickButton opThreadbar = new JoystickButton(operatorConsole, 9);
     private static final JoystickButton intake = new JoystickButton(driverConsole, 5);
     private static final JoystickButton outtake = new JoystickButton(driveStick, 2);
     private static final JoystickButton opIntake = new JoystickButton(operatorConsole, 7);
     private static final JoystickButton opOuttake = new JoystickButton(operatorConsole, 8);
-    private DrawbridgeState drawbridgeState = Robot.intake.drawbridge.getDrawbridgeState();
     private static final JoystickButton drawbridge = new JoystickButton(driverConsole, 6);
 
     // Elevator
-
-    private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 8);
-    private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 7);
+    
     private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 6);// placeholder
     private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 5);// placeholder
     private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 4);// placeholder
     private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 3);
     private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 1);
     private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
-    private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
+    private static final JoystickButton elevatorUp = new JoystickButton(operatorConsole, 12);
+    private static final JoystickButton elevatorDown = new JoystickButton(operatorConsole, 11);
+    // private static final JoystickButton elevatorBrakeOn = new JoystickButton(driverConsole, 3);
     private static final JoystickButton elevatorBrakeOff = new JoystickButton(driverConsole, 4);
-    private static final JoystickButton elevatorState = new JoystickButton(driverConsole, 6);
-
-    // Endgame
-    private static final JoystickButton endgame = new JoystickButton(operatorConsole, 2928);
-    private static final JoystickButton endgameStop = new JoystickButton(operatorConsole, 987);
-    private static final JoystickButton fourBarUp = new JoystickButton(driveStick, 4);
-    private static final JoystickButton fourBarDown = new JoystickButton(driveStick, 3);
+    private static final JoystickButton elevatorResetEncoders = new JoystickButton(driverConsole, 2);
 
     OperatorInterface() {
         gearButton.whenPressed(new Shift(Transmission.GearState.HIGH));
@@ -89,12 +78,16 @@ public class OperatorInterface {
         opThreadbar.whenPressed(new SetArm(ArmState.HATCH));
         opThreadbar.whenInactive(new SetArm(ArmState.BALL));
 
-        threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
-        threadbarBall.whenPressed(new SetArm(ArmState.BALL));
-        // threadbarState.whenPressed(new SetArm(ArmState.BALL));
-        // threadbarState.whenInactive(new SetArm(ArmState.HATCH));
+        // threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
+        // threadbarHatch.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
+        // threadbarBall.whenPressed(new SetArm(ArmState.BALL));
+        // threadbarBall.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
+        threadbarBall.whileActive(new RunElevator(0.5));
+        threadbarHatch.whileActive(new RunElevator(0.5));
 
-        VisionButton.whenPressed(new VisionSetThreadbar());
+        VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
+        VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,1500));
+        VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
 
         intake.whileHeld(new RunWheels(0.9));
         outtake.whileHeld(new RunWheels(-0.9));
@@ -105,16 +98,19 @@ public class OperatorInterface {
         drawbridge.whenInactive(new SetDrawbridge(DrawbridgeState.DOWN));
 
         armCurrentState = getArmState();
-        elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
-        elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
-        elevatorUp.whileHeld(new RunElevator(0.75));
-        elevatorDown.whileHeld(new RunElevator(-0.1));
+        SmartDashboard.putString("ARM CURRENT STATE FOR OPERATOR CONSOLE",
+                armCurrentState == ArmState.BALL ? "BALL" : "HATCH");
         elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
+        // elevatorBrakeOn.whenPressed(new SetElevatorBrake(BrakeState.ON));
+        // elevatorBrakeOff.whenPressed(new SetElevatorBrake(BrakeState.OFF));
         elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
         elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
         elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
+        elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
+        elevatorDown.whileHeld(new RunElevator(-0.2));
+        elevatorUp.whileHeld(new RunElevator(0.4));
     }
 
     public double getDriveY() {
@@ -127,10 +123,6 @@ public class OperatorInterface {
 
     public double getDriveZ() {
         return driveStick.getZ();
-    }
-
-    public double getSlider(){
-        return driveStick.getThrottle();
     }
 
     private ArmState getArmState() {

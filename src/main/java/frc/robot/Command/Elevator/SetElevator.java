@@ -6,6 +6,8 @@ import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
+import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
+
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -18,17 +20,12 @@ public class SetElevator extends Command {
   private double error;
   private double elevatorMovement;
   private double kP;
-  private double min_Command;
   private double kI;
   private double kD;
   private double derivative;
   private double errorSum;
   private double previousError;
-  private boolean isFinished;
   private ArmState armState;
-  private long stopTime;
-  private long currentTime;
-  private int counter;
 
   public enum LiftState { 
     LEVEL_1, LEVEL_2, LEVEL_3, CARGO_SHIP_BALL, CARGO_LOADER_BALL, GROUND_LEVEL;
@@ -49,7 +46,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 7.8;
+        setpointInches = 7.3;
       } else {
         setpointInches = 13;
       }
@@ -63,13 +60,15 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 45;
+        setpointInches = 48;
       } else {
-        setpointInches = 45;
+        setpointInches = 48;
+        Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
       }
       break;
     case GROUND_LEVEL:
       setpointInches = 0;
+      Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
       break;
     case CARGO_SHIP_BALL:
       setpointInches = 23.25;
@@ -83,8 +82,6 @@ public class SetElevator extends Command {
 
     errorSum = 0;
     derivative = 0;
-    isFinished = false;
-    counter = 0;
   }
 
   @Override
@@ -101,25 +98,19 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.06; // 0.0675
-      kI = 0.08;
-      kD = 0.325;
+      kP = 0.05; // 0.07
+      kI = 0.06;
+      kD = 0.3;
     }
 
     if (error < 0) {
-      kP = 0.011;
-      kI = 0.001;
+      kP = 0.015;
+      kI = 0.015;
       kD = 0;
     }
 
-    if (Math.abs(error) >= 2) {
       elevatorMovement = (kP * error) + (kI * errorSum) - (kD * derivative);
 
-    }
-
-    if (Math.abs(error) < 2) {
-      elevatorMovement = (kP * error) + (kI * errorSum) + (kD * derivative);
-    }
 
     // if(inZone()){
     // Robot.elevator.lift.shiftBrake(BrakeState.ON);
@@ -128,16 +119,28 @@ public class SetElevator extends Command {
     // Robot.elevator.lift.shiftBrake(BrakeState.OFF);
     // }
 
+    if (elevatorMovement < -0.3){
+      elevatorMovement = -0.3;
+    }
+
     Robot.elevator.lift.setLiftPower(elevatorMovement);
     previousError = error;
     SmartDashboard.putNumber("Elevator PID movement", elevatorMovement);
     SmartDashboard.putNumber("Elevator PID Error", error);
+    SmartDashboard.putNumber("Elevator Integral", errorSum * kI);
     SmartDashboard.putNumber("Elevator PID Setpoint", setpointInches);
-
   }
 
   private boolean inZone() {
-    return Math.abs(error) < 0.2;
+    if(setpointInches == 0){
+      return Math.abs(error) < 1;
+    }
+    else if(error < 0){
+      return Math.abs(error) < 2;
+    }
+    else{
+      return Math.abs(error) < 0.5;
+    }
   }
 
   @Override
@@ -187,7 +190,7 @@ public class SetElevator extends Command {
   @Override
   protected void end() {
     Robot.elevator.lift.shiftBrake(BrakeState.ON);
-    Robot.elevator.lift.setLiftPower(0);
+    Robot.elevator.lift.setLiftPower(0); //Note to see if command is interrupted, what happens
   }
 
   @Override

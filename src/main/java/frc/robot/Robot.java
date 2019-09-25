@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystem.Chassis.*;
 import frc.robot.Subsystem.Elevator.Elevator;
+import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 // import frc.robot.Subsystem.GroundIntake.*;
 import frc.robot.Subsystem.Intake.*;
 import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
@@ -49,13 +51,13 @@ public class Robot extends TimedRobot {
         intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
         intake.threadbar.resetThreadbarEncoders();
         elevator.lift.resetLiftEncoders();
-
-
+        elevator.lift.shiftBrake(BrakeState.ON);
     }
 
     @Override
     public void autonomousPeriodic() { 
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Lift position", elevator.lift.getLiftPosition());
     }
 
     @Override
@@ -68,9 +70,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        // NetworkTableEntry tx = table.getEntry("tx");
-        // double x = tx.getDouble(0.0);
-        // SmartDashboard.putNumber("Limelight X value  from Robot.java", x);
+        SmartDashboard.putNumber("Lift position", elevator.lift.getLiftPosition());
+      
     }
 
    

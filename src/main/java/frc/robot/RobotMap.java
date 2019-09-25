@@ -25,7 +25,7 @@ public class RobotMap
     public static final int TALON_RIGHT_INTAKE = 9;
 
     //Elevator motors
-    public static final int SPARK_ELEVATOR = 7;
+    public static final int SPARK_ELEVATOR_BOTTOM = 7;
     public static final int SPARK_ELEVATOR_TOP = 8;
 
     //Four-Bar motors

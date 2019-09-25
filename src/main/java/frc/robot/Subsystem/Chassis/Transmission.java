@@ -27,10 +27,10 @@ public class Transmission extends Subsystem {
         long time = currentTimeMillis();
         if ((time - lastShift) > RobotConstants.SHIFT_DELAY_MS) {
             if (state == HIGH) {
-                shiftSolenoid.set(false);
+                shiftSolenoid.set(true);
             }
             if (state == LOW) {
-                shiftSolenoid.set(true);
+                shiftSolenoid.set(false);
             }
             currentState = state;
             lastShift = time;

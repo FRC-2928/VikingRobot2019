@@ -9,8 +9,6 @@ import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
 public class SetArm extends Command {
   private double leftPreviousPosition;
   private double rightPreviousPosition;
-  private double midpoint;
-  private double ballOffset;
   private double setpointLeft;
   private double setpointRight;
   private double currentPositionLeft;
@@ -30,19 +28,24 @@ public class SetArm extends Command {
 
   @Override
   protected void initialize() {
-    midpoint = (leftPreviousPosition + rightPreviousPosition) / 2;
+    leftPreviousPosition = Robot.intake.threadbar.getLeftThreadbarEncoder()
+        / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
+    rightPreviousPosition = Robot.intake.threadbar.getRightThreadbarEncoder()
+        / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     currentState = Robot.intake.armPresets.currentState;
 
     // Left positive, right negative
     switch (target) {
     case HATCH:
-      setpointLeft = 0; 
-      setpointRight = 0;
+      setpointLeft = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH; //  +
+                                                                   // RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
+      setpointRight = RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;// -
+                                                                   // RobotConstants.THREAD_ENCODER_TICKS_TO_HATCH;
       break;
 
     case BALL:
-      setpointLeft = RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
-      setpointRight = RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointLeft = -RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
+      setpointRight = -RobotConstants.THREAD_ENCODER_TICKS_TO_BALL;
       break;
 
     }
@@ -52,7 +55,8 @@ public class SetArm extends Command {
 
     // SmartDashboard.putString("Current State",
     // Robot.intake.armPresets.currentState.toString());
-    SmartDashboard.putNumber("Arm State Midpoint", midpoint);
+    SmartDashboard.putNumber("Arm State Left Previous Position", leftPreviousPosition);
+    SmartDashboard.putNumber("Arm State Right Previous Position", rightPreviousPosition);
     SmartDashboard.putNumber("Arm State Left Setpoint", setpointLeft);
     SmartDashboard.putNumber("Arm State Right Setpoint", setpointRight);
 
@@ -64,12 +68,11 @@ public class SetArm extends Command {
         / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
     currentPositionRight = Robot.intake.threadbar.getRightThreadbarEncoder()
         / RobotConstants.THREAD_ENCODER_TICKS_PER_INCH;
-    errorLeft = setpointLeft + currentPositionLeft;
-    errorRight = setpointRight + currentPositionRight;
-    ballOffset = Robot.oi.getSlider();
-
-    double kP = 0.6; // Normally 0.5, testing rn
-    double min_Command = 0.25;
+    errorLeft = setpointLeft - currentPositionLeft;
+    errorRight = setpointRight - currentPositionRight;
+    
+    double kP = 0.35; // Normally 0.5, testing rn
+    double min_Command = 0.1;
     double kI = 0.01;
     // Very basic P, will expand later but need to test it first
     if (Math.abs(errorLeft) >= 1) {
@@ -78,7 +81,7 @@ public class SetArm extends Command {
 
     if (Math.abs(errorLeft) < 1) {
 
-      double errorSumLeft = +errorLeft * 0.2;
+      double errorSumLeft =+ errorLeft * 0.2;
       outputLeft = (errorLeft * kP) + (min_Command * errorLeft) + (kI * errorSumLeft);
     }
 
@@ -92,7 +95,7 @@ public class SetArm extends Command {
     }
 
     Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
-    Robot.intake.threadbar.setRightThreadbarPower(outputRight);
+    Robot.intake.threadbar.setRightThreadbarPower(-outputRight);
 
     SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);
     SmartDashboard.putNumber("Arm State current position right", currentPositionRight);
@@ -105,7 +108,9 @@ public class SetArm extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Math.abs(errorLeft) < 0.1 && Math.abs(errorRight) < 0.1;
+    SmartDashboard.putNumber("Is Finished error left", errorLeft);
+    SmartDashboard.putNumber("Is Finished error right", errorRight);
+    return Math.abs(errorLeft) < 0.2 && Math.abs(errorRight) < 0.2;
   }
 
   @Override

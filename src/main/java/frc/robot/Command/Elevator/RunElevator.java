@@ -2,6 +2,7 @@ package frc.robot.Command.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 
 public class RunElevator extends Command {
   private double power;
@@ -15,11 +16,11 @@ public class RunElevator extends Command {
   @Override
   protected void initialize() {
     Robot.elevator.lift.setLiftPower(power);
+    Robot.elevator.lift.shiftBrake(BrakeState.OFF);
   }
 
   @Override
   protected void execute() { 
-    currentPosition = Robot.elevator.lift.getLiftPosition();
 
   }
 
@@ -37,6 +38,7 @@ public class RunElevator extends Command {
   @Override
   protected void end() {
     Robot.elevator.lift.setLiftPower(0);
+    Robot.elevator.lift.shiftBrake(BrakeState.ON);
   }
 
   @Override
