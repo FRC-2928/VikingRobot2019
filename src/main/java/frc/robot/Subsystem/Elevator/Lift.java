@@ -24,6 +24,8 @@ public class Lift extends Subsystem {
     liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR_BOTTOM, MotorType.kBrushless);
     lfitMotorSlave = new CANSparkMax(RobotMap.SPARK_ELEVATOR_TOP, MotorType.kBrushless);
     lfitMotorSlave.follow(liftMotor);
+    liftMotor.setSmartCurrentLimit(45, 55, 750);
+    lfitMotorSlave.setSmartCurrentLimit(45, 55, 750);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
     liftEncoder = liftMotor.getEncoder();
     currentState = BrakeState.ON;

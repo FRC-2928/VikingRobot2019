@@ -98,13 +98,13 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.05; // 0.07
-      kI = 0.06;
-      kD = 0.3;
+      kP = 0.04; // 0.07
+      kI = 0.03;
+      kD = 0.35;
     }
 
     if (error < 0) {
-      kP = 0.015;
+      kP = 0.0175;
       kI = 0.015;
       kD = 0;
     }
@@ -139,49 +139,16 @@ public class SetElevator extends Command {
       return Math.abs(error) < 2;
     }
     else{
-      return Math.abs(error) < 0.5;
+      return Math.abs(error) < 1;
     }
   }
 
   @Override
   protected boolean isFinished() {
 
-    // if(error > 0){
-    // if(Math.abs(error) < 0.5){
-    // return true;
-    // }
-    // }
-
-    // if(error < 0){
-    // if(Math.abs(error) < 0.5){
-    // return true;
-    // }
-    // }
-
     if (inZone()) {
       return true;
     }
-
-    // if (isFinished == true){
-    // System.out.println("TIMEEEEE AHHH");
-    // return true;
-    // }
-
-    // if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches +
-    // currentPosition)){
-    // System.out.println("Elevator setpoint is too high dude, aborting");
-    // return true;
-    // }
-
-    // if(currentPosition < RobotConstants.ELEVATOR_MAX_ENCODER_TICKS -
-    // RobotConstants.ELEVATOR_STOP_THRESHOLD){
-    // return true;
-    // }
-
-    // if (currentPosition > RobotConstants.ELEVATOR_MIN_ENCODER_TICKS +
-    // RobotConstants.ELEVATOR_STOP_THRESHOLD){
-    // return true;
-    // }
 
     return false;
 
@@ -190,7 +157,7 @@ public class SetElevator extends Command {
   @Override
   protected void end() {
     Robot.elevator.lift.shiftBrake(BrakeState.ON);
-    Robot.elevator.lift.setLiftPower(0); //Note to see if command is interrupted, what happens
+    Robot.elevator.lift.setLiftPower(0);
   }
 
   @Override
