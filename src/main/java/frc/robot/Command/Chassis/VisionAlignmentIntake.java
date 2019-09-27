@@ -106,8 +106,8 @@ public class VisionAlignmentIntake extends Command {
 
     rotationOutput = (kP * x) + (kI * errorSum) + (kD *derivative);
     if(currentGear == GearState.HIGH){
-      if(rotationOutput > Math.abs(0.6)){
-        rotationOutput = 0.6;
+      if(rotationOutput > Math.abs(0.8)){
+        rotationOutput = 0.8;
       }
     }
 

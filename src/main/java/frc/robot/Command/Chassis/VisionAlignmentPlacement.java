@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionAlignmentPlacement extends Command {
-  private double setpoint;
   private NetworkTable table;
   private double x;
   private double y;
@@ -33,7 +32,6 @@ public class VisionAlignmentPlacement extends Command {
     currentGear = Robot.chassis.transmission.getGear();
     table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-    setpoint = 0;
     errorSum = 0;
   }
 
