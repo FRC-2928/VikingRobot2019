@@ -84,7 +84,7 @@ public class OperatorInterface {
         threadbarHatch.whileActive(new SetArm(ArmState.HATCH));
 
         VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
-        VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,1000));
+        VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,750));
         VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
 
         intake.whileHeld(new RunWheels(0.9));

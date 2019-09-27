@@ -71,7 +71,7 @@ public class SetElevator extends Command {
       Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
       break;
     case CARGO_SHIP_BALL:
-      setpointInches = 23.25;
+      setpointInches = 23;
       break;
     case CARGO_LOADER_BALL:
       setpointInches = 19.5;
