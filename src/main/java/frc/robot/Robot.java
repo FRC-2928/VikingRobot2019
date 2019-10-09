@@ -25,7 +25,6 @@ public class Robot extends TimedRobot {
     public static OperatorInterface oi;
     public static Intake intake;
     public static Elevator elevator;
-    private double elevatorEncoder = elevator.lift.getLiftPosition();
 
     
     //public static Sensors sensors;
@@ -58,7 +57,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() { 
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Lift position", elevatorEncoder);
+        SmartDashboard.putNumber("Lift position", elevator.lift.getLiftPosition());
     }
 
     @Override
@@ -71,7 +70,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Lift position", elevatorEncoder);
+        SmartDashboard.putNumber("Lift position", elevator.lift.getLiftPosition());
       
     }
 

@@ -52,24 +52,24 @@ public class VisionAlignmentIntake extends Command {
     Robot.intake.wheels.setWheelPower(-0.8);
 
     if(currentGear == GearState.LOW){
-    kP = 0.045;
-    kI = 0.01;
-    kD = 0.15;
-    }
+      kP = 0.045;
+      kI = 0.002;
+      kD = 0.15;
+      }
 
-    if(currentGear == GearState.HIGH){
-    kP = 0.055;
-    kI = 0.005;
-    kD = 0.15;
-    }
+      if(currentGear == GearState.HIGH){
+      kP = 0.05;
+      kI = 0.003;
+      kD = 0.15;
+      }
 
     if(currentGear == GearState.LOW){
-      if(Math.abs(x) < 3){
+      if(Math.abs(x) < 3.5){
         if(y == 0){
           driveOutput = 0.2;
         }
         else if(y > -30){
-          driveOutput = 0.3;
+          driveOutput = 0.55;
         }
         else if(y > -10){
           driveOutput = 0.6;
@@ -77,16 +77,13 @@ public class VisionAlignmentIntake extends Command {
         else if(y > 5){
           driveOutput = 0.7;
         }
-        else if(y > 10){
-          driveOutput = 0.8;
-        }
         rotationOutput = 0;
         errorSum = 0;
       }
     }  
     
     if(currentGear == GearState.HIGH){
-      if(Math.abs(x) < 3){
+      if(Math.abs(x) < 3.5){
         if(y == 0){
           driveOutput = 0.2;
         }

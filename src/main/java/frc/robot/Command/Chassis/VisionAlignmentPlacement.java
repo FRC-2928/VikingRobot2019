@@ -61,15 +61,15 @@ public class VisionAlignmentPlacement extends Command {
       }
 
       if(currentGear == GearState.LOW){
-        if(Math.abs(x) < 3){
+        if(Math.abs(x) < 3.5){
           if(y == 0){
             driveOutput = 0.2;
           }
           else if(y > -30){
-            driveOutput = 0.5;
+            driveOutput = 0.55;
           }
           else if(y > -10){
-            driveOutput = 0.55;
+            driveOutput = 0.6;
           }
           else if(y > 5){
             driveOutput = 0.7;
@@ -80,7 +80,7 @@ public class VisionAlignmentPlacement extends Command {
       }  
       
       if(currentGear == GearState.HIGH){
-        if(Math.abs(x) < 3){
+        if(Math.abs(x) < 3.5){
           if(y == 0){
             driveOutput = 0.2;
           }
@@ -88,7 +88,7 @@ public class VisionAlignmentPlacement extends Command {
             driveOutput = 0.5;
           }
           else if(y > -10){
-            driveOutput = 0.6;
+            driveOutput = 0.65;
           }
           else if(y > 5){
             driveOutput = 0.7;
@@ -162,6 +162,9 @@ public class VisionAlignmentPlacement extends Command {
 
     Robot.chassis.drivetrain.drive(-driveOutput, -rotationOutput);
     previousError = x;
+
+    SmartDashboard.putNumber("Vision error", x);
+    SmartDashboard.putNumber("Rotation output", rotationOutput);
   }
 
   @Override

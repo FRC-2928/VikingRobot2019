@@ -107,8 +107,8 @@ public class OperatorInterface {
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
         elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
-        elevatorDown.whileHeld(new RunElevator(-0.15));
-        elevatorUp.whileHeld(new RunElevator(0.3));
+        elevatorDown.whileHeld(new RunElevator(-0.3));
+        elevatorUp.whileHeld(new RunElevator(0.45));
     }
 
     public double getDriveY() {
