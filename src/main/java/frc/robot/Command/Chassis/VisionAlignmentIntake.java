@@ -88,10 +88,10 @@ public class VisionAlignmentIntake extends Command {
           driveOutput = 0.2;
         }
         else if(y > -30){
-          driveOutput = 0.4;
+          driveOutput = 0.5;
         }
         else if(y > -10){
-          driveOutput = 0.55;
+          driveOutput = 0.6;
         }
         else if(y > 5){
           driveOutput = 0.7;

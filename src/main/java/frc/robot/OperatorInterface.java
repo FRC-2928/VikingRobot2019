@@ -3,7 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.
+smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.*;
 import frc.robot.Command.Elevator.*;
 import frc.robot.Command.Elevator.SetElevator.LiftState;
@@ -80,8 +81,8 @@ public class OperatorInterface {
         // threadbarHatch.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
         // threadbarBall.whenPressed(new SetArm(ArmState.BALL));
         // threadbarBall.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
-        threadbarBall.whileActive(new SetArm(ArmState.BALL));
-        threadbarHatch.whileActive(new SetArm(ArmState.HATCH));
+        threadbarBall.whenPressed(new SetArm(ArmState.BALL));
+        threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
 
         VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
         VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,750));
@@ -107,7 +108,7 @@ public class OperatorInterface {
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
         elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
-        elevatorDown.whileHeld(new RunElevator(-0.3));
+        elevatorDown.whileHeld(new RunElevator(-0.25));
         elevatorUp.whileHeld(new RunElevator(0.45));
     }
 

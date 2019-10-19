@@ -64,7 +64,7 @@ public class Lift extends Subsystem {
   public void resetLiftEncoders() {
     liftEncoder.setPosition(0);
   }
-  
+
   @Override
   public void initDefaultCommand() {
   }

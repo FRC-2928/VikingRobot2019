@@ -73,28 +73,28 @@ public class SetArm extends Command {
     
     double kP = 0.35; // Normally 0.5, testing rn
     double min_Command = 0.1;
-    double kI = 0.01;
+    double kI = 0.05;
     // Very basic P, will expand later but need to test it first
-    if (Math.abs(errorLeft) >= 1) {
+    if (Math.abs(errorLeft) >= 0.75) {
       outputLeft = errorLeft * kP;
     }
 
-    if (Math.abs(errorLeft) < 1) {
+    if (Math.abs(errorLeft) < 0.75) {
 
       double errorSumLeft =+ errorLeft * 0.2;
       outputLeft = (errorLeft * kP) + (min_Command * errorLeft) + (kI * errorSumLeft);
     }
 
-    if (Math.abs(errorRight) >= 1) {
+    if (Math.abs(errorRight) >= 0.75) {
       outputRight = errorRight * kP;
     }
 
-    if (Math.abs(errorRight) < 1) {
+    if (Math.abs(errorRight) < 0.75) {
       double errorSumRight = +errorRight * 0.2;
       outputRight = (errorRight * kP) + (min_Command * errorRight) + (kI * errorSumRight);
     }
 
-    Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
+    Robot.intake.threadbar.setLeftThreadbarPower(-outputLeft);
     Robot.intake.threadbar.setRightThreadbarPower(-outputRight);
 
     SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);

@@ -25,6 +25,9 @@ public class SetElevator extends Command {
   private double derivative;
   private double errorSum;
   private double previousError;
+  private double oldError;
+  private int counter = 0;
+  private double mainTime;
   private ArmState armState;
 
   public enum LiftState { 
@@ -46,7 +49,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 7.5;
+        setpointInches = 8;
       } else {
         setpointInches = 13;
       }
@@ -60,9 +63,9 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 48;
+        setpointInches = 49;
       } else {
-        setpointInches = 48;
+        setpointInches = 49;
         Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
       }
       break;
@@ -99,8 +102,8 @@ public class SetElevator extends Command {
 
     if (error > 0) {
       kP = 0.045; // 0.07
-      kI = 0.03;
-      kD = 0.35;
+      kI = 0.035;
+      kD = 0.4;
     }
 
     if (error < 0) {
@@ -119,8 +122,8 @@ public class SetElevator extends Command {
     // Robot.elevator.lift.shiftBrake(BrakeState.OFF);
     // }
 
-    if (elevatorMovement < -0.3){
-      elevatorMovement = -0.3;
+    if (elevatorMovement < -0.4){
+      elevatorMovement = -0.4;
     }
 
     Robot.elevator.lift.setLiftPower(elevatorMovement);
@@ -136,15 +139,40 @@ public class SetElevator extends Command {
       return Math.abs(error) < 1;
     }
     else if(error < 0){
-      return Math.abs(error) < 1.5;
+      return Math.abs(error) < 2;
     }
     else{
-      return Math.abs(error) < 1;
+      return Math.abs(error) < 0.5;
     }
+  }
+
+  private boolean isStalled(){
+    if(setpointInches == 0){
+      if (counter == 0) {
+            mainTime = currentTimeMillis();
+            oldError = error;
+            counter = 1;
+          }
+      if(currentTimeMillis() - mainTime > 750){
+        if(Math.abs(error - oldError) < 0.1){
+          counter = 0;
+          return true;
+        }
+        counter = 0;
+      } 
+      return false;
+    }
+    counter = 0;
+    return false;
   }
 
   @Override
   protected boolean isFinished() {
+
+    if (isStalled() == true){
+      Robot.elevator.lift.resetLiftEncoders();
+      return true;
+    }
 
     if (inZone()) {
       return true;

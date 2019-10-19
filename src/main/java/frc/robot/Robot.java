@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystem.Chassis.*;
+import frc.robot.Subsystem.Chassis.Transmission.GearState;
 import frc.robot.Subsystem.Elevator.Elevator;
 import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 // import frc.robot.Subsystem.GroundIntake.*;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         chassis.drivetrain.resetEncoderPosition();
+        chassis.transmission.shift(GearState.LOW);
         intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
         intake.threadbar.resetThreadbarEncoders();
         elevator.lift.resetLiftEncoders();

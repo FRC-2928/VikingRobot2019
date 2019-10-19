@@ -15,11 +15,11 @@ public class RunWheels extends Command {
   @Override
   protected void initialize() {
     if (Robot.intake.armPresets.currentState == ArmState.HATCH) {
-      Robot.intake.wheels.setWheelPower(power);
+      Robot.intake.wheels.setWheelPower(-power);
     }
     
     if (Robot.intake.armPresets.currentState == ArmState.BALL) {
-      Robot.intake.wheels.setWheelPower(-power);
+      Robot.intake.wheels.setWheelPower(power);
     }
   }
 

@@ -61,7 +61,7 @@ public class VisionAlignmentPlacement extends Command {
       }
 
       if(currentGear == GearState.LOW){
-        if(Math.abs(x) < 3.5){
+        if(Math.abs(x) < 3){
           if(y == 0){
             driveOutput = 0.2;
           }
@@ -80,18 +80,18 @@ public class VisionAlignmentPlacement extends Command {
       }  
       
       if(currentGear == GearState.HIGH){
-        if(Math.abs(x) < 3.5){
+        if(Math.abs(x) < 3){
           if(y == 0){
-            driveOutput = 0.2;
+            driveOutput = 0.25;
           }
           else if(y > -30){
-            driveOutput = 0.5;
+            driveOutput = 0.55;
           }
           else if(y > -10){
             driveOutput = 0.65;
           }
           else if(y > 5){
-            driveOutput = 0.7;
+            driveOutput = 0.75;
           }
           rotationOutput = 0;
           errorSum = 0;
