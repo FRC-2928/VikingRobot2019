@@ -1,21 +1,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.Command.Intake.*;
 import edu.wpi.first.wpilibj.buttons.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Command.Chassis.Shift;
-import frc.robot.Command.Elevator.*;
-import frc.robot.Command.Elevator.SetElevator.LiftState;
 // import frc.robot.Command.GroundIntake.RunGroundIntake;
 // import frc.robot.Command.GroundIntake.SetPusher;
-import frc.robot.Command.Endgame.RunFourBar;
-import frc.robot.Command.Endgame.ClimbWithFourBar;
-import frc.robot.Subsystem.Chassis.Transmission;
-import frc.robot.Subsystem.Elevator.Lift.BrakeState;
 // import frc.robot.Subsystem.GroundIntake.Pusher.PusherState;
-import frc.robot.Subsystem.Intake.ArmPresets.ArmState;
-import frc.robot.Subsystem.Intake.Drawbridge.DrawbridgeState;
 
 public class OperatorInterface {
 
