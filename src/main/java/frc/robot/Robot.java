@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Scheduler.getInstance().removeAll();
         chassis.drivetrain.resetEncoderPosition();
-        chassis.transmission.shift(GearState.LOW);
+        chassis.transmission.shift(GearState.HIGH);
         intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
         intake.threadbar.resetThreadbarEncoders();
         elevator.lift.resetLiftEncoders();
@@ -60,6 +60,8 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() { 
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Lift position", elevator.lift.getLiftPosition());
+        chassis.drivetrain.getEncoderPositionRight();
+        chassis.drivetrain.getEncoderPositionLeft();
     }
 
     @Override

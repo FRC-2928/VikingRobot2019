@@ -66,12 +66,13 @@ public class SetElevator extends Command {
         setpointInches = 49;
       } else {
         setpointInches = 49;
-        Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
       }
       break;
     case GROUND_LEVEL:
       setpointInches = 0;
-      Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
+      if (armState == ArmState.BALL){
+        Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
+      }
       break;
     case CARGO_SHIP_BALL:
       setpointInches = 23;

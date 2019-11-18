@@ -110,7 +110,7 @@ public class SetArm extends Command {
   protected boolean isFinished() {
     SmartDashboard.putNumber("Is Finished error left", errorLeft);
     SmartDashboard.putNumber("Is Finished error right", errorRight);
-    return Math.abs(errorLeft) < 0.15 && Math.abs(errorRight) < 0.15;
+    return Math.abs(errorLeft) < 0.1 && Math.abs(errorRight) < 0.1;
   }
 
   @Override
