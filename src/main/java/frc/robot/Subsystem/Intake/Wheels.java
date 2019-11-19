@@ -41,6 +41,5 @@ public class Wheels extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new RunWheels());
   }
 }
