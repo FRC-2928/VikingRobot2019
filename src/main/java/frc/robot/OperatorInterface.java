@@ -22,16 +22,14 @@ public class OperatorInterface {
 
     private static final JoystickButton gearButton = new JoystickButton(driverConsole, 7);
 
-    // Testing autos
+    // Vision
     private static final JoystickButton VisionButtonIntake = new JoystickButton(driverConsole, 3);
     private static final JoystickButton VisionButtonOuttake = new JoystickButton(driverConsole, 4);
-    // private static final JoystickButton LifterTest = new
-    // JoystickButton(driveStick, 8);
 
     // Intake
     private ArmState armCurrentState; // true == cargo, false == hatch
-    private static final JoystickButton threadbarLeftLeft = new JoystickButton(driveStick, 9);
-    private static final JoystickButton threadbarLeftRight = new JoystickButton(driveStick, 10);
+    private static final JoystickButton threadbarRightLeft = new JoystickButton(driveStick, 9);
+    private static final JoystickButton threadbarRightRight = new JoystickButton(driveStick, 10);
     private static final JoystickButton threadbarLeft = new JoystickButton(driveStick, 11);
     private static final JoystickButton threadbarRight = new JoystickButton(driveStick, 12);
     private static final JoystickButton threadbarHatch = new JoystickButton(driveStick, 7); // placeholder
@@ -73,10 +71,10 @@ public class OperatorInterface {
         // threadbarLeft.whileHeld(new RunRightThreadbar(-0.8));
         threadbarRight.whileHeld(new RunLeftThreadbar(0.8));
         // threadbarRight.whileHeld(new RunRightThreadbar(0.8));
-        threadbarLeftLeft.whileHeld(new RunRightThreadbar(-0.8));
-        threadbarLeftRight.whileHeld(new RunRightThreadbar(0.8));
+        threadbarRightLeft.whileHeld(new RunRightThreadbar(-0.8));
+        threadbarRightRight.whileHeld(new RunRightThreadbar(0.8));
         opThreadbar.whenPressed(new SetArm(ArmState.HATCH));
-        opThreadbar.whenInactive(new SetArm(ArmState.BALL));
+        opThreadbar.whenReleased(new SetArm(ArmState.BALL));
 
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
         threadbarHatch.whenPressed(new SetDrawbridge(DrawbridgeState.DOWN));
@@ -107,8 +105,8 @@ public class OperatorInterface {
         elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
         elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
         elevatorResetEncoders.whileHeld(new ResetElevatorEncoders());
-        elevatorDown.whileHeld(new RunElevator(-0.7));
-        elevatorUp.whileHeld(new RunElevator(0.7));
+        elevatorDown.whileHeld(new RunElevator(-0.25));
+        elevatorUp.whileHeld(new RunElevator(0.45));
     }
 
     public double getDriveY() {

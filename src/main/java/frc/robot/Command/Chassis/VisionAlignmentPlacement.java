@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionAlignmentPlacement extends Command {
-  private double setpoint;
   private NetworkTable table;
   private double x;
   private double y;
@@ -21,6 +20,7 @@ public class VisionAlignmentPlacement extends Command {
   private double previousError;
   private double rotationOutput;
   private double driveOutput;
+  private double elevatorState;
   private GearState currentGear;
 
   public VisionAlignmentPlacement() {
@@ -32,9 +32,7 @@ public class VisionAlignmentPlacement extends Command {
     currentGear = Robot.chassis.transmission.getGear();
     table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-    setpoint = 0;
     errorSum = 0;
-    
   }
 
   @Override
@@ -43,78 +41,130 @@ public class VisionAlignmentPlacement extends Command {
     NetworkTableEntry ty = table.getEntry("ty");
     y = ty.getDouble(0.0);
     x = tx.getDouble(0.0);
-    // if (x < Math.abs(8)){
-      errorSum += x;
-    // }
+    errorSum += x;
     derivative = x - previousError;
+    elevatorState = Robot.elevator.lift.getLiftPosition();
 
-    if(currentGear == GearState.LOW){
-    kP = 0.045;
-    kI = 0.002;
-    kD = 0.15;
+
+    //When elevator is down
+    if (elevatorState < 30){
+      if(currentGear == GearState.LOW){
+      kP = 0.045;
+      kI = 0.002;
+      kD = 0.15;
+      }
+
+      if(currentGear == GearState.HIGH){
+      kP = 0.05;
+      kI = 0.003;
+      kD = 0.15;
+      }
+
+      if(currentGear == GearState.LOW){
+        if(Math.abs(x) < 3){
+          if(y == 0){
+            driveOutput = 0.2;
+          }
+          else if(y > -30){
+            driveOutput = 0.55;
+          }
+          else if(y > -10){
+            driveOutput = 0.6;
+          }
+          else if(y > 5){
+            driveOutput = 0.7;
+          }
+          rotationOutput = 0;
+          errorSum = 0;
+        }
+      }  
+      
+      if(currentGear == GearState.HIGH){
+        if(Math.abs(x) < 3){
+          if(y == 0){
+            driveOutput = 0.25;
+          }
+          else if(y > -30){
+            driveOutput = 0.55;
+          }
+          else if(y > -10){
+            driveOutput = 0.65;
+          }
+          else if(y > 5){
+            driveOutput = 0.75;
+          }
+          rotationOutput = 0;
+          errorSum = 0;
+        }
+      } 
     }
 
-    if(currentGear == GearState.HIGH){
-    kP = 0.05;
-    kI = 0.003;
-    kD = 0.15;
-    }
-
-    if(currentGear == GearState.LOW){
-      if(Math.abs(x) < 3.5){
-        if(y > -30){
-          driveOutput = 0.5;
+    //When elevator is up
+    else if(elevatorState > 30){
+      if(currentGear == GearState.LOW){
+        kP = 0.030;
+        kI = 0.003;
+        kD = 0.2;
         }
-        if(y > -10){
-          driveOutput = 0.55;
+  
+        if(currentGear == GearState.HIGH){
+        kP = 0.04;
+        kI = 0.003;
+        kD = 0.2;
         }
-        if(y > 5){
-          driveOutput = 0.7;
-        }
-        rotationOutput = 0;
+  
+        if(currentGear == GearState.LOW){
+          if(Math.abs(x) < 3){
+            if(y == 0){
+              driveOutput = 0.1;
+            }
+            else if(y > -30){
+              driveOutput = 0.2;
+            }
+            else if(y > -10){
+              driveOutput = 0.35;
+            }
+            else if(y > 5){
+              driveOutput = 0.5;
+            }
+            rotationOutput = 0;
+            errorSum = 0;
+          }
+        }  
+        
+        if(currentGear == GearState.HIGH){
+          if(Math.abs(x) < 3){
+            if(y == 0){
+              driveOutput = 0.2;
+            }
+            else if(y > -30){
+              driveOutput = 0.3;
+            }
+            else if(y > -10){
+              driveOutput = 0.4;
+            }
+            else if(y > 5){
+              driveOutput = 0.45;
+            }
+            rotationOutput = 0;
+            errorSum = 0;
+          }
+        } 
       }
-      else{
-        driveOutput = 0;
-      }
-    }  
-    
-    if(currentGear == GearState.HIGH){
-      if(Math.abs(x) < 3){
-        if(y > -30){
-          driveOutput = 0.5;
-        }
-        if(y > -10){
-          driveOutput = 0.6;
-        }
-        if(y > 5){
-          driveOutput = 0.7;
-        }
-        rotationOutput = 0;
-      }
-      else{
-        driveOutput = 0;
-      }
-    } 
 
     rotationOutput = (kP * x) + (kI * errorSum) + (kD *derivative);
+
     if(currentGear == GearState.HIGH){
-      rotationOutput *= 0.8;
+      if(rotationOutput > Math.abs(0.8)){
+        rotationOutput = 0.8;
+      }
     }
-    // if(currentGear == GearState.HIGH){
-    //   if(rotationOutput > Math.abs(0.6)){
-    //     rotationOutput = 0.7;
-    //   }
-    // }
 
     Robot.chassis.drivetrain.drive(-driveOutput, -rotationOutput);
-
-    SmartDashboard.putNumber("Vision Aligment P", kP*x);
-    SmartDashboard.putNumber("Vision Alignment I", kI*errorSum);
-    SmartDashboard.putNumber("Vision Alignment derivative",derivative);
-    SmartDashboard.putNumber("Vision Alignment D", kD *derivative);
-    SmartDashboard.putNumber("Vision Alignment error",x);
-    SmartDashboard.putNumber("Vision Alignment Rotation", rotationOutput);
     previousError = x;
+
+    SmartDashboard.putNumber("Vision error", x);
+    SmartDashboard.putNumber("Rotation output", rotationOutput);
   }
 
   @Override
@@ -125,7 +175,6 @@ public class VisionAlignmentPlacement extends Command {
   @Override
   protected void end() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-    Robot.chassis.drivetrain.drive(0,0);
     // Robot.chassis.transmission.shift(GearState.HIGH);
   }
 

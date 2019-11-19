@@ -10,6 +10,7 @@ import frc.robot.RobotMap;
 
 public class Lift extends Subsystem {
   private CANSparkMax liftMotor;
+  private CANSparkMax lfitMotorSlave;
   private CANEncoder liftEncoder;
   private Solenoid brake;
   private BrakeState currentState;
@@ -20,23 +21,28 @@ public class Lift extends Subsystem {
   }
 
   public Lift() {
-    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR, MotorType.kBrushless);
+    liftMotor = new CANSparkMax(RobotMap.SPARK_ELEVATOR_BOTTOM, MotorType.kBrushless);
+    lfitMotorSlave = new CANSparkMax(RobotMap.SPARK_ELEVATOR_TOP, MotorType.kBrushless);
+    lfitMotorSlave.follow(liftMotor);
+    liftMotor.setSmartCurrentLimit(45, 55, 750);
+    lfitMotorSlave.setSmartCurrentLimit(45, 55, 750);
     brake = new Solenoid(RobotMap.SOLENOID_ELEVATOR_BRAKE);
-
     liftEncoder = liftMotor.getEncoder();
     currentState = BrakeState.ON;
   }
 
   public void shiftBrake(BrakeState state) {
     switch (state) {
-      case OFF:
-        brake.set(false);
-        break;
-      case ON:
-        brake.set(true);
-        break;
+      case OFF: 
+      brake.set(true);
+      break;
+
+      case ON: 
+      brake.set(false);
+      break;
+
       default:
-        break;
+      break;
     }
 
     currentState = state;
@@ -52,14 +58,13 @@ public class Lift extends Subsystem {
 
   public double getLiftPosition() {
     double liftPosition = liftEncoder.getPosition();
-    SmartDashboard.putNumber("Lift position inches", liftPosition);
     return liftPosition;
   }
 
   public void resetLiftEncoders() {
     liftEncoder.setPosition(0);
   }
-  
+
   @Override
   public void initDefaultCommand() {
   }
