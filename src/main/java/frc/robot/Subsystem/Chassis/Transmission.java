@@ -20,25 +20,20 @@ public class Transmission extends Subsystem {
         HIGH, LOW;
     }
 
-    public Transmission() {
+    public Transmission(){
         shiftSolenoid = new Solenoid(RobotMap.SOLENOID_TRANSMISSION);
-        shiftSolenoid.set(false);
-        currentState = LOW;
     }
 
     public void shift(GearState state) {
         long time = currentTimeMillis();
         if ((time - lastShift) > RobotConstants.SHIFT_DELAY_MS) {
             if (state == HIGH) {
-                shiftSolenoid.set(false);
                 Robot.chassis.drivetrain.setBrakeMode(false);
-                Robot.chassis.drivetrain.setRampRate(0);
+                shiftSolenoid.set(true);
             }
             if (state == LOW) {
-                shiftSolenoid.set(true);
-                Robot.chassis.drivetrain.setBrakeMode(true);
-                Robot.chassis.drivetrain.setRampRate(0);
-                Robot.chassis.drivetrain.setBrakeMode(true);
+                Robot.chassis.drivetrain.setBrakeMode(true);                
+                shiftSolenoid.set(false);
             }
             currentState = state;
             lastShift = time;

@@ -20,17 +20,15 @@ public class SetElevator extends Command {
   private double error;
   private double elevatorMovement;
   private double kP;
-  private double min_Command;
   private double kI;
   private double kD;
   private double derivative;
   private double errorSum;
   private double previousError;
-  private boolean isFinished;
+  private double oldError;
+  private int counter = 0;
+  private double mainTime;
   private ArmState armState;
-  private long stopTime;
-  private long currentTime;
-  private int counter;
 
   public enum LiftState { 
     LEVEL_1, LEVEL_2, LEVEL_3, CARGO_SHIP_BALL, CARGO_LOADER_BALL, GROUND_LEVEL;
@@ -51,7 +49,7 @@ public class SetElevator extends Command {
     switch (setpoint) {
     case LEVEL_1:
       if (armState == ArmState.HATCH) {
-        setpointInches = 7.3;
+        setpointInches = 8;
       } else {
         setpointInches = 13;
       }
@@ -65,18 +63,19 @@ public class SetElevator extends Command {
       break;
     case LEVEL_3:
       if (armState == ArmState.HATCH) {
-        setpointInches = 48;
+        setpointInches = 49;
       } else {
-        setpointInches = 48;
-        Robot.intake.drawbridge.switchBridge(DrawbridgeState.UP);
+        setpointInches = 49;
       }
       break;
     case GROUND_LEVEL:
       setpointInches = 0;
-      Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
+      if (armState == ArmState.BALL){
+        Robot.intake.drawbridge.switchBridge(DrawbridgeState.DOWN);
+      }
       break;
     case CARGO_SHIP_BALL:
-      setpointInches = 23.25;
+      setpointInches = 23;
       break;
     case CARGO_LOADER_BALL:
       setpointInches = 19.5;
@@ -87,8 +86,6 @@ public class SetElevator extends Command {
 
     errorSum = 0;
     derivative = 0;
-    isFinished = false;
-    counter = 0;
   }
 
   @Override
@@ -105,27 +102,19 @@ public class SetElevator extends Command {
     derivative = (error - previousError);
 
     if (error > 0) {
-      kP = 0.074; // 0.07
-      kI = 0.07;
-      kD = 0.275;
-      min_Command = 0.006; // 0.05
+      kP = 0.045; // 0.07
+      kI = 0.035;
+      kD = 0.4;
     }
 
     if (error < 0) {
-      kP = 0.025;
-      kI = 0.02;
-      min_Command = 0;
+      kP = 0.02;
+      kI = 0.015;
       kD = 0;
     }
 
-    if (Math.abs(error) >= 4) {
       elevatorMovement = (kP * error) + (kI * errorSum) - (kD * derivative);
 
-    }
-
-    if (Math.abs(error) < 4) {
-      elevatorMovement = ((kP + min_Command) * error) + (kI * errorSum) + (kD * derivative); //Why the hell is this derivative a plus and not a minus
-    }
 
     // if(inZone()){
     // Robot.elevator.lift.shiftBrake(BrakeState.ON);
@@ -148,55 +137,47 @@ public class SetElevator extends Command {
 
   private boolean inZone() {
     if(setpointInches == 0){
-      return Math.abs(error) < 1.25;
+      return Math.abs(error) < 1;
     }
     else if(error < 0){
       return Math.abs(error) < 2;
     }
     else{
-      return Math.abs(error) < 1;
+      return Math.abs(error) < 0.5;
     }
+  }
+
+  private boolean isStalled(){
+    if(setpointInches == 0){
+      if (counter == 0) {
+            mainTime = currentTimeMillis();
+            oldError = error;
+            counter = 1;
+          }
+      if(currentTimeMillis() - mainTime > 750){
+        if(Math.abs(error - oldError) < 0.1){
+          counter = 0;
+          return true;
+        }
+        counter = 0;
+      } 
+      return false;
+    }
+    counter = 0;
+    return false;
   }
 
   @Override
   protected boolean isFinished() {
 
-    // if(error > 0){
-    // if(Math.abs(error) < 0.5){
-    // return true;
-    // }
-    // }
-
-    // if(error < 0){
-    // if(Math.abs(error) < 0.5){
-    // return true;
-    // }
-    // }
+    if (isStalled() == true){
+      Robot.elevator.lift.resetLiftEncoders();
+      return true;
+    }
 
     if (inZone()) {
       return true;
     }
-
-    // if (isFinished == true){
-    // System.out.println("TIMEEEEE AHHH");
-    // return true;
-    // }
-
-    // if(RobotConstants.ELEVATOR_MAX_ENCODER_TICKS < (setpointInches +
-    // currentPosition)){
-    // System.out.println("Elevator setpoint is too high dude, aborting");
-    // return true;
-    // }
-
-    // if(currentPosition < RobotConstants.ELEVATOR_MAX_ENCODER_TICKS -
-    // RobotConstants.ELEVATOR_STOP_THRESHOLD){
-    // return true;
-    // }
-
-    // if (currentPosition > RobotConstants.ELEVATOR_MIN_ENCODER_TICKS +
-    // RobotConstants.ELEVATOR_STOP_THRESHOLD){
-    // return true;
-    // }
 
     return false;
 

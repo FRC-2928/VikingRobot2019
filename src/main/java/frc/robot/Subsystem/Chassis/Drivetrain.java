@@ -52,6 +52,13 @@ public class Drivetrain extends Subsystem {
     left_follower_1.setInverted(true);
     left_follower_2.setInverted(true);
 
+    right.setInverted(false);
+    right_follower_1.setInverted(false);
+    right_follower_2.setInverted(false);
+
+    left.configPeakCurrentLimit(55, 10);
+    right.configPeakCurrentLimit(55, 10);
+
     left.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     right.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     left.configNeutralDeadband(0.01);

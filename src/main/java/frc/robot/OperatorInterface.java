@@ -67,7 +67,7 @@ public class OperatorInterface {
         // threadbarLeftLeft.whileHeld(new RunRightThreadbar(-0.8));
         threadbarLeftRight.whileHeld(new RunRightThreadbar(-0.8));
         opThreadbar.whenPressed(new SetArm(ArmState.HATCH));
-        opThreadbar.whenInactive(new SetArm(ArmState.BALL));
+        opThreadbar.whenReleased(new SetArm(ArmState.BALL));
 
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));

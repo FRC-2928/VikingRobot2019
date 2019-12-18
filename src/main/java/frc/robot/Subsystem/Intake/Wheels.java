@@ -22,9 +22,9 @@ public class Wheels extends Subsystem {
   }
 
   public Wheels(){
+    
     leftWheel = new VictorSPX(RobotMap.TALON_LEFT_INTAKE);
     rightWheel = new VictorSPX(RobotMap.TALON_RIGHT_INTAKE);
-    leftWheel.setInverted(true);
 
   }
 

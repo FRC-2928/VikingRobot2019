@@ -31,7 +31,7 @@ public class VisionAlignmentIntake extends Command {
   protected void initialize() {
     currentGear = Robot.chassis.transmission.getGear();
     table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(2);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
     setpoint = 0;
     errorSum = 0;
     // Robot.chassis.transmission.shift(GearState.LOW);
@@ -52,43 +52,59 @@ public class VisionAlignmentIntake extends Command {
     Robot.intake.wheels.setWheelPower(-0.8);
 
     if(currentGear == GearState.LOW){
-    kP = 0.045;
-    kI = 0.002;
-    kD = 0.15;
-    }
+      kP = 0.045;
+      kI = 0.002;
+      kD = 0.15;
+      }
 
+      if(currentGear == GearState.HIGH){
+      kP = 0.05;
+      kI = 0.003;
+      kD = 0.15;
+      }
+
+    if(currentGear == GearState.LOW){
+      if(Math.abs(x) < 3.5){
+        if(y == 0){
+          driveOutput = 0.2;
+        }
+        else if(y > -30){
+          driveOutput = 0.55;
+        }
+        else if(y > -10){
+          driveOutput = 0.6;
+        }
+        else if(y > 5){
+          driveOutput = 0.7;
+        }
+        rotationOutput = 0;
+        errorSum = 0;
+      }
+    }  
+    
     if(currentGear == GearState.HIGH){
-      if(x > Math.abs(8)){
+      if(Math.abs(x) < 3.5){
+        if(y == 0){
+          driveOutput = 0.2;
+        }
+        else if(y > -30){
+          driveOutput = 0.5;
+        }
+        else if(y > -10){
+          driveOutput = 0.6;
+        }
+        else if(y > 5){
+          driveOutput = 0.7;
+        }
+        rotationOutput = 0;
+        errorSum = 0;
       }
-      else{
-        Robot.chassis.drivetrain.setRampRate(0);
-      } 
-    kP = 0.055;
-    kI = 0.001;
-    }
-
-    if(Math.abs(x) < 4){
-      if(y > 5){
-        driveOutput = 0.4;
-      }
-      if(y > 10){
-        driveOutput = 0.5;
-      }
-      if(y < 4.5){
-        driveOutput = 0;
-      }
-     
-
-      rotationOutput = 0;
-    }
-    else{
-      driveOutput = 0;
-    }
+    } 
 
     rotationOutput = (kP * x) + (kI * errorSum) + (kD *derivative);
     if(currentGear == GearState.HIGH){
-      if(rotationOutput > Math.abs(0.6)){
-        rotationOutput = 0.7;
+      if(rotationOutput > Math.abs(0.8)){
+        rotationOutput = 0.8;
       }
     }
 
@@ -111,11 +127,6 @@ public class VisionAlignmentIntake extends Command {
   @Override
   protected void end() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-    Robot.chassis.drivetrain.drive(0,0);
-    // Robot.chassis.drivetrain.setRampRate(0);
-    Robot.intake.wheels.setWheelPower(-0.3);
-    // Robot.chassis.transmission.shift(GearState.HIGH);
-    // Robot.chassis.transmission.shift(GearState.HIGH);
   }
 
   @Override

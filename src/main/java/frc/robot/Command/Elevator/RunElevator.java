@@ -21,7 +21,6 @@ public class RunElevator extends Command {
 
   @Override
   protected void execute() { 
-    currentPosition = Robot.elevator.lift.getLiftPosition();
 
   }
 
