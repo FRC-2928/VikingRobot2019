@@ -25,11 +25,8 @@ public class OperatorInterface {
     private static final JoystickButton gearButton = new JoystickButton(driveStick, 9);
     private static final JoystickButton gearButtonHigh = new JoystickButton(driveStick, 10);
 
-    // Testing autos
-    // private static final JoystickButton VisionButtonIntake = new JoystickButton(driveStick, 5);
-    // private static final JoystickButton VisionButtonOuttake = new JoystickButton(driveStick, 6);
-    // private static final JoystickButton LifterTest = new
-    // JoystickButton(driveStick, 8);
+    private static final JoystickButton VisionButtonIntake = new JoystickButton(driveStick, 5);
+    private static final JoystickButton VisionButtonOuttake = new JoystickButton(driveStick, 6);
 
     // Intake
     private ArmState armCurrentState; // true == cargo, false == hatch
@@ -44,17 +41,18 @@ public class OperatorInterface {
 
 
     // Elevator
-    private static final JoystickButton elevatorUp = new JoystickButton(driveStick, 6);
-    private static final JoystickButton elevatorDown = new JoystickButton(driveStick, 5);
+    private static final JoystickButton elevatorLvl1 = new JoystickButton(operatorConsole, 6);// placeholder
+    private static final JoystickButton elevatorLvl2 = new JoystickButton(operatorConsole, 5);// placeholder
+    private static final JoystickButton elevatorLvl3 = new JoystickButton(operatorConsole, 4);// placeholder
+    private static final JoystickButton elevatorLvlGround = new JoystickButton(operatorConsole, 3);
+    private static final JoystickButton elevatorLvlCargoBall = new JoystickButton(operatorConsole, 1);
+    private static final JoystickButton elevatorLvlCargoLoader = new JoystickButton(operatorConsole, 2);
+    private static final JoystickButton elevatorUp = new JoystickButton(operatorConsole, 12);
+    private static final JoystickButton elevatorDown = new JoystickButton(operatorConsole, 11);
 
     OperatorInterface() {
         gearButtonHigh.whenPressed(new Shift(Transmission.GearState.HIGH));
         gearButton.whenPressed(new Shift(Transmission.GearState.LOW));
-
-        // groundButtonUp.whileHeld(new RunGroundIntake(0.8));
-        // groundButtonDown.whileHeld(new RunGroundIntake(-0.5));
-        // pusherButton.whenPressed(new SetPusher(PusherState.IN));
-        // pusherButton.whenReleased(new SetPusher(PusherState.OUT));
 
         // Left: - for moving left, + for moving right
         // Right: - for moving left, + for moving right
@@ -71,12 +69,18 @@ public class OperatorInterface {
         threadbarHatch.whenPressed(new SetArm(ArmState.HATCH));
         threadbarBall.whenPressed(new SetArm(ArmState.BALL));
 
-        // VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
-        // VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,750));
-        // VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
+        VisionButtonIntake.whileHeld(new VisionAlignmentIntake());
+        VisionButtonIntake.whenReleased(new RunWheelsForTime(0.3,750));
+        VisionButtonOuttake.whileHeld(new VisionAlignmentPlacement());
 
-        elevatorUp.whileHeld(new RunElevator(0.6));
-        elevatorDown.whileHeld(new RunElevator(-0.3));
+        elevatorLvlGround.whenPressed(new SetElevator(LiftState.GROUND_LEVEL));
+        elevatorLvlCargoBall.whenPressed(new SetElevator(LiftState.CARGO_SHIP_BALL));
+        elevatorLvlCargoLoader.whenPressed(new SetElevator(LiftState.CARGO_LOADER_BALL));
+        elevatorLvl1.whenPressed(new SetElevator(LiftState.LEVEL_1));
+        elevatorLvl2.whenPressed(new SetElevator(LiftState.LEVEL_2));
+        elevatorLvl3.whenPressed(new SetElevator(LiftState.LEVEL_3));
+        elevatorDown.whileHeld(new RunElevator(-0.25));
+        elevatorUp.whileHeld(new RunElevator(0.45));
     }
 
     public double getDriveY() {
