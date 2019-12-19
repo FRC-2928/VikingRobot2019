@@ -94,7 +94,7 @@ public class SetArm extends Command {
       outputRight = (errorRight * kP) + (min_Command * errorRight) + (kI * errorSumRight);
     }
 
-    Robot.intake.threadbar.setLeftThreadbarPower(outputLeft);
+    Robot.intake.threadbar.setLeftThreadbarPower(-outputLeft);
     Robot.intake.threadbar.setRightThreadbarPower(-outputRight);
 
     SmartDashboard.putNumber("Arm State current position left", currentPositionLeft);
